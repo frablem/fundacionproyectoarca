@@ -123,6 +123,7 @@
     .brand {
       display: inline-flex;
       align-items: center;
+      min-height: 44px;
       min-width: 0;
       gap: 0.72rem;
       color: var(--purple);
@@ -135,6 +136,7 @@
     .nav-toggle {
       display: inline-flex;
       align-items: center;
+      min-height: 44px;
       gap: 0.55rem;
       padding: 0.55rem 0;
       border: 0;
@@ -293,6 +295,7 @@
     .stand-in-tag { flex: 0 0 auto; padding: 0.24rem 0.42rem; color: var(--dark); background: var(--olive); font-family: "Cabin Condensed", sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; line-height: 1.1; text-transform: uppercase; }
     .petfi-stand-in { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
     .pet-card { min-width: 0; background: #fff; border: 1px solid var(--paper-line); transition: transform 180ms ease, box-shadow 180ms ease; }
+    .pet-card:nth-child(5) { display: none; }
     .pet-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
     .pet-card figure { margin: 0; overflow: hidden; aspect-ratio: 1 / 1; background: var(--paper-deep); }
     .pet-card figure img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.8); transition: transform 320ms ease; }
@@ -301,7 +304,7 @@
     .pet-meta { margin-bottom: 0.27rem; color: var(--purple); font-family: "Cabin Condensed", sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
     .pet-card h3 { margin-bottom: 0.25rem; font-size: 1.65rem; line-height: 1; }
     .pet-card-description { min-height: 3.2em; margin-bottom: 0.75rem; color: var(--muted); font-size: 0.83rem; line-height: 1.4; }
-    .text-link { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--purple); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+    .text-link { display: inline-flex; align-items: center; min-height: 44px; gap: 0.45rem; color: var(--purple); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
     .text-link:hover { color: var(--purple-2); }
     .catalog-link { margin-top: 2rem; }
 
@@ -345,10 +348,10 @@
     .bank-row dt { color: var(--muted); font-family: "Cabin Condensed", sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
     .bank-row dd { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 0.5rem; margin: 0; color: var(--dark); font-size: 0.9rem; font-weight: 600; }
     .bank-row dd span { overflow-wrap: anywhere; }
-    .copy-button { flex: 0 0 auto; padding: 0.28rem 0.42rem; border: 1px solid var(--purple); color: var(--purple); background: transparent; cursor: pointer; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; }
+    .copy-button { flex: 0 0 auto; min-width: 44px; min-height: 44px; padding: 0.28rem 0.42rem; border: 1px solid var(--purple); color: var(--purple); background: transparent; cursor: pointer; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; }
     .copy-button:hover { color: #fff; background: var(--purple); }
     .copy-button.is-copied { border-color: var(--olive); color: var(--dark); background: var(--olive); }
-    .bank-receipt { display: block; margin-top: 1rem; color: var(--purple); font-size: 0.84rem; font-weight: 700; text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+    .bank-receipt { display: inline-flex; align-items: center; min-height: 44px; margin-top: 1rem; color: var(--purple); font-size: 0.84rem; font-weight: 700; text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
     .bank-receipt:hover { color: var(--purple-2); }
     .bank-footnote { margin: 1rem 0 0; color: var(--muted); font-size: 0.75rem; }
 
@@ -371,14 +374,14 @@
     .footer-blurb { max-width: 22rem; margin: 1rem 0 0; color: var(--muted); font-size: 0.84rem; }
     .footer-heading { margin-bottom: 0.65rem; color: var(--purple); font-family: "Cabin Condensed", sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; }
     .footer-links, .footer-contact { display: grid; gap: 0.36rem; }
-    .footer-links a, .footer-contact a { width: fit-content; color: var(--muted); font-size: 0.84rem; text-decoration: none; }
+    .footer-links a, .footer-contact a { display: inline-flex; align-items: center; min-height: 32px; width: fit-content; color: var(--muted); font-size: 0.84rem; text-decoration: none; }
     .footer-links a:hover, .footer-contact a:hover { color: var(--purple); text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 2px; text-underline-offset: 3px; }
     .footer-contact p { margin: 0; color: var(--muted); font-size: 0.84rem; }
     .footer-donation { max-width: 17rem; margin: 0; color: var(--muted); font-size: 0.8rem; }
     .footer-donation strong { color: var(--dark); }
     .footer-bottom { display: flex; flex-direction: column; gap: 1.15rem; align-items: flex-start; margin-top: 2.8rem; padding-top: 1.2rem; border-top: 1px solid var(--paper-line); }
     .legal-line { margin: 0; color: var(--muted); font-size: 0.72rem; }
-    .cloe-credit { display: inline-flex; align-items: center; gap: 0.48rem; color: var(--purple); font-size: 0.76rem; text-decoration: none; }
+    .cloe-credit { display: inline-flex; align-items: center; min-height: 44px; gap: 0.48rem; color: var(--purple); font-size: 0.76rem; text-decoration: none; }
     .cloe-credit:hover { color: var(--purple-2); }
     .cloe-credit svg { flex: 0 0 auto; }
 
@@ -405,24 +408,24 @@
       .donation-layout { grid-template-columns: minmax(0, 1fr) minmax(330px, 0.9fr); align-items: center; gap: clamp(2rem, 8vw, 8rem); }
       .bank-sheet { padding: 1.65rem; }
       .contact-layout { grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr); align-items: center; gap: clamp(2rem, 8vw, 8rem); }
-      .footer-grid { grid-template-columns: minmax(220px, 1.3fr) repeat(3, minmax(130px, 0.8fr)); gap: 1.8rem; }
+      .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem; }
       .footer-bottom { flex-direction: row; align-items: center; justify-content: space-between; }
     }
 
     @media (min-width: 930px) {
       .nav-toggle { display: none; }
       .primary-nav { position: static; display: flex; align-items: center; gap: 0.1rem; padding: 0; border: 0; background: transparent; box-shadow: none; }
-      .primary-nav a { min-height: 40px; padding: 0.45rem 0.6rem; font-size: 0.76rem; }
+      .primary-nav a { min-height: 44px; padding: 0.45rem 0.6rem; font-size: 0.76rem; }
       .primary-nav a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--yellow); }
-      .primary-nav .nav-donate { min-height: 42px; margin-top: 0; margin-left: 0.45rem; padding-inline: 1rem; }
+      .primary-nav .nav-donate { min-height: 44px; margin-top: 0; margin-left: 0.45rem; padding-inline: 1rem; }
       .hero { grid-template-columns: minmax(0, 1fr) minmax(300px, 0.76fr); }
       .petfi-stand-in { grid-template-columns: repeat(5, minmax(0, 1fr)); }
       .pet-card:nth-child(5) { display: block; }
+      .footer-grid { grid-template-columns: minmax(220px, 1.3fr) repeat(3, minmax(130px, 0.8fr)); }
     }
 
     @media (max-width: 767px) {
-      /* Five visual stand-ins on wide screens, four on mobile to mirror Petfi's future homepage limit. */
-      .pet-card:nth-child(5) { display: none; }
+      /* Four visual stand-ins below the wide-desktop layout to mirror Petfi's compact homepage limit. */
       .header-inner { min-height: 4.25rem; }
       .brand img { width: 2.6rem; height: 2.6rem; }
       .brand-copy strong { font-size: 1.05rem; }

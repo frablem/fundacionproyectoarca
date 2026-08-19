@@ -210,6 +210,9 @@
       }
 
       .topline a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
         color: var(--white);
         letter-spacing: 0.02em;
         text-transform: none;
@@ -234,6 +237,7 @@
       .brand {
         display: inline-flex;
         align-items: center;
+        min-height: 44px;
         min-width: 0;
         gap: 0.7rem;
       }
@@ -928,6 +932,10 @@
         box-shadow: 0 8px 30px rgba(57, 20, 75, 0.09);
       }
 
+      .cat-card:nth-child(5) {
+        display: none;
+      }
+
       .cat-media {
         position: relative;
         aspect-ratio: 4 / 3;
@@ -1120,6 +1128,7 @@
       .text-link {
         display: inline-flex;
         align-items: center;
+        min-height: 44px;
         gap: 0.4rem;
         color: var(--purple-deep);
         font-family: "Cabin Condensed", "Arial Narrow", sans-serif;
@@ -1272,8 +1281,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 1.7rem;
-        height: 1.7rem;
+        width: 2.75rem;
+        height: 2.75rem;
         padding: 0;
         border: 1px solid rgba(119, 54, 139, 0.35);
         border-radius: 50%;
@@ -1411,6 +1420,14 @@
         font-size: 0.87rem;
       }
 
+      .footer-links a,
+      .footer-contact a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        width: fit-content;
+      }
+
       .footer-links a:hover,
       .footer-contact a:hover {
         color: var(--yellow-bright);
@@ -1446,6 +1463,7 @@
       .cloe-credit {
         display: inline-flex;
         align-items: center;
+        min-height: 44px;
         gap: 0.45rem;
         width: fit-content;
         color: var(--cream);
@@ -1500,33 +1518,6 @@
           width: min(calc(100% - 5rem), var(--content));
         }
 
-        .menu-toggle {
-          display: none;
-        }
-
-        .nav-links,
-        .nav-links.is-open {
-          position: static;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          padding: 0;
-          border: 0;
-          background: transparent;
-          box-shadow: none;
-        }
-
-        .nav-links a {
-          min-height: auto;
-          padding: 0.55rem 0.65rem;
-          font-size: 0.82rem;
-        }
-
-        .nav-links .nav-donate {
-          margin: 0 0 0 0.35rem;
-          padding: 0.75rem 1rem;
-        }
-
         .hero-grid {
           grid-template-columns: minmax(0, 1.03fr) minmax(23rem, 0.97fr);
           gap: 4rem;
@@ -1575,7 +1566,7 @@
         }
 
         .cat-grid {
-          grid-template-columns: repeat(5, minmax(0, 1fr));
+          grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
         .cat-body {
@@ -1608,6 +1599,50 @@
           grid-template-columns: 1fr auto;
           align-items: center;
           justify-content: space-between;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .menu-toggle {
+          display: none;
+        }
+
+        .nav-links,
+        .nav-links.is-open {
+          position: static;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          box-shadow: none;
+        }
+
+        .nav-links a {
+          min-height: 44px;
+          padding: 0.55rem 0.65rem;
+          font-size: 0.82rem;
+        }
+
+        .nav-links .nav-donate {
+          margin: 0 0 0 0.35rem;
+          padding: 0.75rem 1rem;
+        }
+
+        .cat-grid {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        .cat-card:nth-child(5) {
+          display: block;
+        }
+      }
+
+      @media (min-width: 768px) and (max-width: 899px) {
+        .donation-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 2.5rem;
         }
       }
 
@@ -1913,10 +1948,6 @@
           gap: 1.75rem;
           padding-top: 3rem;
           padding-bottom: 2.5rem;
-        }
-
-        .cat-card:nth-child(5) {
-          display: none;
         }
 
         .count-desktop {
