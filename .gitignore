@@ -1,0 +1,10 @@
+# private intake material — never publish
+NOTES.md
+brand/
+
+# tooling
+.wrangler/
+.dev.vars*
+.env*
+.DS_Store
+node_modules/
