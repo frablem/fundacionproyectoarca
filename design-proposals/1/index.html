@@ -267,12 +267,13 @@
     .hero-figure { margin: 0; }
     .hero-image-wrap { position: relative; padding: 0.7rem 0.7rem 0.85rem; background: #fff; box-shadow: var(--shadow); transform: rotate(1.2deg); }
     .hero-image-wrap::before { content: ""; position: absolute; top: -0.55rem; left: 17%; width: 5.8rem; height: 1.15rem; background: rgba(219, 204, 0, 0.78); transform: rotate(-4deg); }
-    .hero-image-wrap img { width: 100%; aspect-ratio: 4 / 4.5; object-fit: cover; filter: saturate(0.78) contrast(1.04); }
+    .hero-image-wrap img { width: 100%; height: auto; aspect-ratio: 4 / 4.5; object-fit: cover; filter: saturate(0.78) contrast(1.04); }
     figcaption { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.75rem; color: var(--muted); font-size: 0.72rem; line-height: 1.35; }
     figcaption span { color: var(--purple); font-family: "Cabin Condensed", sans-serif; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
 
     .rule { width: min(calc(100% - 2.5rem), var(--max)); height: 1px; margin-inline: auto; background: var(--purple); opacity: 0.7; }
     .section { padding: clamp(4.8rem, 9vw, 8.4rem) 0; }
+    main section[id] { scroll-margin-top: 5rem; }
     .section--paper-deep { background: var(--paper-deep); }
     .section-head { display: grid; gap: 1.2rem; margin-bottom: 2.8rem; }
     .section-head h2 { max-width: 14ch; margin-bottom: 0; font-size: clamp(2.8rem, 7vw, 5.4rem); letter-spacing: -0.025em; line-height: 0.92; }
@@ -293,8 +294,8 @@
     .petfi-stand-in { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
     .pet-card { min-width: 0; background: #fff; border: 1px solid var(--paper-line); transition: transform 180ms ease, box-shadow 180ms ease; }
     .pet-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
-    .pet-card figure { margin: 0; overflow: hidden; background: var(--paper-deep); }
-    .pet-card figure img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; filter: saturate(0.8); transition: transform 320ms ease; }
+    .pet-card figure { margin: 0; overflow: hidden; aspect-ratio: 1 / 1; background: var(--paper-deep); }
+    .pet-card figure img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.8); transition: transform 320ms ease; }
     .pet-card:hover figure img { transform: scale(1.035); }
     .pet-card-body { padding: 0.85rem 0.85rem 1rem; }
     .pet-meta { margin-bottom: 0.27rem; color: var(--purple); font-family: "Cabin Condensed", sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -422,6 +423,57 @@
     @media (max-width: 767px) {
       /* Five visual stand-ins on wide screens, four on mobile to mirror Petfi's future homepage limit. */
       .pet-card:nth-child(5) { display: none; }
+      .header-inner { min-height: 4.25rem; }
+      .brand img { width: 2.6rem; height: 2.6rem; }
+      .brand-copy strong { font-size: 1.05rem; }
+      .brand-copy small { font-size: 0.61rem; }
+      .nav-toggle { min-height: 44px; }
+      .hero { gap: 1.75rem; padding: 2.75rem 0 3.5rem; }
+      .hero-folio { display: none; }
+      .hero-copy { padding-top: 0; }
+      .eyebrow, .section-label { margin-bottom: 0.8rem; }
+      h1 { margin-bottom: 1.15rem; font-size: clamp(3rem, 15vw, 4.2rem); }
+      .hero-lead { margin-bottom: 1.25rem; font-size: 1rem; }
+      .hero-actions .button:first-child { flex: 1 1 100%; }
+      .hero-note { margin-top: 1.5rem; }
+      .hero-figure { width: calc(100% - 1rem); margin-inline: auto; }
+      .hero-image-wrap { padding: 0.5rem; }
+      .hero-image-wrap img { aspect-ratio: 4 / 3; object-position: center 45%; }
+      .section, .donation-section, .contact-section { padding: 3.5rem 0; }
+      .section-head { gap: 0.85rem; margin-bottom: 2rem; }
+      .section-head h2 { font-size: clamp(2.55rem, 12vw, 3.4rem); }
+      .section-head p { font-size: 1rem; }
+      .mission-item { grid-template-columns: 2.5rem 1fr; padding: 1.15rem 0; }
+      .pull-quote { margin-top: 2.2rem; font-size: 2.1rem; }
+      .stand-in-note { display: grid; gap: 0.65rem; margin-bottom: 1.5rem; }
+      .petfi-stand-in { gap: 0.65rem; }
+      .pet-card-body { padding: 0.7rem; }
+      .pet-card h3 { font-size: 1.35rem; }
+      .pet-card-description {
+        display: -webkit-box;
+        min-height: 0;
+        overflow: hidden;
+        font-size: 0.76rem;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+      .text-link { font-size: 0.7rem; }
+      .catalog-link { margin-top: 1.5rem; }
+      .story-card { padding: 1.1rem; }
+      .story-card h3 { font-size: 2rem; }
+      .help-item { grid-template-columns: 1.7rem 1fr auto; padding: 1rem 0; }
+      .help-item h3 { font-size: 1.45rem; }
+      .donation-layout, .contact-layout { gap: 1.5rem; }
+      .donation-copy h2, .contact-layout h2 { font-size: 2.85rem; }
+      .bank-sheet { padding: 1rem; }
+      .bank-row { grid-template-columns: 5.2rem 1fr; }
+      .bank-row dd { font-size: 0.8rem; }
+      .copy-button { min-width: 44px; min-height: 44px; }
+      .bank-row:last-child { grid-template-columns: 1fr; gap: 0.3rem; }
+      .bank-row:last-child dd { justify-content: space-between; overflow-wrap: anywhere; }
+      .site-footer { padding: 2.75rem 0 1.25rem; }
+      .footer-grid { gap: 1.5rem; }
+      .footer-bottom { margin-top: 2rem; }
     }
 
     @media (min-width: 1100px) {

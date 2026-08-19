@@ -694,6 +694,10 @@
         padding: 5.8rem 0;
       }
 
+      main section[id] {
+        scroll-margin-top: 6.5rem;
+      }
+
       .mission {
         background: var(--paper);
       }
@@ -1638,6 +1642,279 @@
       }
 
       @media (max-width: 767px) {
+        .container {
+          width: min(calc(100% - 2.5rem), var(--content));
+        }
+
+        .topline-inner {
+          justify-content: center;
+          min-height: 1.8rem;
+        }
+
+        .topline a {
+          display: none;
+        }
+
+        .nav-wrap,
+        .nav {
+          min-height: 4.3rem;
+        }
+
+        .brand img {
+          width: 2.55rem;
+          height: 2.55rem;
+        }
+
+        .brand-text strong {
+          font-size: 1rem;
+        }
+
+        .brand-text small {
+          font-size: 0.65rem;
+        }
+
+        .menu-toggle {
+          width: 2.75rem;
+          height: 2.75rem;
+        }
+
+        .nav-links {
+          top: 100%;
+          right: 1.25rem;
+          left: 1.25rem;
+        }
+
+        .hero-grid {
+          gap: 1.75rem;
+          padding-top: 3.25rem;
+          padding-bottom: 3.5rem;
+        }
+
+        h1 {
+          font-size: clamp(3.2rem, 14vw, 3.8rem);
+        }
+
+        .hero-lede {
+          margin-bottom: 1.4rem;
+          font-size: 1rem;
+        }
+
+        .hero-actions .button {
+          flex: 1 1 calc(50% - 0.5rem);
+        }
+
+        .network-card {
+          min-height: 18rem;
+          padding: 0.8rem;
+        }
+
+        .network-map {
+          min-height: 13.5rem;
+        }
+
+        .route-strip-inner {
+          gap: 0.8rem;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+        }
+
+        .section {
+          padding: 3.5rem 0;
+        }
+
+        .section-heading h2,
+        .territory-copy h2,
+        .adoption-head h2,
+        .stories-head h2,
+        .help-head h2,
+        .donation-copy h2,
+        .education-copy h2 {
+          font-size: clamp(2.55rem, 12vw, 3.3rem);
+        }
+
+        .section-heading > p:last-child,
+        .territory-copy > p:last-child,
+        .adoption-head > p:last-child,
+        .stories-head > p:last-child,
+        .help-head > p:last-child,
+        .donation-copy > p:last-child,
+        .education-copy > p:last-child {
+          font-size: 1rem;
+        }
+
+        .mission-list {
+          margin-top: 2rem;
+        }
+
+        .mission-row {
+          padding: 1.2rem 0;
+        }
+
+        .mission-row h3 {
+          font-size: 1.55rem;
+        }
+
+        .territory-grid {
+          gap: 1.75rem;
+          padding-top: 3.5rem;
+          padding-bottom: 3.5rem;
+        }
+
+        .territory-panel {
+          padding: 1.1rem;
+        }
+
+        .territory-panel p {
+          font-size: 1.75rem;
+        }
+
+        .adoption-head,
+        .stories-head {
+          display: grid;
+          align-items: start;
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .standin-note {
+          display: grid;
+          gap: 0.55rem;
+          margin: 1.5rem 0 1rem;
+          padding: 0.8rem;
+        }
+
+        .standin-note strong {
+          white-space: normal;
+        }
+
+        .cat-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.75rem;
+        }
+
+        .cat-status {
+          top: 0.5rem;
+          left: 0.5rem;
+          padding: 0.25rem 0.4rem;
+          font-size: 0.61rem;
+        }
+
+        .cat-body {
+          padding: 0.72rem;
+        }
+
+        .cat-body h3 {
+          font-size: 1.3rem;
+        }
+
+        .cat-meta,
+        .cat-summary {
+          font-size: 0.72rem;
+        }
+
+        .cat-summary {
+          display: -webkit-box;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+
+        .cat-reference {
+          font-size: 0.61rem;
+        }
+
+        .cat-arrow {
+          width: 1.55rem;
+          height: 1.55rem;
+        }
+
+        .adoption-cta {
+          margin-top: 1.5rem;
+        }
+
+        .story-card {
+          grid-template-columns: 4.5rem 1fr;
+          min-height: 0;
+        }
+
+        .story-index {
+          min-height: 9.5rem;
+          padding: 0.75rem;
+        }
+
+        .story-index span {
+          font-size: 2.8rem;
+        }
+
+        .story-body {
+          padding: 1rem;
+        }
+
+        .story-body h3 {
+          font-size: 1.45rem;
+        }
+
+        .help-grid {
+          gap: 0;
+          margin-top: 1.75rem;
+        }
+
+        .help-item {
+          padding: 1rem 0;
+        }
+
+        .donation-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 1.75rem;
+        }
+
+        .bank-card {
+          min-width: 0;
+          padding: 1.05rem;
+        }
+
+        .bank-card-head {
+          flex-wrap: wrap;
+        }
+
+        .bank-row {
+          align-items: flex-start;
+        }
+
+        .bank-row dd {
+          min-width: 0;
+          max-width: 67%;
+          overflow-wrap: anywhere;
+        }
+
+        .bank-row:last-child {
+          flex-direction: column;
+        }
+
+        .bank-row:last-child dd {
+          width: 100%;
+          max-width: none;
+          justify-content: space-between;
+        }
+
+        .copy-button {
+          flex: 0 0 2.75rem;
+          width: 2.75rem;
+          height: 2.75rem;
+        }
+
+        .education-grid {
+          gap: 1.5rem;
+          padding-top: 3.5rem;
+          padding-bottom: 3.5rem;
+        }
+
+        .footer-main {
+          gap: 1.75rem;
+          padding-top: 3rem;
+          padding-bottom: 2.5rem;
+        }
+
         .cat-card:nth-child(5) {
           display: none;
         }

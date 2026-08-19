@@ -138,6 +138,7 @@
       gap: 1rem;
       margin-bottom: 2.5rem;
     }
+    main section[id] { scroll-margin-top: 5rem; }
     .section-header h2 {
       max-width: 15ch;
       margin: 0;
@@ -922,6 +923,88 @@
     .cloe-credit:hover { color: var(--arca-yellow); }
     .cloe-credit svg { flex: 0 0 auto; }
 
+    @media (max-width: 699px) {
+      .header-inner { min-height: 4.25rem; }
+      .brand-link img { width: 2.6rem; height: 2.6rem; }
+      .brand-text strong { font-size: 1.05rem; }
+      .brand-text span { font-size: .65rem; }
+      .menu-toggle { width: 2.75rem; height: 2.75rem; }
+      .hero { padding: 3rem 0 3.5rem; }
+      .hero-grid { gap: 2rem; }
+      .hero h1 {
+        margin: 1rem 0 1.25rem;
+        font-size: clamp(3.35rem, 14.5vw, 4rem);
+      }
+      .hero-lead { font-size: 1rem; }
+      .hero-actions { margin-top: 1.5rem; }
+      .hero-meta { margin-top: 1.5rem; font-size: .82rem; }
+      .hero-art { min-height: 23rem; }
+      .hero-window {
+        right: 5%;
+        width: min(82vw, 20rem);
+        height: min(94vw, 23rem);
+        border-width: .55rem;
+        box-shadow: .8rem .8rem 0 var(--arca-olive);
+      }
+      .hero-art-caption { right: .25rem; bottom: .25rem; padding: .6rem .75rem; }
+      .mission,
+      .adoption-section,
+      .stories,
+      .help-section,
+      .donation-section,
+      .contact-section { padding: 3.5rem 0; }
+      .mission-intro { gap: 1rem; margin-bottom: 2.25rem; }
+      .mission-intro h2 { font-size: clamp(2.75rem, 12vw, 3.4rem); }
+      .mission-intro p { font-size: 1rem; }
+      .pillar-grid { gap: .75rem; }
+      .pillar { min-height: 11rem; padding: 1.15rem; }
+      .pillar h3 { margin: 1.25rem 0 .55rem; font-size: 1.8rem; }
+      .section-header { gap: .8rem; margin-bottom: 1.75rem; }
+      .section-header h2 { font-size: clamp(2.55rem, 12vw, 3.2rem); }
+      .section-header p { font-size: 1rem; }
+      .stand-in-note { margin: 0 0 1.4rem; padding: .75rem .85rem; font-size: .84rem; }
+      .adoption-grid { gap: .65rem; }
+      .cat-card-image { aspect-ratio: 1 / 1; }
+      .cat-card-body { min-height: 5.4rem; padding: .72rem; }
+      .cat-card-body h3 { font-size: 1.35rem; }
+      .cat-card-body p { font-size: .76rem; }
+      .cat-card-tag { font-size: .6rem; }
+      .adoption-footer { gap: .8rem; margin-top: 1.5rem; }
+      .story-card { grid-template-columns: 4rem 1fr; gap: .8rem; padding: 1rem 0; }
+      .story-card h3 { font-size: 1.5rem; }
+      .stories-note { margin-top: 1.5rem; }
+      .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .help-card { min-height: 13rem; gap: .8rem; padding: 1.05rem; }
+      .help-card h3 { font-size: 1.75rem; }
+      .help-card p { font-size: .8rem; }
+      .help-card .arrow-link { font-size: .85rem; }
+      .donation-layout { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+      .donation-layout > * { min-width: 0; }
+      .donation-copy h2 { font-size: 3rem; }
+      .donation-foot { overflow-wrap: anywhere; }
+      .bank-card { width: 100%; min-width: 0; padding: 1.1rem; }
+      .bank-list li { align-items: flex-start; padding: .55rem 0; }
+      .copy-button {
+        display: inline-flex;
+        min-width: 0;
+        min-height: 44px;
+        align-items: center;
+        justify-content: flex-end;
+        overflow-wrap: anywhere;
+      }
+      .bank-list li:last-child { display: grid; grid-template-columns: 1fr; gap: .25rem; }
+      .bank-list li:last-child .copy-button { width: 100%; max-width: none; justify-content: flex-start; text-align: left; }
+      .contact-inner { gap: 1.4rem; }
+      .contact-inner h2 { font-size: 2.75rem; }
+      .site-footer { padding: 3rem 0 1.5rem; }
+      .footer-grid { gap: 1.7rem; padding-bottom: 2.2rem; }
+    }
+    @media (max-width: 374px) {
+      .brand-text span { display: none; }
+      .hero-actions .button { width: 100%; }
+      .help-grid { grid-template-columns: 1fr; }
+      .help-card { min-height: 11rem; }
+    }
     @media (min-width: 700px) {
       .container { width: min(calc(100% - 5rem), var(--max-content)); }
       .menu-toggle { display: none; }
