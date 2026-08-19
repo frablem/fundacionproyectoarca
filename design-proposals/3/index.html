@@ -1039,13 +1039,14 @@
       .adoption-section { padding-block: 8rem; }
       .adoption-section .section-header { grid-template-columns: 1.1fr .9fr; align-items: end; }
       .adoption-section .section-header p { padding-bottom: .2rem; }
-      .adoption-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.1rem; }
-      .cat-card { grid-column: span 3; }
-      .cat-card:nth-child(1) { grid-column: span 4; }
-      .cat-card:nth-child(2) { grid-column: span 3; margin-top: 2.6rem; }
-      .cat-card:nth-child(3) { grid-column: span 2; }
-      .cat-card:nth-child(4) { grid-column: span 3; margin-top: 1.2rem; }
-      .cat-card:nth-child(5) { display: block; grid-column: 4 / span 3; margin-top: -1rem; }
+      .adoption-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: 1.1rem; }
+      .cat-card { grid-column: auto; align-self: start; }
+      .cat-card:nth-child(1),
+      .cat-card:nth-child(2),
+      .cat-card:nth-child(3),
+      .cat-card:nth-child(4),
+      .cat-card:nth-child(5) { grid-column: auto; margin-top: 0; }
+      .cat-card:nth-child(5) { display: block; }
       .cat-card-body { min-height: 7.4rem; padding: 1rem; }
       .stories { padding-block: 8rem; }
       .stories-grid { max-width: 62rem; margin-left: auto; }
@@ -1058,6 +1059,9 @@
       .donation-copy { padding-top: 1rem; }
       .contact-section { padding-block: 5.3rem; }
       .footer-grid { grid-template-columns: 1.35fr .8fr .9fr 1fr; gap: 2.5rem; }
+    }
+    @media (min-width: 900px) {
+      .adoption-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
     }
     @media (min-width: 1080px) {
       .site-menu { gap: 1.5rem; }
