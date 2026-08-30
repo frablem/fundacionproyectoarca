@@ -72,7 +72,7 @@
         },
         adopcion: {
           title: 'Recibimos tu consulta.',
-          text: 'Te escribiremos pronto. Si ya sabes con qué gato quieres empezar, también puedes completar el formulario de adopción completo.'
+          text: 'Te escribiremos pronto para conversar sobre la adopción y resolver todas tus dudas.'
         }
       }[tipo];
 
@@ -170,19 +170,11 @@
                           <div className="field-grid">
                             <Field id="gato_interes" label="¿Hay algún gato que te interese?" name="gato_interes"
                               hint="Su nombre, si ya lo viste en el listado." />
-                            <Field id="tipo_vivienda_ad" label="Tipo de vivienda" name="tipo_vivienda" required>
-                              <select id="tipo_vivienda_ad" name="tipo_vivienda" required defaultValue="">
-                                <option value="" disabled>Selecciona una opción</option>
-                                <option>Casa</option>
-                                <option>Departamento</option>
-                                <option>Otro</option>
-                              </select>
-                            </Field>
                           </div>
                           <p className="hint" style={{ marginTop: '0.8rem', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                            Si ya tienes claro con quién quieres empezar, el {' '}
-                            <a className="text-link" href="/formulario-adopcion">formulario de adopción completo</a> {' '}
-                            nos ahorra un par de correos.
+                            La postulación se hace en la ficha de cada gato, dentro de {' '}
+                            <a className="text-link" href="/adoptar">nuestro listado de adopción</a>. {' '}
+                            Este formulario es para las dudas previas.
                           </p>
                         </fieldset>
                       ) : null}
@@ -195,7 +187,7 @@
                               tipo === 'hogar_temporal'
                                 ? 'Cuéntanos con quién vives, cómo es tu casa y qué te motivó a ofrecerla.'
                                 : tipo === 'adopcion'
-                                  ? 'Cuéntanos de tu hogar, tu rutina y qué esperas de la convivencia.'
+                                  ? 'Cuéntanos qué dudas tienes sobre el proceso, los requisitos o algún gato en particular.'
                                   : 'Escríbenos con calma. Si es un caso de rescate, incluye la ciudad, el lugar exacto y en qué estado está el gato.'
                             } />
                         </div>

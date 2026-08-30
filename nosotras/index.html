@@ -44,7 +44,7 @@
     const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_EDUCA_URL, RUT_ONG, REG_NUM } = window.SiteConfig;
 
     /* Áreas de trabajo con los colores que la fundación definió en su manual de marca.
-       PLACEHOLDER: faltan los nombres y las fotos de cada integrante. */
+       Pendiente: nombres y fotos de cada integrante, cuando Arca las envíe. */
     const AREAS = [
       { name: 'Directiva', color: '#91BF20', copy: 'Define el rumbo de la fundación, responde por su gestión y sostiene el vínculo con la comunidad.' },
       { name: 'Rescate', color: '#E0AB26', copy: 'Recibe los avisos, evalúa cada caso en terreno y coordina la salida y la atención de urgencia.' },
@@ -125,22 +125,24 @@
                   </figure>
                 </div>
 
+                {/* Cifras de rescates y adopciones pendientes de que Arca las confirme.
+                    Hasta entonces sólo van datos verificables. */}
                 <div className="stat-grid reveal">
                   <div className="stat">
                     <span className="stat-value">3</span>
                     <span className="stat-label">Ciudades: La Serena, Coquimbo y Santiago</span>
                   </div>
                   <div className="stat">
-                    <span className="stat-value">PLACEHOLDER_RESCATADOS</span>
-                    <span className="stat-label">Gatos rescatados desde que partimos</span>
-                  </div>
-                  <div className="stat">
-                    <span className="stat-value">PLACEHOLDER_ADOPCIONES</span>
-                    <span className="stat-label">Adopciones concretadas y acompañadas</span>
+                    <span className="stat-value">Gatos</span>
+                    <span className="stat-label">Una sola especie, para conocerla de verdad</span>
                   </div>
                   <div className="stat">
                     <span className="stat-value">100%</span>
                     <span className="stat-label">Voluntario: nadie recibe sueldo por este trabajo</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-value">N° 319235</span>
+                    <span className="stat-label">Personalidad jurídica vigente y registro público</span>
                   </div>
                 </div>
               </div>
@@ -207,12 +209,13 @@
                 <div className="team-grid">
                   {AREAS.map((area) => (
                     <article className="team-card reveal" key={area.name}>
-                      {/* PLACEHOLDER: agregar nombre y foto de la responsable de cada área. */}
+                      {/* Pendiente: nombre y foto de la responsable de cada área,
+                          cuando Arca las envíe. Hasta entonces se describe el área. */}
                       <span className="team-role">
                         <span className="team-swatch" style={{ background: area.color }} aria-hidden="true"></span>
-                        {area.name}
+                        Área
                       </span>
-                      <h3>PLACEHOLDER_NOMBRE</h3>
+                      <h3>{area.name}</h3>
                       <p>{area.copy}</p>
                     </article>
                   ))}

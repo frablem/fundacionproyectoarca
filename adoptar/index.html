@@ -7,7 +7,7 @@
   <meta name="description" content="Gatitos en adopción de Fundación Proyecto Arca. Conoce el proceso, los requisitos y postula. Si vives en La Serena o Santiago, coordinamos el traslado de tu gato." />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Adoptar — Fundación Proyecto Arca" />
-  <meta property="og:description" content="Conoce a los gatos que esperan familia en La Serena, Coquimbo y Santiago. Proceso, requisitos y formulario de adopción responsable." />
+  <meta property="og:description" content="Conoce a los gatos que esperan familia en La Serena, Coquimbo y Santiago. Proceso, requisitos y adopción responsable." />
   <meta property="og:image" content="/media/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#77368B" />
@@ -46,7 +46,7 @@
 
     const PASOS = [
       { num: 'Paso 01', title: 'Míralos y elige', copy: 'Revisa las fichas de esta página. Cada una dice su edad, su ciudad y lo que necesita para estar bien.' },
-      { num: 'Paso 02', title: 'Postula', copy: 'Completa el formulario de adopción. Nos interesa conocer tu hogar y tu rutina, no juzgarte.' },
+      { num: 'Paso 02', title: 'Postula en su ficha', copy: 'Abre la ficha del gato que te interesa y postula ahí mismo. La solicitud nos llega directo a nosotras.' },
       { num: 'Paso 03', title: 'Conversamos', copy: 'Te contactamos para hablar con calma, resolver dudas y ver si ese gato y tu casa se corresponden.' },
       { num: 'Paso 04', title: 'Entrega y seguimiento', copy: 'Coordinamos la entrega, firmamos el compromiso de adopción y seguimos en contacto después.' }
     ];
@@ -68,11 +68,11 @@
                   que construiremos juntas. Estos son los gatos que hoy están buscando hogar.
                 </p>
                 <div className="page-hero-actions">
-                  <a className="button" href="/formulario-adopcion"
+                  <a className="button" href="#gatitos"
                     onClick={() => trackEvent('adoption_start', { placement: 'adoptar_hero' })}>
-                    Postular a una adopción <IconArrow size={17} />
+                    Ver quiénes esperan <IconArrow size={17} />
                   </a>
-                  <a className="button button--outline" href="#proceso">Ver el proceso</a>
+                  <a className="button button--outline" href="#proceso">Cómo es el proceso</a>
                 </div>
               </div>
             </section>
@@ -98,13 +98,13 @@
                 <PetfiRescues id="petfi-foundation-rescues" limit={200} />
 
                 <div className="petfi-foot">
-                  <a className="button" href="/formulario-adopcion"
-                    onClick={() => trackEvent('adoption_start', { placement: 'adoptar_listado' })}>
-                    Quiero postular <IconArrow size={17} />
-                  </a>
-                  <a className="text-link" href={PETFI_PROFILE_URL} target="_blank" rel="noreferrer"
+                  <a className="button" href={PETFI_PROFILE_URL} target="_blank" rel="noreferrer"
                     onClick={() => trackEvent('petfi_referral_click', { placement: 'adoptar_profile' })}>
-                    Ver nuestro perfil en Petfi
+                    Ver nuestro perfil en Petfi <IconArrow size={17} />
+                  </a>
+                  <a className="text-link" href="/contacto?motivo=adopcion"
+                    onClick={() => trackEvent('adoption_start', { placement: 'adoptar_consulta' })}>
+                    Tengo una duda antes de postular
                   </a>
                   <p className="petfi-credit">
                     ¿No ves al gato que buscas? Escríbenos a {CONTACT_EMAIL}: a veces hay rescatados
@@ -235,12 +235,12 @@
 
             <CierreCTA
               titulo="¿Ya sabes con quién quieres empezar?"
-              texto="Postula y conversamos. Si todavía tienes dudas, escríbenos y las vemos antes de que llenes nada."
+              texto="Abre su ficha y postula ahí mismo. Si todavía tienes dudas, escríbenos y las vemos antes."
               acciones={
                 <React.Fragment>
-                  <a className="button button--light" href="/formulario-adopcion"
+                  <a className="button button--light" href="#gatitos"
                     onClick={() => trackEvent('adoption_start', { placement: 'adoptar_cierre' })}>
-                    Postular
+                    Ver el listado
                   </a>
                   <a className="button button--ghost-light" href="/contacto"
                     onClick={() => trackEvent('contact_start', { placement: 'adoptar_cierre' })}>

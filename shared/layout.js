@@ -137,10 +137,6 @@ const seoConfigByPath = {
   '/contacto': {
     description: 'Escríbenos para adoptar, ofrecer hogar temporal, colaborar o pedir una charla educativa. Fundación Proyecto Arca, La Serena, Coquimbo y Santiago.',
     keywords: 'contacto fundación proyecto arca, escribir fundación gatos, charlas tenencia responsable'
-  },
-  '/formulario-adopcion': {
-    description: 'Formulario de solicitud de adopción de Fundación Proyecto Arca. Cuéntanos de tu hogar y te acompañamos en todo el proceso.',
-    keywords: 'formulario adopción gato, solicitud adopción felina, postular adopción Chile'
   }
 };
 
@@ -292,10 +288,9 @@ const IconBook = (props) => (
 const Navbar = ({ active }) => {
   const [open, setOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    document.body.classList.toggle('menu-open', open);
-    return () => document.body.classList.remove('menu-open');
-  }, [open]);
+  /* Sin bloqueo de scroll a propósito. Poner overflow:hidden en el body lo
+     convierte en contenedor de scroll y el header sticky salta a su posición
+     estática, así que el menú se abría fuera de pantalla al ir desplazado. */
 
   React.useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
@@ -368,7 +363,6 @@ const Footer = () => (
               <a key={link.key} href={link.href}>{link.name}</a>
             ))}
             <a href="/donar">Donar</a>
-            <a href="/formulario-adopcion">Formulario de adopción</a>
           </nav>
         </div>
 

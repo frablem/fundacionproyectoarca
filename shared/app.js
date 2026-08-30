@@ -392,39 +392,6 @@ const PetfiRescues = ({ id, limit }) => {
   return <div className="petfi-mount" id={mountId}></div>;
 };
 
-/* Nombres de los gatos disponibles, para el selector del formulario de adopción.
-   Las fichas del sitio las pinta el widget de Petfi y su markup vive en Shadow DOM,
-   así que no se puede leer desde ahí. Esta lectura es solo para llenar un <select>:
-   no dibuja tarjetas ni reemplaza al widget. Si falla, el campo pasa a texto libre. */
-const usePetfiAnimals = () => {
-  const [names, setNames] = useState([]);
-  const [state, setState] = useState('loading');
-
-  useEffect(() => {
-    let cancelled = false;
-    const cfg = window.SiteConfig;
-    const url = 'https://petfi.io/api/foundation/' + cfg.PETFI_FOUNDATION_ID +
-      '/rescues?limit=200&species=' + cfg.PETFI_SPECIES;
-
-    fetch(url)
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('petfi ' + res.status))))
-      .then((json) => {
-        if (cancelled) return;
-        const list = (json.items || [])
-          .map((it) => it.name)
-          .filter(Boolean)
-          .sort((a, b) => a.localeCompare(b, 'es'));
-        setNames(list);
-        setState(list.length ? 'ready' : 'empty');
-      })
-      .catch(() => { if (!cancelled) setState('error'); });
-
-    return () => { cancelled = true; };
-  }, []);
-
-  return { names, state };
-};
-
 /* ============================================================
    Valor copiable — datos de transferencia
    ============================================================ */
@@ -494,11 +461,11 @@ const SociosGuardianes = ({ compact }) => {
         <div className="section-head reveal">
           <div>
             <p className="section-label"><span className="eyebrow-dot" aria-hidden="true"></span>Socios Guardianes FPA 365</p>
-            <h2 id="guardianes-title">Una comunidad que está ahí los 365 días.</h2>
+            <h2 id="guardianes-title">Una comunidad que está ahí para ellos los 365 días del año.</h2>
           </div>
           <p>
-            No podemos rescatar solas. Un aporte mensual convierte la urgencia en un plan: sabemos
-            con cuánto contamos cada mes y podemos decir que sí a más gatos.
+            No podemos rescatar solas. Necesitamos una comunidad. Un aporte mensual convierte la
+            urgencia en un plan: sabemos con cuánto contamos cada mes y podemos decir que sí a más gatos.
           </p>
         </div>
 
@@ -685,6 +652,6 @@ window.SharedApp = {
   fmtAge, fmtDate, parseCategories, stripHtml, sanitize,
   Cargando, EstadoVacio, SectionHead,
   MapaCuidado, FranjaCiudades, AvisoTraslado,
-  PetfiRescues, usePetfiAnimals, ValorCopiable, HojaTransferencia, SociosGuardianes,
+  PetfiRescues, ValorCopiable, HojaTransferencia, SociosGuardianes,
   FormspreeForm, Field, TextArea, Check, CierreCTA
 };

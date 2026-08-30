@@ -47,7 +47,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body.menu-open { overflow: hidden; }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -740,7 +739,7 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
 .help-section .section-head h2 { color: #fff; }
 .help-section .section-head p { color: rgba(255, 255, 255, 0.84); }
 .help-grid { display: grid; gap: 1px; background: rgba(255, 255, 255, 0.42); }
-.help-card { display: grid; gap: 1.1rem; min-height: 15.5rem; padding: 1.5rem; background: var(--purple); }
+.help-card { display: grid; gap: 1.1rem; min-height: 15.5rem; padding: 1.5rem; background: var(--purple-2); }
 .help-card:nth-child(2) { background: var(--purple-deep); }
 .help-card:nth-child(3) { background: var(--olive); color: var(--ink); }
 .help-card:nth-child(4) { background: var(--yellow); color: var(--ink); }
@@ -932,7 +931,7 @@ legend {
 /* ---------- Nosotras ---------- */
 
 .stat-grid { display: grid; gap: 1px; margin-top: 2.4rem; background: var(--paper-line); border: 1px solid var(--paper-line); }
-.stat { display: grid; gap: 0.3rem; padding: 1.3rem; background: var(--paper); }
+.stat { display: grid; gap: 0.3rem; padding: 1.3rem; background: #fff; }
 .stat-value { color: var(--purple); font-family: var(--condensed); font-size: 2.6rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
 .stat-label { color: var(--muted); font-size: 0.85rem; }
 
@@ -957,7 +956,7 @@ legend {
 
 /* Pasos de adopción */
 .step-grid { display: grid; gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); }
-.step { display: grid; gap: 0.5rem; padding: 1.35rem; background: var(--paper); }
+.step { display: grid; gap: 0.5rem; padding: 1.35rem; background: #fff; }
 .step-num { color: var(--purple); font-family: var(--condensed); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
 .step h3 { margin: 0; font-size: 1.45rem; line-height: 1.05; }
 .step p { margin: 0; color: var(--muted); font-size: 0.92rem; }
