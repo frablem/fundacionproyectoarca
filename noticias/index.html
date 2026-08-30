@@ -41,7 +41,7 @@
   <script type="text/babel">
     const { Navbar, Footer, IconArrow, trackEvent } = window.SharedComponents;
     const {
-      useReveal, useCollection, useDocParam, fmtDate, parseCategories, stripHtml, sanitize,
+      useReveal, useCollection, useDocParam, fmtDate, parseCategories, stripHtml, resumen, sanitize,
       Cargando, EstadoVacio, CierreCTA
     } = window.SharedApp;
     const { CONTACT_EMAIL, INSTAGRAM_URL, BASE_URL } = window.SiteConfig;
@@ -129,7 +129,7 @@
                   <div className="article-body">
                     <span className="article-meta">{fmtDate(p.publishedDate || p.date)}</span>
                     <h3>{p.title}</h3>
-                    <p>{(p.summary || stripHtml(p.content)).slice(0, 150)}…</p>
+                    <p>{resumen(p.summary || stripHtml(p.content), 150)}</p>
                     <span className="text-link">Leer <IconArrow size={16} /></span>
                   </div>
                 </a>

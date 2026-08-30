@@ -63,7 +63,7 @@
   <script type="text/babel">
     const { Navbar, Footer, IconArrow, IconHeart, IconPaw, trackEvent } = window.SharedComponents;
     const {
-      useReveal, useCollection, fmtDate, stripHtml,
+      useReveal, useCollection, fmtDate, stripHtml, resumen,
       Cargando, EstadoVacio, MapaCuidado, FranjaCiudades, AvisoTraslado,
       PetfiRescues, HojaTransferencia, SociosGuardianes
     } = window.SharedApp;
@@ -269,7 +269,7 @@
                       <div className="story-body">
                         <span className="story-kicker">Rescate{story.date ? ' · ' + fmtDate(story.date) : ''}</span>
                         <h3>{story.title}</h3>
-                        <p>{(story.testimonial || stripHtml(story.content)).slice(0, 150)}…</p>
+                        <p>{resumen(story.testimonial || stripHtml(story.content), 150)}</p>
                         <span className="text-link">Leer más <IconArrow size={16} /></span>
                       </div>
                     </a>

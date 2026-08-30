@@ -232,6 +232,16 @@ const parseCategories = (value) => {
 
 const stripHtml = (html) => String(html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
+/* Recorta al último espacio y agrega puntos suspensivos sólo si de verdad cortó.
+   Sin esto, un texto que ya termina en punto quedaba como "un gato….". */
+const resumen = (text, max) => {
+  const t = String(text || '').trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const space = cut.lastIndexOf(' ');
+  return (space > max * 0.6 ? cut.slice(0, space) : cut).replace(/[\s.,;:…]+$/, '') + '…';
+};
+
 /* ============================================================
    Piezas de interfaz
    ============================================================ */
@@ -649,7 +659,7 @@ const CierreCTA = ({ titulo, texto, acciones }) => (
 
 window.SharedApp = {
   useReveal, useCollection, useDocParam,
-  fmtAge, fmtDate, parseCategories, stripHtml, sanitize,
+  fmtAge, fmtDate, parseCategories, stripHtml, resumen, sanitize,
   Cargando, EstadoVacio, SectionHead,
   MapaCuidado, FranjaCiudades, AvisoTraslado,
   PetfiRescues, ValorCopiable, HojaTransferencia, SociosGuardianes,
