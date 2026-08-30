@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario de adopción — Fundación Proyecto Arca</title>
+  <meta name="description" content="Formulario de solicitud de adopción de Fundación Proyecto Arca. Cuéntanos de tu hogar y te acompañamos en todo el proceso." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Formulario de adopción — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Postula para adoptar un gato rescatado. Nos interesa conocer tu hogar y tu rutina para encontrar el match correcto." />
+  <meta property="og:image" content="/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260829"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, trackEvent } = window.SharedComponents;
+    const { useReveal, usePetfiAnimals, FormspreeForm, Field, TextArea, Check } = window.SharedApp;
+    const { CONTACT_EMAIL, FORMSPREE } = window.SiteConfig;
+
+    const App = () => {
+      useReveal();
+
+      const { names, state } = usePetfiAnimals();
+      const preseleccion = new URLSearchParams(window.location.search).get('mascota') || '';
+      const [mascota, setMascota] = React.useState(preseleccion);
+
+      React.useEffect(() => {
+        // Si el gato del enlace ya no está publicado, no dejamos el campo vacío en silencio.
+        if (state === 'ready' && preseleccion && names.indexOf(preseleccion) === -1) {
+          setMascota('');
+        }
+      }, [state, names.length]);
+
+      const usarSelect = state === 'ready';
+
+      return (
+        <React.Fragment>
+          <Navbar active="adoptar" />
+          <main id="contenido">
+
+            <section className="wrap page-hero" aria-labelledby="page-title">
+              <div className="reveal">
+                <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Solicitud de adopción</p>
+                <h1 id="page-title">Cuéntanos de tu hogar.</h1>
+                <p className="lede">
+                  Este formulario es largo a propósito. No es un examen: nos ayuda a entender tu
+                  rutina y tu casa para proponerte el gato correcto, y para que la convivencia
+                  funcione desde el primer día.
+                </p>
+                <p style={{ maxWidth: '42rem', color: 'var(--muted)', fontSize: '0.92rem' }}>
+                  Lo revisamos y te escribimos para conversar. Ninguna adopción se cierra sin esa
+                  conversación. Si tienes dudas antes de completarlo, escríbenos a {CONTACT_EMAIL}.
+                </p>
+              </div>
+            </section>
+
+            <div className="rule" aria-hidden="true"></div>
+
+            <section className="section" aria-labelledby="form-title">
+              <div className="wrap">
+                <h2 id="form-title" className="sr-only">Formulario de solicitud de adopción</h2>
+
+                <div className="form-layout">
+                  <div className="reveal">
+                    <FormspreeForm
+                      formId={FORMSPREE.adopcion}
+                      tipo="adopcion"
+                      submitLabel="Enviar solicitud"
+                      successTitle="Recibimos tu solicitud."
+                      successText="Gracias por tomarte el tiempo. La revisamos con calma y te escribimos para conversar. Si pasan unos días sin noticias, escríbenos: a veces los correos se pierden."
+                    >
+                      <fieldset>
+                        <legend>El gato que te interesa</legend>
+                        <div className="field-grid">
+                          <Field id="mascota" label="¿Con quién quieres empezar?" name="mascota"
+                            hint={
+                              state === 'loading' ? 'Cargando el listado…'
+                                : usarSelect ? 'Si aún no te decides, elige "Todavía no lo decido".'
+                                : 'Escribe su nombre tal como aparece en el listado, si ya lo viste.'
+                            }>
+                            {usarSelect ? (
+                              <select id="mascota" name="mascota" value={mascota}
+                                onChange={(e) => setMascota(e.target.value)}>
+                                <option value="">Todavía no lo decido</option>
+                                {names.map((n) => <option key={n} value={n}>{n}</option>)}
+                              </select>
+                            ) : (
+                              <input id="mascota" name="mascota" type="text" defaultValue={preseleccion}
+                                placeholder="Nombre del gato (opcional)" />
+                            )}
+                          </Field>
+                          <Field id="ciudad" label="¿En qué ciudad vives?" name="ciudad" required
+                            hint="Si el gato está en otra ciudad, coordinamos el traslado." />
+                        </div>
+                      </fieldset>
+
+                      <fieldset>
+                        <legend>Tus datos</legend>
+                        <div className="field-grid">
+                          <Field id="nombre" label="Nombre y apellido" name="nombre" required autoComplete="name" />
+                          <Field id="rut" label="RUT" name="rut" required placeholder="12.345.678-9" />
+                          <Field id="edad" label="Edad" name="edad" type="number" min="18" required
+                            hint="Debes ser mayor de edad para adoptar." />
+                          <Field id="nacionalidad" label="Nacionalidad" name="nacionalidad" />
+                          <Field id="ocupacion" label="Ocupación" name="ocupacion" required />
+                          <Field id="telefono" label="Teléfono o WhatsApp" name="telefono" type="tel" required autoComplete="tel" />
+                          <Field id="email" label="Correo" name="email" type="email" required autoComplete="email" />
+                          <Field id="direccion" label="Dirección" name="direccion" required wide
+                            hint="Calle, número y comuna. La usamos solo para coordinar la entrega." />
+                        </div>
+                      </fieldset>
+
+                      <fieldset>
+                        <legend>Tu hogar</legend>
+                        <div className="field-grid">
+                          <Field id="tipo_vivienda" label="Tipo de vivienda" name="tipo_vivienda" required>
+                            <select id="tipo_vivienda" name="tipo_vivienda" required defaultValue="">
+                              <option value="" disabled>Selecciona una opción</option>
+                              <option>Casa propia</option>
+                              <option>Casa arrendada</option>
+                              <option>Departamento propio</option>
+                              <option>Departamento arrendado</option>
+                              <option>Otro</option>
+                            </select>
+                          </Field>
+                          <Field id="autorizacion_arriendo" label="Si arriendas, ¿tienes autorización?" name="autorizacion_arriendo">
+                            <select id="autorizacion_arriendo" name="autorizacion_arriendo" defaultValue="">
+                              <option value="" disabled>Selecciona una opción</option>
+                              <option>Sí, permiten animales</option>
+                              <option>No lo he consultado todavía</option>
+                              <option>No arriendo</option>
+                            </select>
+                          </Field>
+                          <Field id="ventanas" label="¿Ventanas y balcones protegidos?" name="ventanas" required
+                            hint="Es nuestro requisito más estricto en departamentos.">
+                            <select id="ventanas" name="ventanas" required defaultValue="">
+                              <option value="" disabled>Selecciona una opción</option>
+                              <option>Sí, ya tengo mallas instaladas</option>
+                              <option>No, pero me comprometo a instalarlas antes</option>
+                              <option>No y no puedo instalarlas</option>
+                            </select>
+                          </Field>
+                          <Field id="integrantes_familia" label="¿Quiénes viven contigo?" name="integrantes_familia" required
+                            hint="Cuántas personas y sus edades." />
+                          <Field id="acuerdo_familiar" label="¿Todos están de acuerdo con adoptar?" name="acuerdo_familiar" required>
+                            <select id="acuerdo_familiar" name="acuerdo_familiar" required defaultValue="">
+                              <option value="" disabled>Selecciona una opción</option>
+                              <option>Sí, lo conversamos y todos están de acuerdo</option>
+                              <option>Algunos todavía no están seguros</option>
+                              <option>Vivo sola o solo</option>
+                            </select>
+                          </Field>
+                          <Field id="hijos_futuro" label="¿Planean tener hijos próximamente?" name="hijos_futuro"
+                            hint="Lo preguntamos porque es un motivo frecuente de devolución." />
+                          <Field id="mudanza" label="¿Planeas mudarte o viajar en el mediano plazo?" name="mudanza" wide
+                            hint="Si es fuera del país, cuéntanos qué pasaría con el gato." />
+                        </div>
+                      </fieldset>
+
+                      <fieldset>
+                        <legend>Tu experiencia y tu rutina</legend>
+                        <div className="field-grid">
+                          <Field id="otros_animales" label="¿Tienes otros animales hoy?" name="otros_animales" required
+                            hint="Cuáles, cuántos y si están esterilizados." />
+                          <Field id="historial_mascotas" label="¿Has tenido animales antes?" name="historial_mascotas" required
+                            hint="Qué pasó con ellos." />
+                          <Field id="lugar_gato" label="¿Dónde va a estar el gato?" name="lugar_gato" required
+                            hint="Dentro de la casa, con acceso a patio, en una pieza." />
+                          <Field id="tiempo_solo" label="¿Cuántas horas al día estaría solo?" name="tiempo_solo" required />
+                          <Field id="cuidados_ausencia" label="¿Quién lo cuida si viajas?" name="cuidados_ausencia" required />
+                          <Field id="alimentacion" label="¿Con qué piensas alimentarlo?" name="alimentacion" required />
+                          <Field id="alergias_salud" label="¿Alguien en casa tiene alergia a los gatos?" name="alergias_salud" required />
+                          <Field id="problemas_comportamiento" label="¿Qué harías si araña muebles o hace fuera de la arena?" name="problemas_comportamiento" wide
+                            hint="No hay respuesta correcta. Nos interesa saber cómo lo enfrentarías." />
+                          <TextArea id="motivo_adopcion" label="¿Por qué quieres adoptar?" name="motivo_adopcion" required rows={5}
+                            placeholder="Cuéntanos con tus palabras. Esto es lo que más leemos." />
+                        </div>
+                      </fieldset>
+
+                      <fieldset>
+                        <legend>Compromisos</legend>
+                        <div className="check-list">
+                          <Check name="acuerdo_esterilizacion" label="Me comprometo a esterilizar al gato cuando tenga la edad, si aún no lo está." />
+                          <Check name="compromiso_chip" label="Me comprometo a mantener su identificación y sus vacunas al día." />
+                          <Check name="compromiso_fotos" label="Acepto enviar fotos y noticias durante el seguimiento posterior a la adopción." />
+                          <Check name="compromiso_ventanas" label="Me comprometo a proteger ventanas y balcones antes de recibirlo." />
+                          <Check name="veterinario_transporte" label="Me hago cargo de su atención veterinaria y de sus traslados una vez adoptado." />
+                          <Check name="compromiso_devolucion" label="Si no puedo seguir cuidándolo, avisaré a la fundación en vez de entregarlo a otra persona." />
+                        </div>
+                        <p className="hint" style={{ marginTop: '0.9rem', color: 'var(--muted)', fontSize: '0.85rem' }}>
+                          Marca los que puedas cumplir de verdad. Preferimos una postulación honesta
+                          a una perfecta.
+                        </p>
+                      </fieldset>
+                    </FormspreeForm>
+                  </div>
+
+                  <aside className="contact-aside reveal">
+                    <div className="contact-block">
+                      <h3>Qué pasa después</h3>
+                      <p style={{ margin: '0 0 0.6rem', color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        <strong>1.</strong> Leemos tu solicitud completa.
+                      </p>
+                      <p style={{ margin: '0 0 0.6rem', color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        <strong>2.</strong> Te escribimos para conversar y resolver dudas de ambos lados.
+                      </p>
+                      <p style={{ margin: '0 0 0.6rem', color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        <strong>3.</strong> Si todo calza, coordinamos la entrega y firmamos el compromiso.
+                      </p>
+                      <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        <strong>4.</strong> Seguimos en contacto. Puedes escribirnos cuando quieras.
+                      </p>
+                    </div>
+
+                    <div className="contact-block">
+                      <h3>Adoptar es gratis</h3>
+                      <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        No cobramos por la adopción. Si quieres colaborar con los gastos veterinarios
+                        del gato que adoptas, se agradece, pero nunca es una condición.
+                      </p>
+                    </div>
+
+                    <div className="contact-block">
+                      <h3>¿Todavía no te decides?</h3>
+                      <p style={{ margin: '0 0 0.9rem', color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        Puedes enviar la solicitud sin elegir un gato en particular y lo vemos juntas
+                        según tu rutina y tu espacio.
+                      </p>
+                      <a className="text-link" href="/adoptar"
+                        onClick={() => trackEvent('adoption_start', { placement: 'formulario_aside' })}>
+                        Volver al listado <IconArrow size={16} />
+                      </a>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </section>
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

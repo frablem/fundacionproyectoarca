@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cómo ayudar — Fundación Proyecto Arca</title>
+  <meta name="description" content="Donar, adoptar, ser hogar temporal o difundir. Cuatro formas concretas de sostener el rescate felino de Fundación Proyecto Arca." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cómo ayudar — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Hay muchas formas de hacer espacio: donar, adoptar, ser hogar temporal o difundir. Elige la que puedas sostener." />
+  <meta property="og:image" content="/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260829"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, IconCheck, trackEvent } = window.SharedComponents;
+    const { useReveal, SociosGuardianes, CierreCTA } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_EDUCA_URL } = window.SiteConfig;
+
+    const AYUDAS = [
+      {
+        num: '01 / Donar',
+        title: 'Sostener el cuidado',
+        copy: 'Una transferencia ayuda a cubrir alimentación, atención veterinaria y traslados.',
+        href: '/donar',
+        cta: 'Quiero participar',
+        event: 'donation_start',
+        type: 'donar'
+      },
+      {
+        num: '02 / Adoptar',
+        title: 'Abrir un hogar',
+        copy: 'Conoce el proceso y encuentra una adopción que se construya con tiempo y compromiso.',
+        href: '/adoptar',
+        cta: 'Quiero participar',
+        event: 'adoption_start',
+        type: 'adoptar'
+      },
+      {
+        num: '03 / Acompañar',
+        title: 'Ser hogar temporal',
+        copy: 'Conversa con nosotras si puedes ofrecer un espacio seguro durante una recuperación.',
+        href: '/contacto?motivo=hogar_temporal',
+        cta: 'Quiero participar',
+        event: 'volunteer_start',
+        type: 'acompanar'
+      },
+      {
+        num: '04 / Difundir',
+        title: 'Hacer circular una historia',
+        copy: 'Comparte nuestras publicaciones y contenidos de educación para llegar a más guardianes responsables.',
+        href: INSTAGRAM_URL,
+        cta: 'Quiero participar',
+        event: 'contact_start',
+        type: 'difundir',
+        external: true
+      }
+    ];
+
+    const App = () => {
+      useReveal();
+      return (
+        <React.Fragment>
+          <Navbar active="como-ayudar" />
+          <main id="contenido">
+
+            <section className="wrap page-hero" aria-labelledby="page-title">
+              <div className="reveal">
+                <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Cómo ayudar</p>
+                <h1 id="page-title">Hay muchas formas de hacer espacio.</h1>
+                <p className="lede">
+                  Elige una acción posible para ti. Cuando se sostiene en comunidad, cada gesto se
+                  convierte en cuidado concreto. No hace falta poder con todo: hace falta que alguien
+                  haga una parte.
+                </p>
+              </div>
+            </section>
+
+            {/* Las cuatro tarjetas que la fundación eligió */}
+            <section className="section help-section on-dark" aria-labelledby="formas-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="eyebrow">Cuatro caminos</p>
+                    <h2 id="formas-title">Elige el que puedas sostener.</h2>
+                  </div>
+                  <p>
+                    Todos valen. El mejor es el que puedas mantener en el tiempo sin que se te haga
+                    una carga.
+                  </p>
+                </div>
+
+                <div className="help-grid">
+                  {AYUDAS.map((item) => (
+                    <article className="help-card reveal" key={item.num}>
+                      <span className="help-card-number">{item.num}</span>
+                      <div>
+                        <h3>{item.title}</h3>
+                        <p>{item.copy}</p>
+                      </div>
+                      <a className="arrow-link" href={item.href}
+                        target={item.external ? '_blank' : undefined}
+                        rel={item.external ? 'noreferrer' : undefined}
+                        onClick={() => trackEvent(item.event, { placement: 'como_ayudar_grid', help_type: item.type })}>
+                        {item.cta} <IconArrow size={16} />
+                      </a>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Hogar temporal en detalle */}
+            <section className="section" id="hogar-temporal" aria-labelledby="hogar-title">
+              <div className="wrap">
+                <div className="split">
+                  <div className="split-body reveal">
+                    <p className="section-label">Hogar temporal</p>
+                    <h2 id="hogar-title" style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.4rem)', letterSpacing: '-0.025em', lineHeight: '0.96', marginBottom: '1.2rem' }}>
+                      Lo que más nos falta, casi siempre.
+                    </h2>
+                    <p>
+                      Un hogar temporal es una casa que recibe a un gato mientras se recupera o
+                      espera a su familia definitiva. Es el cuello de botella de todo rescate: sin
+                      hogares disponibles, no podemos decir que sí a un caso nuevo.
+                    </p>
+                    <p style={{ marginBottom: '1.2rem' }}>Cómo funciona:</p>
+                    <ul className="req-list">
+                      <li><IconCheck /> <span>Nosotras cubrimos el alimento, la arena y toda la atención veterinaria.</span></li>
+                      <li><IconCheck /> <span>Tú pones un espacio seguro, con ventanas protegidas, y el tiempo de acompañarlo.</span></li>
+                      <li><IconCheck /> <span>Acordamos juntas cuánto puede durar. Puede ser una semana o unos meses.</span></li>
+                      <li><IconCheck /> <span>Nos hacemos cargo de difundirlo y de todo el proceso de adopción.</span></li>
+                      <li><IconCheck /> <span>Si en algún momento no puedes seguir, lo reubicamos nosotras. No te quedas sola con eso.</span></li>
+                    </ul>
+                    <div className="page-hero-actions" style={{ marginTop: '1.6rem' }}>
+                      <a className="button" href="/contacto?motivo=hogar_temporal"
+                        onClick={() => trackEvent('volunteer_start', { placement: 'como_ayudar_hogar' })}>
+                        Postular como hogar temporal <IconArrow size={17} />
+                      </a>
+                    </div>
+                  </div>
+
+                  <figure className="split-figure reveal">
+                    {/* PLACEHOLDER: reemplazar por una foto real de un hogar temporal de Arca. */}
+                    <img src="/media/placeholders/hogar-temporal.webp" width="1400" height="2100"
+                      alt="Gato acomodado en una casa, fotografía de referencia" />
+                    <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            {/* Voluntariado */}
+            <section className="section section--paper-deep" id="voluntariado" aria-labelledby="voluntariado-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">Voluntariado</p>
+                    <h2 id="voluntariado-title">Manos, autos y oficios.</h2>
+                  </div>
+                  <p>
+                    No todo el voluntariado implica tener un gato en casa. Buena parte del trabajo es
+                    logística, y ahí siempre falta gente.
+                  </p>
+                </div>
+
+                <div className="help-list">
+                  <article className="help-item reveal">
+                    <span className="help-item-number">01</span>
+                    <div>
+                      <h3>Traslados</h3>
+                      <p>Llevar un gato a la veterinaria, a su hogar temporal o entre La Serena, Coquimbo y Santiago. Si tienes auto y disponibilidad ocasional, esto nos sirve muchísimo.</p>
+                    </div>
+                  </article>
+                  <article className="help-item reveal">
+                    <span className="help-item-number">02</span>
+                    <div>
+                      <h3>Servicios profesionales</h3>
+                      <p>Veterinaria, fotografía, diseño, contabilidad, asesoría legal. Si tienes un oficio y quieres donar algunas horas, conversemos qué se puede hacer.</p>
+                    </div>
+                  </article>
+                  <article className="help-item reveal">
+                    <span className="help-item-number">03</span>
+                    <div>
+                      <h3>Charlas y educación</h3>
+                      <p>Si trabajas en un colegio o jardín infantil y quieres una charla de tenencia responsable, escríbenos. También buscamos voluntarias que quieran ayudar a prepararlas.</p>
+                    </div>
+                  </article>
+                  <article className="help-item reveal">
+                    <span className="help-item-number">04</span>
+                    <div>
+                      <h3>Difusión</h3>
+                      <p>Compartir una ficha de adopción no cuesta nada y a veces es exactamente lo que encuentra a la familia. Síguenos en {' '}
+                        <a className="text-link" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@fundacionproyectoarca</a> y en {' '}
+                        <a className="text-link" href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">@proyectoarcaeduca</a>.
+                      </p>
+                    </div>
+                  </article>
+                </div>
+
+                <div className="page-hero-actions" style={{ marginTop: '2rem' }}>
+                  <a className="button" href="/contacto"
+                    onClick={() => trackEvent('volunteer_start', { placement: 'como_ayudar_voluntariado' })}>
+                    Quiero ser voluntaria <IconArrow size={17} />
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            <SociosGuardianes compact />
+
+            <CierreCTA
+              titulo="Una sola persona cambia lo que podemos hacer."
+              texto="No necesitamos que hagas todo. Necesitamos que hagas una cosa, y que la sostengas."
+              acciones={
+                <React.Fragment>
+                  <a className="button button--light" href="/donar"
+                    onClick={() => trackEvent('donation_start', { placement: 'como_ayudar_cierre' })}>Donar</a>
+                  <a className="button button--ghost-light" href="/contacto"
+                    onClick={() => trackEvent('contact_start', { placement: 'como_ayudar_cierre' })}>Escribirnos</a>
+                </React.Fragment>
+              }
+            />
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

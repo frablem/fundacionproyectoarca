@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historias — Fundación Proyecto Arca</title>
+  <meta name="description" content="Historias reales de rescate de Fundación Proyecto Arca. Cada gato rescatado deja una huella y una segunda oportunidad." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Historias — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Cada rescate deja una huella. Historias reales de los gatos que pasaron por Proyecto Arca." />
+  <meta property="og:image" content="/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260829"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, trackEvent } = window.SharedComponents;
+    const {
+      useReveal, useCollection, useDocParam, fmtDate, stripHtml, sanitize,
+      Cargando, EstadoVacio, CierreCTA
+    } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, BASE_URL } = window.SiteConfig;
+
+    const Detalle = ({ historia }) => {
+      const url = (BASE_URL || window.location.origin) + '/historias?h=' + historia.id;
+
+      return (
+        <section className="section" aria-labelledby="detalle-title">
+          <div className="wrap">
+            <p style={{ marginBottom: '1.4rem' }}>
+              <a className="text-link" href="/historias">← Volver a historias</a>
+            </p>
+
+            <div className="detail-head reveal">
+              <p className="section-label">
+                Historia de rescate{historia.date ? ' · ' + fmtDate(historia.date) : ''}
+              </p>
+              <h1 id="detalle-title">{historia.title}</h1>
+            </div>
+
+            {historia.image ? (
+              <figure className="detail-banner reveal">
+                <img src={historia.image} alt={historia.title} />
+              </figure>
+            ) : null}
+
+            {historia.testimonial ? (
+              <blockquote className="pull-quote reveal" style={{ margin: '0 0 2rem', maxWidth: '34ch' }}>
+                “{historia.testimonial}”
+              </blockquote>
+            ) : null}
+
+            <div className="prose reveal" dangerouslySetInnerHTML={{ __html: sanitize(historia.content) }} />
+
+            <div className="detail-foot">
+              <a className="text-link"
+                href={'https://wa.me/?text=' + encodeURIComponent(historia.title + ' — ' + url)}
+                target="_blank" rel="noreferrer">
+                Compartir por WhatsApp <IconArrow size={16} />
+              </a>
+              <a className="text-link" href="/adoptar"
+                onClick={() => trackEvent('adoption_start', { placement: 'historia_detalle' })}>
+                Ver quiénes esperan hoy <IconArrow size={16} />
+              </a>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const App = () => {
+      useReveal();
+
+      const { data, loading } = useCollection('stories', {
+        sort: (a, b) => Number(b.order || 0) - Number(a.order || 0)
+      });
+
+      const id = useDocParam('h');
+      const historia = id ? data.find((d) => d.id === id) : null;
+
+      return (
+        <React.Fragment>
+          <Navbar active="historias" />
+          <main id="contenido">
+
+            {!historia ? (
+              <React.Fragment>
+                <section className="wrap page-hero" aria-labelledby="page-title">
+                  <div className="reveal">
+                    <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Historias de la red</p>
+                    <h1 id="page-title">Cada rescate deja una huella.</h1>
+                    <p className="lede">
+                      Un espacio para contar procesos con honestidad: lo que vimos, lo que aprendimos
+                      y lo que aún queda por hacer.
+                    </p>
+                  </div>
+                </section>
+                <div className="rule" aria-hidden="true"></div>
+              </React.Fragment>
+            ) : null}
+
+            {loading ? (
+              <section className="section"><div className="wrap"><Cargando label="Cargando historias…" /></div></section>
+            ) : null}
+
+            {!loading && historia ? <Detalle historia={historia} /> : null}
+
+            {!loading && !historia && id ? (
+              <section className="section">
+                <div className="wrap">
+                  <EstadoVacio titulo="No encontramos esa historia.">
+                    <p>Puede que haya cambiado de dirección o que ya no esté publicada.</p>
+                    <a className="button button--outline" href="/historias">Ver todas las historias</a>
+                  </EstadoVacio>
+                </div>
+              </section>
+            ) : null}
+
+            {!loading && !id && data.length > 0 ? (
+              <section className="section">
+                <div className="wrap">
+                  <div className="story-grid">
+                    {data.map((h, i) => (
+                      <a className="story-card reveal" key={h.id} href={'/historias?h=' + h.id}>
+                        <div className="story-index" aria-hidden="true">
+                          {h.image ? <img src={h.image} alt="" loading="lazy" /> : null}
+                          <span>{(i + 1) < 10 ? '0' + (i + 1) : (i + 1)}</span>
+                        </div>
+                        <div className="story-body">
+                          <span className="story-kicker">
+                            Rescate{h.date ? ' · ' + fmtDate(h.date) : ''}
+                          </span>
+                          <h3>{h.title}</h3>
+                          <p>{(h.testimonial || stripHtml(h.content)).slice(0, 160)}…</p>
+                          <span className="text-link">Leer más <IconArrow size={16} /></span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            ) : null}
+
+            {!loading && !id && data.length === 0 ? (
+              <section className="section">
+                <div className="wrap">
+                  <EstadoVacio titulo="Estamos escribiendo las primeras.">
+                    <p>
+                      Tenemos historias que merecen contarse bien y con calma. Tony, que esperó un
+                      año y medio hasta encontrar a su familia. Toñito, que llegó con un pronóstico
+                      de cuatro meses de vida y hoy tiene los exámenes perfectos. Emilia, que nació
+                      en la casa de un perro, en el antejardín de una casa.
+                    </p>
+                    <p>
+                      Las vamos a publicar aquí, una por una. Mientras tanto, las encuentras en
+                      nuestro Instagram.
+                    </p>
+                    <a className="button button--outline" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                      Seguirnos en Instagram
+                    </a>
+                  </EstadoVacio>
+                </div>
+              </section>
+            ) : null}
+
+            <CierreCTA
+              titulo="Estas historias existen porque alguien ayudó."
+              texto="Un hogar temporal, un traslado, una transferencia. Ninguna se sostiene sola."
+              acciones={
+                <React.Fragment>
+                  <a className="button button--light" href="/como-ayudar">Quiero ayudar</a>
+                  <a className="button button--ghost-light" href="/adoptar"
+                    onClick={() => trackEvent('adoption_start', { placement: 'historias_cierre' })}>Adoptar</a>
+                </React.Fragment>
+              }
+            />
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto — Fundación Proyecto Arca</title>
+  <meta name="description" content="Escríbenos para adoptar, ofrecer hogar temporal, colaborar o pedir una charla educativa. Fundación Proyecto Arca, La Serena, Coquimbo y Santiago." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Contacto — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Escríbenos para adoptar, ofrecer hogar temporal, colaborar o pedir una charla de tenencia responsable." />
+  <meta property="og:image" content="/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260829"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, IconMail, IconInstagram, IconPin, IconBook, trackEvent } = window.SharedComponents;
+    const { useReveal, FormspreeForm, Field, TextArea, Check } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE, FORMSPREE } = window.SiteConfig;
+
+    /* Un selector cambia los campos y el endpoint. También lee ?motivo= para que
+       otras páginas puedan enlazar directo a un tipo de formulario. */
+    const TIPOS = [
+      { key: 'contacto', label: 'Consulta general', formId: FORMSPREE.contacto },
+      { key: 'hogar_temporal', label: 'Hogar temporal', formId: FORMSPREE.hogar_temporal },
+      { key: 'adopcion', label: 'Adopción', formId: FORMSPREE.adopcion }
+    ];
+
+    const App = () => {
+      useReveal();
+
+      const [tipo, setTipo] = React.useState(() => {
+        const motivo = new URLSearchParams(window.location.search).get('motivo');
+        return TIPOS.some((t) => t.key === motivo) ? motivo : 'contacto';
+      });
+
+      const actual = TIPOS.find((t) => t.key === tipo);
+
+      const exito = {
+        contacto: {
+          title: 'Mensaje recibido.',
+          text: 'Gracias por escribirnos. Somos un equipo voluntario, así que puede tomarnos unos días, pero respondemos todos los mensajes.'
+        },
+        hogar_temporal: {
+          title: 'Gracias por ofrecer tu casa.',
+          text: 'Te vamos a contactar para conversar los detalles: cuánto tiempo puedes, qué espacio tienes y qué gato calzaría mejor contigo.'
+        },
+        adopcion: {
+          title: 'Recibimos tu consulta.',
+          text: 'Te escribiremos pronto. Si ya sabes con qué gato quieres empezar, también puedes completar el formulario de adopción completo.'
+        }
+      }[tipo];
+
+      return (
+        <React.Fragment>
+          <Navbar active="contacto" />
+          <main id="contenido">
+
+            <section className="wrap page-hero" aria-labelledby="page-title">
+              <div className="reveal">
+                <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Conversemos</p>
+                <h1 id="page-title">Hablemos de cómo ayudar.</h1>
+                <p className="lede">
+                  Escríbenos para adoptar, ofrecer tu casa como hogar temporal, colaborar, contarnos
+                  un caso o pedir una charla educativa. Leemos todo.
+                </p>
+              </div>
+            </section>
+
+            <div className="rule" aria-hidden="true"></div>
+
+            <section className="section" aria-labelledby="form-title">
+              <div className="wrap">
+                <h2 id="form-title" className="sr-only">Formulario de contacto</h2>
+
+                <div className="form-layout">
+                  <div className="reveal">
+                    <div className="form-switch" role="group" aria-label="Motivo del mensaje">
+                      {TIPOS.map((t) => (
+                        <button key={t.key} type="button"
+                          className={'chip' + (tipo === t.key ? ' is-active' : '')}
+                          aria-pressed={tipo === t.key}
+                          onClick={() => setTipo(t.key)}>
+                          {t.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    <FormspreeForm
+                      key={tipo}
+                      formId={actual.formId}
+                      tipo={tipo}
+                      submitLabel="Enviar mensaje"
+                      successTitle={exito.title}
+                      successText={exito.text}
+                    >
+                      <input type="hidden" name="motivo" value={actual.label} />
+
+                      <fieldset>
+                        <legend>Tus datos</legend>
+                        <div className="field-grid">
+                          <Field id="nombre" label="Nombre y apellido" name="nombre" required autoComplete="name" />
+                          <Field id="email" label="Correo" name="email" type="email" required autoComplete="email" />
+                          <Field id="telefono" label="Teléfono o WhatsApp" name="telefono" type="tel" autoComplete="tel" />
+                          <Field id="ciudad" label="Ciudad" name="ciudad" required
+                            hint="La Serena, Coquimbo, Santiago u otra." />
+                        </div>
+                      </fieldset>
+
+                      {tipo === 'hogar_temporal' ? (
+                        <fieldset>
+                          <legend>Sobre tu espacio</legend>
+                          <div className="field-grid">
+                            <Field id="tipo_vivienda" label="Tipo de vivienda" name="tipo_vivienda" required>
+                              <select id="tipo_vivienda" name="tipo_vivienda" required defaultValue="">
+                                <option value="" disabled>Selecciona una opción</option>
+                                <option>Casa</option>
+                                <option>Departamento</option>
+                                <option>Otro</option>
+                              </select>
+                            </Field>
+                            <Field id="ventanas_protegidas" label="¿Ventanas y balcones protegidos?" name="ventanas_protegidas" required>
+                              <select id="ventanas_protegidas" name="ventanas_protegidas" required defaultValue="">
+                                <option value="" disabled>Selecciona una opción</option>
+                                <option>Sí, ya tengo mallas</option>
+                                <option>No, pero puedo instalarlas</option>
+                                <option>No</option>
+                              </select>
+                            </Field>
+                            <Field id="disponibilidad" label="¿Por cuánto tiempo podrías?" name="disponibilidad" required
+                              hint="Unas semanas, unos meses, sin plazo definido." />
+                            <Field id="otros_animales" label="¿Tienes otros animales?" name="otros_animales"
+                              hint="Cuáles y cómo se llevan con gatos." />
+                          </div>
+                          <div className="check-list" style={{ marginTop: '1rem' }}>
+                            <Check name="acepta_visita" label="Entiendo que conversaremos antes y que podemos coordinar una visita." />
+                            <Check name="acepta_seguimiento" label="Me comprometo a mantener el contacto mientras el gato esté conmigo." />
+                          </div>
+                        </fieldset>
+                      ) : null}
+
+                      {tipo === 'adopcion' ? (
+                        <fieldset>
+                          <legend>Sobre la adopción</legend>
+                          <div className="field-grid">
+                            <Field id="gato_interes" label="¿Hay algún gato que te interese?" name="gato_interes"
+                              hint="Su nombre, si ya lo viste en el listado." />
+                            <Field id="tipo_vivienda_ad" label="Tipo de vivienda" name="tipo_vivienda" required>
+                              <select id="tipo_vivienda_ad" name="tipo_vivienda" required defaultValue="">
+                                <option value="" disabled>Selecciona una opción</option>
+                                <option>Casa</option>
+                                <option>Departamento</option>
+                                <option>Otro</option>
+                              </select>
+                            </Field>
+                          </div>
+                          <p className="hint" style={{ marginTop: '0.8rem', color: 'var(--muted)', fontSize: '0.85rem' }}>
+                            Si ya tienes claro con quién quieres empezar, el {' '}
+                            <a className="text-link" href="/formulario-adopcion">formulario de adopción completo</a> {' '}
+                            nos ahorra un par de correos.
+                          </p>
+                        </fieldset>
+                      ) : null}
+
+                      <fieldset>
+                        <legend>Tu mensaje</legend>
+                        <div className="field-grid">
+                          <TextArea id="mensaje" label="Cuéntanos" name="mensaje" required rows={6}
+                            placeholder={
+                              tipo === 'hogar_temporal'
+                                ? 'Cuéntanos con quién vives, cómo es tu casa y qué te motivó a ofrecerla.'
+                                : tipo === 'adopcion'
+                                  ? 'Cuéntanos de tu hogar, tu rutina y qué esperas de la convivencia.'
+                                  : 'Escríbenos con calma. Si es un caso de rescate, incluye la ciudad, el lugar exacto y en qué estado está el gato.'
+                            } />
+                        </div>
+                      </fieldset>
+                    </FormspreeForm>
+                  </div>
+
+                  <aside className="contact-aside reveal">
+                    <div className="contact-block">
+                      <h3>Escríbenos directo</h3>
+                      <div className="contact-list">
+                        <a href={'mailto:' + CONTACT_EMAIL}
+                          onClick={() => trackEvent('contact_start', { placement: 'contacto_aside', method: 'email' })}>
+                          <IconMail /> {CONTACT_EMAIL}
+                        </a>
+                        <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                          <IconInstagram /> {INSTAGRAM_HANDLE}
+                        </a>
+                        <a href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
+                          <IconBook /> {INSTAGRAM_EDUCA_HANDLE}
+                        </a>
+                        <p style={{ marginTop: '0.4rem' }}>
+                          <IconPin /> La Serena · Coquimbo · Santiago
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="contact-block">
+                      <h3>Antes de escribir</h3>
+                      <p style={{ margin: '0 0 0.7rem', color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        <strong>¿Encontraste un gato en la calle?</strong> Cuéntanos la ciudad, el
+                        lugar exacto y su estado, y adjunta fotos si puedes. Nuestra capacidad depende
+                        de los hogares temporales disponibles, así que no siempre podemos recibir,
+                        pero siempre respondemos y orientamos.
+                      </p>
+                      <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        <strong>Somos voluntarias.</strong> Podemos demorar unos días en responder.
+                        Si es una urgencia veterinaria, acude primero a una clínica.
+                      </p>
+                    </div>
+
+                    <div className="contact-block">
+                      <h3>Charlas educativas</h3>
+                      <p style={{ margin: '0 0 0.9rem', color: 'var(--muted)', fontSize: '0.9rem' }}>
+                        Hacemos charlas de tenencia responsable en colegios y jardines infantiles,
+                        sin costo. Escríbenos con el nombre del establecimiento, la ciudad y el curso.
+                      </p>
+                      <a className="text-link" href={'mailto:' + CONTACT_EMAIL + '?subject=Solicitud%20de%20charla%20educativa'}
+                        onClick={() => trackEvent('contact_start', { placement: 'contacto_charlas', method: 'email' })}>
+                        Solicitar una charla <IconArrow size={16} />
+                      </a>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </section>
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
