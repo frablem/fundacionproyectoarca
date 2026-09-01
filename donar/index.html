@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donar — Fundación Proyecto Arca</title>
+  <meta name="description" content="Dona a Fundación Proyecto Arca por transferencia bancaria o hazte Socio Guardián FPA 365 con un aporte mensual desde $3.000. Cada aporte sostiene alimentación, veterinario y traslados." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Donar — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Transferencia bancaria o aporte mensual como Socio Guardián FPA 365. Tu ayuda llega directo a un gato que hoy está esperando." />
+  <meta property="og:image" content="https://proyectoarcafundacion.cl/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:url" content="https://proyectoarcafundacion.cl/donar" />
+  <link rel="canonical" href="https://proyectoarcafundacion.cl/donar" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, IconHeart, trackEvent } = window.SharedComponents;
+    const { useReveal, HojaTransferencia, SociosGuardianes, CierreCTA } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL } = window.SiteConfig;
+
+    /* Montos ilustrativos: sirven para dimensionar el aporte, no son un precio. */
+    const IMPACTO = [
+      { monto: '$5.000', copy: 'Un saco de arena y alimento para una semana de un gato en recuperación.' },
+      { monto: '$15.000', copy: 'Una consulta veterinaria general con examen y desparasitación.' },
+      { monto: '$35.000', copy: 'Una esterilización, que evita camadas enteras en situación de calle.' },
+      { monto: '$60.000', copy: 'Exámenes de sangre y tratamiento inicial de un caso crónico.' }
+    ];
+
+    const App = () => {
+      useReveal();
+      return (
+        <React.Fragment>
+          {/* Donar no está en navLinks, así que no se pasa clave activa. */}
+          <Navbar />
+          <main id="contenido">
+
+            <section className="wrap page-hero" aria-labelledby="page-title">
+              <div className="reveal">
+                <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Aporte directo</p>
+                <h1 id="page-title">Tu ayuda llega a una vida.</h1>
+                <p className="lede">
+                  Alimentación, arena, esterilizaciones, exámenes y traslados entre ciudades. Cada
+                  peso que recibimos se convierte en algo concreto para un gato que hoy está
+                  esperando. Puedes aportar una vez o acompañarnos todos los meses.
+                </p>
+                <div className="page-hero-actions">
+                  <a className="button" href="#transferencia"
+                    onClick={() => trackEvent('donation_start', { placement: 'donar_hero', method: 'transferencia' })}>
+                    Datos de transferencia <IconArrow size={17} />
+                  </a>
+                  <a className="button button--outline" href="#socios-guardianes"
+                    onClick={() => trackEvent('donation_start', { placement: 'donar_hero', method: 'fpa365' })}>
+                    Ser Socio Guardián FPA 365
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            <div className="rule" aria-hidden="true"></div>
+
+            {/* Transferencia bancaria */}
+            <section className="donation-section on-dark" id="transferencia" aria-labelledby="transferencia-title">
+              <div className="wrap donation-layout">
+                <div className="donation-copy reveal">
+                  <p className="eyebrow">01 / Aporte único</p>
+                  <h2 id="transferencia-title">Transferencia bancaria.</h2>
+                  <p>
+                    Es la forma más directa: el aporte llega completo, sin comisiones de por medio.
+                    Si nos envías el comprobante, te confirmamos la recepción y te contamos en qué
+                    se usó.
+                  </p>
+                </div>
+                <HojaTransferencia />
+              </div>
+            </section>
+
+            {/* Socios Guardianes */}
+            <SociosGuardianes />
+
+            {/* Qué hace tu aporte */}
+            <section className="section" aria-labelledby="impacto-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">En qué se convierte</p>
+                    <h2 id="impacto-title">Para que sepas qué estás sosteniendo.</h2>
+                  </div>
+                  <p>
+                    Estos montos son referenciales, para dimensionar. Los valores veterinarios varían
+                    entre ciudades y según cada caso.
+                  </p>
+                </div>
+
+                <div className="step-grid">
+                  {IMPACTO.map((i) => (
+                    <article className="step reveal" key={i.monto}>
+                      <span className="step-num">Aporte</span>
+                      <h3>{i.monto}</h3>
+                      <p>{i.copy}</p>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="contact-block reveal" style={{ marginTop: '2.4rem' }}>
+                  <h3>Rendimos cuentas de lo que recibimos</h3>
+                  <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.92rem' }}>
+                    Somos una fundación con personalidad jurídica vigente, RUT {window.SiteConfig.RUT_ONG},
+                    Registro N° {window.SiteConfig.REG_NUM}. Si aportaste y quieres ver el detalle de
+                    un gasto veterinario, pídelo a {CONTACT_EMAIL} y te lo enviamos.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Otras formas */}
+            <section className="section section--paper-deep" aria-labelledby="otras-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">No solo con dinero</p>
+                    <h2 id="otras-title">También ayuda lo que no se transfiere.</h2>
+                  </div>
+                  <p>
+                    Hay meses en que lo que más falta no es plata: es un auto, una pieza libre o
+                    alguien que comparta una publicación.
+                  </p>
+                </div>
+
+                <div className="help-list">
+                  <article className="help-item reveal">
+                    <span className="help-item-number">01</span>
+                    <div>
+                      <h3>Donaciones en especie</h3>
+                      <p>Alimento, arena, transportadoras, mantas, medicamentos sin usar y dentro de fecha. Escríbenos antes para coordinar dónde entregarlas.</p>
+                      <a className="text-link" href={'mailto:' + CONTACT_EMAIL + '?subject=Donaci%C3%B3n%20en%20especie'}
+                        onClick={() => trackEvent('donation_start', { placement: 'donar_especie', method: 'especie' })}>
+                        Coordinar una entrega <IconArrow size={16} />
+                      </a>
+                    </div>
+                  </article>
+                  <article className="help-item reveal">
+                    <span className="help-item-number">02</span>
+                    <div>
+                      <h3>Ser hogar temporal</h3>
+                      <p>Recibir a un gato mientras se recupera o espera familia. Nosotras ponemos el alimento y la atención veterinaria; tú pones el espacio y la paciencia.</p>
+                      <a className="text-link" href="/contacto?motivo=hogar_temporal"
+                        onClick={() => trackEvent('volunteer_start', { placement: 'donar_hogar' })}>
+                        Postular como hogar temporal <IconArrow size={16} />
+                      </a>
+                    </div>
+                  </article>
+                  <article className="help-item reveal">
+                    <span className="help-item-number">03</span>
+                    <div>
+                      <h3>Empresas y colaboraciones</h3>
+                      <p>Si tu empresa quiere aportar de forma sostenida, entregar insumos o apadrinar a un gato en tratamiento, conversemos.</p>
+                      <a className="text-link" href={'mailto:' + CONTACT_EMAIL + '?subject=Colaboraci%C3%B3n%20de%20empresa'}
+                        onClick={() => trackEvent('donation_start', { placement: 'donar_empresas', method: 'empresa' })}>
+                        Escribirnos <IconArrow size={16} />
+                      </a>
+                    </div>
+                  </article>
+                  <article className="help-item reveal">
+                    <span className="help-item-number">04</span>
+                    <div>
+                      <h3>Difundir</h3>
+                      <p>Compartir una ficha de adopción cuesta cero y a veces es lo que encuentra al gato su familia. Es ayuda real.</p>
+                      <a className="text-link" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                        Seguirnos y compartir <IconArrow size={16} />
+                      </a>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <CierreCTA
+              titulo="Gracias por llegar hasta acá."
+              texto="Cada aporte, grande o chico, es la diferencia entre poder decir que sí al próximo rescate o tener que decir que no."
+              acciones={
+                <React.Fragment>
+                  <a className="button button--light" href="#transferencia"
+                    onClick={() => trackEvent('donation_start', { placement: 'donar_cierre', method: 'transferencia' })}>
+                    Donar ahora <IconHeart size={17} />
+                  </a>
+                  <a className="button button--ghost-light" href="/adoptar"
+                    onClick={() => trackEvent('adoption_start', { placement: 'donar_cierre' })}>
+                    Prefiero adoptar
+                  </a>
+                </React.Fragment>
+              }
+            />
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

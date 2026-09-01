@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosotras — Fundación Proyecto Arca</title>
+  <meta name="description" content="Somos un equipo de mujeres que rescata, rehabilita y educa por el bienestar de los gatos en La Serena, Coquimbo y Santiago. Conoce nuestra historia y cómo trabajamos." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Nosotras — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Somos un equipo de mujeres que rescata, rehabilita y educa por el bienestar de los gatos en La Serena, Coquimbo y Santiago." />
+  <meta property="og:image" content="https://proyectoarcafundacion.cl/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:url" content="https://proyectoarcafundacion.cl/nosotras" />
+  <link rel="canonical" href="https://proyectoarcafundacion.cl/nosotras" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, IconCheck, trackEvent } = window.SharedComponents;
+    const { useReveal, MapaCuidado, CierreCTA } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_EDUCA_URL, RUT_ONG, REG_NUM } = window.SiteConfig;
+
+    /* Áreas de trabajo con los colores que la fundación definió en su manual de marca.
+       Pendiente: nombres y fotos de cada integrante, cuando Arca las envíe. */
+    const AREAS = [
+      { name: 'Directiva', color: '#91BF20', copy: 'Define el rumbo de la fundación, responde por su gestión y sostiene el vínculo con la comunidad.' },
+      { name: 'Rescate', color: '#E0AB26', copy: 'Recibe los avisos, evalúa cada caso en terreno y coordina la salida y la atención de urgencia.' },
+      { name: 'Adopciones', color: '#4CA252', copy: 'Acompaña las postulaciones, conversa con cada familia y hace el seguimiento después de la entrega.' },
+      { name: 'Voluntarias de transporte', color: '#E8434D', copy: 'Mueven gatos entre La Serena, Coquimbo y Santiago: a la veterinaria, al hogar temporal o a su nueva casa.' },
+      { name: 'Tesorería', color: '#B2B24A', copy: 'Lleva las cuentas, ordena los gastos veterinarios y responde por cada aporte recibido.' },
+      { name: 'Marketing y RRPP', color: '#53A3A3', copy: 'Cuenta lo que hacemos, difunde a los gatos en adopción y sostiene el contenido educativo.' }
+    ];
+
+    const HITOS = [
+      { when: '2021', title: 'Nace Proyecto Arca', copy: 'Un grupo de mujeres empieza a rescatar gatos en Coquimbo y La Serena, coordinándose por mensajes y financiando con sus propios medios.' },
+      { when: '2022', title: 'Identidad propia', copy: 'La fundación define su manual de marca, su logo y la forma en que quiere presentarse: seria, cálida y clara.' },
+      { when: 'Hoy', title: 'Tres ciudades', copy: 'Rescatamos y coordinamos adopciones entre La Serena, Coquimbo y Santiago, y llevamos educación a colegios y jardines.' }
+    ];
+
+    const App = () => {
+      useReveal();
+      return (
+        <React.Fragment>
+          <Navbar active="nosotras" />
+          <main id="contenido">
+
+            <section className="wrap page-hero" aria-labelledby="page-title">
+              <div className="reveal">
+                <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Quiénes somos</p>
+                <h1 id="page-title">Somos todas mujeres, y esto lo hacemos a pulso.</h1>
+                <p className="lede">
+                  En Fundación Proyecto Arca trabajamos por la protección y el bienestar de los gatos
+                  en situación de abandono en las ciudades de La Serena, Coquimbo y Santiago.
+                </p>
+                <div className="page-hero-actions">
+                  <a className="button" href="/adoptar"
+                    onClick={() => trackEvent('adoption_start', { placement: 'nosotras_hero' })}>
+                    Ver gatitos en adopción <IconArrow size={17} />
+                  </a>
+                  <a className="button button--outline" href="/donar"
+                    onClick={() => trackEvent('donation_start', { placement: 'nosotras_hero' })}>
+                    Apoyar el rescate
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            <div className="rule" aria-hidden="true"></div>
+
+            {/* Misión, en las palabras de la fundación */}
+            <section className="section" aria-labelledby="mision-title">
+              <div className="wrap">
+                <div className="split">
+                  <div className="split-body reveal">
+                    <p className="section-label">Nuestra misión</p>
+                    <h2 id="mision-title" style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.6rem)', letterSpacing: '-0.025em', lineHeight: '0.96', marginBottom: '1.2rem' }}>
+                      Rescatar, rehabilitar y acompañar hasta el final del proceso.
+                    </h2>
+                    <p>
+                      Rescatamos, rehabilitamos y brindamos los cuidados necesarios a cada gato,
+                      acompañando su recuperación y trabajando para encontrarles familias
+                      responsables que les ofrezcan una vida digna, segura y llena de amor.
+                    </p>
+                    <p>
+                      Al mismo tiempo, promovemos la tenencia responsable y el respeto hacia los
+                      animales mediante la difusión de contenido educativo y la realización de
+                      charlas en centros educacionales, buscando generar conciencia desde temprana
+                      edad.
+                    </p>
+                    <p>
+                      No tenemos un refugio con puertas abiertas al público. Trabajamos con hogares
+                      temporales, veterinarias y voluntarias, porque es la forma en que un equipo
+                      pequeño puede sostener cuidados largos sin bajar la calidad de la atención.
+                    </p>
+                  </div>
+
+                  <figure className="split-figure reveal">
+                    {/* PLACEHOLDER: reemplazar por una foto real del equipo o de un rescate. */}
+                    <img src="/media/placeholders/equipo-cuidado.webp" width="1400" height="2100"
+                      alt="Persona sosteniendo a un gato rescatado, fotografía de referencia" />
+                    <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+                  </figure>
+                </div>
+
+                {/* Cifras de rescates y adopciones pendientes de que Arca las confirme.
+                    Hasta entonces sólo van datos verificables. */}
+                <div className="stat-grid reveal">
+                  <div className="stat">
+                    <span className="stat-value">3</span>
+                    <span className="stat-label">Ciudades: La Serena, Coquimbo y Santiago</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-value">Gatos</span>
+                    <span className="stat-label">Una sola especie, para conocerla de verdad</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-value">100%</span>
+                    <span className="stat-label">Voluntario: nadie recibe sueldo por este trabajo</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-value">N° 319235</span>
+                    <span className="stat-label">Personalidad jurídica vigente y registro público</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Cómo trabajamos */}
+            <section className="section section--paper-deep" aria-labelledby="trabajo-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">Cómo trabajamos</p>
+                    <h2 id="trabajo-title">Solo gatos, y hasta el final.</h2>
+                  </div>
+                  <p>
+                    Decidimos especializarnos. Trabajar con una sola especie nos permite conocer sus
+                    tiempos, sus enfermedades y sus formas de recuperar la confianza.
+                  </p>
+                </div>
+
+                <ul className="req-list reveal" style={{ maxWidth: '46rem' }}>
+                  <li><IconCheck /> <span>Cada gato entra con evaluación veterinaria: examen general, desparasitación y lo que su caso requiera.</span></li>
+                  <li><IconCheck /> <span>Esterilizamos antes de entregar, o dejamos el compromiso firmado cuando el gato es muy pequeño.</span></li>
+                  <li><IconCheck /> <span>Los casos crónicos, positivos a inmunodeficiencia o leucemia felina también se rescatan. No descartamos a nadie por su diagnóstico.</span></li>
+                  <li><IconCheck /> <span>Ninguna adopción se cierra el mismo día. Conversamos, revisamos el hogar y esperamos a que la decisión esté tomada de verdad.</span></li>
+                  <li><IconCheck /> <span>Hacemos seguimiento después de la entrega y seguimos disponibles para dudas o problemas.</span></li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Territorio */}
+            <section className="territory-band on-dark" aria-labelledby="territorio-title">
+              <div className="wrap territory-grid">
+                <div className="territory-copy reveal">
+                  <p className="eyebrow">Cuidado sin fronteras</p>
+                  <h2 id="territorio-title">Tres ciudades, un mismo equipo.</h2>
+                  <p>
+                    Nos organizamos entre Coquimbo, La Serena y Santiago. Un gato puede ser rescatado
+                    en el norte y encontrar familia en la capital, o al revés. Cuando eso pasa,
+                    coordinamos el traslado nosotras mismas.
+                  </p>
+                  <p style={{ marginBottom: 0 }}>
+                    Por seguridad de los gatos no publicamos direcciones. Cada visita, entrega o
+                    retiro se coordina antes por correo o por Instagram.
+                  </p>
+                </div>
+                <MapaCuidado />
+              </div>
+            </section>
+
+            {/* Equipo */}
+            <section className="section" aria-labelledby="equipo-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">El equipo</p>
+                    <h2 id="equipo-title">Cada área tiene una responsable.</h2>
+                  </div>
+                  <p>
+                    Somos un equipo de mujeres voluntarias. Nadie vive de esto: cada una tiene su
+                    trabajo, y el rescate ocurre en los tiempos que quedan.
+                  </p>
+                </div>
+
+                <div className="team-grid">
+                  {AREAS.map((area) => (
+                    <article className="team-card reveal" key={area.name}>
+                      {/* Pendiente: nombre y foto de la responsable de cada área,
+                          cuando Arca las envíe. Hasta entonces se describe el área. */}
+                      <span className="team-role">
+                        <span className="team-swatch" style={{ background: area.color }} aria-hidden="true"></span>
+                        Área
+                      </span>
+                      <h3>{area.name}</h3>
+                      <p>{area.copy}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Historia */}
+            <section className="section section--soft" aria-labelledby="historia-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">Nuestra historia</p>
+                    <h2 id="historia-title">Empezamos sin nada formal.</h2>
+                  </div>
+                  <p>
+                    Primero fueron rescates sueltos, financiados del bolsillo. La fundación llegó
+                    después, para poder responder mejor y rendir cuentas de lo que recibimos.
+                  </p>
+                </div>
+
+                <div className="timeline">
+                  {HITOS.map((h) => (
+                    <article className="timeline-item reveal" key={h.when}>
+                      <span className="timeline-when">{h.when}</span>
+                      <div>
+                        <h3>{h.title}</h3>
+                        <p>{h.copy}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="contact-block reveal" style={{ marginTop: '2.4rem' }}>
+                  <h3>Somos una fundación con personalidad jurídica vigente</h3>
+                  <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.92rem' }}>
+                    RUT {RUT_ONG} · Registro N° {REG_NUM}. Puedes pedirnos el detalle de cualquier
+                    gasto veterinario que hayas ayudado a cubrir, y te lo mostramos.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Educación */}
+            <section className="section" aria-labelledby="educacion-title">
+              <div className="wrap">
+                <div className="split">
+                  <figure className="split-figure reveal">
+                    {/* PLACEHOLDER: reemplazar por una foto real de una charla educativa. */}
+                    <img src="/media/placeholders/educacion.webp" width="1400" height="1866"
+                      alt="Gato en un espacio doméstico, fotografía de referencia" />
+                    <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+                  </figure>
+
+                  <div className="split-body reveal">
+                    <p className="section-label">Proyecto Arca Educa</p>
+                    <h2 style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.4rem)', letterSpacing: '-0.025em', lineHeight: '0.96', marginBottom: '1.2rem' }}>
+                      Educar también es una forma de rescatar.
+                    </h2>
+                    <p>
+                      Hacemos charlas en colegios y jardines infantiles sobre tenencia responsable,
+                      esterilización y respeto hacia los animales. Nos interesa llegar temprano:
+                      un niño que entiende que un gato siente es un adulto que no abandona.
+                    </p>
+                    <p>
+                      Si trabajas en un establecimiento educacional y quieres una charla, escríbenos.
+                      No cobramos por ellas.
+                    </p>
+                    <div className="page-hero-actions" style={{ marginTop: '1.2rem' }}>
+                      <a className="button button--outline" href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
+                        Ver @proyectoarcaeduca
+                      </a>
+                      <a className="button button--outline" href="/contacto"
+                        onClick={() => trackEvent('contact_start', { placement: 'nosotras_educa' })}>
+                        Solicitar una charla
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <CierreCTA
+              titulo="¿Nos acompañas?"
+              texto="Adoptar, dar hogar temporal o aportar cada mes. Cualquiera de las tres cambia lo que podemos hacer el próximo rescate."
+              acciones={
+                <React.Fragment>
+                  <a className="button button--light" href="/adoptar"
+                    onClick={() => trackEvent('adoption_start', { placement: 'nosotras_cierre' })}>Adoptar</a>
+                  <a className="button button--ghost-light" href="/como-ayudar">Otras formas de ayudar</a>
+                </React.Fragment>
+              }
+            />
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

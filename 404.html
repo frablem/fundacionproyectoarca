@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página no encontrada — Fundación Proyecto Arca</title>
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="No encontramos la página que buscabas en el sitio de Fundación Proyecto Arca." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Página no encontrada — Fundación Proyecto Arca" />
+  <meta property="og:description" content="No encontramos la página que buscabas." />
+  <meta property="og:image" content="https://proyectoarcafundacion.cl/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow } = window.SharedComponents;
+    const { useReveal } = window.SharedApp;
+
+    const App = () => {
+      useReveal();
+      return (
+        <React.Fragment>
+          <Navbar />
+          <main id="contenido">
+            <section className="wrap notfound">
+              <div>
+                <p className="eyebrow" style={{ justifyContent: 'center' }}>
+                  <span className="eyebrow-dot" aria-hidden="true"></span>Error 404
+                </p>
+                <h1>Este gato se escondió.</h1>
+                <p>
+                  La página que buscabas no existe o cambió de dirección. Puedes volver al inicio o
+                  ir directo a ver quiénes están esperando familia.
+                </p>
+                <div className="page-hero-actions">
+                  <a className="button" href="/">Volver al inicio <IconArrow size={17} /></a>
+                  <a className="button button--outline" href="/adoptar">Ver gatitos en adopción</a>
+                </div>
+              </div>
+            </section>
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

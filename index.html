@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundación Proyecto Arca — Rescatamos vidas, transformamos historias</title>
+  <meta name="description" content="Fundación Proyecto Arca rescata, rehabilita y busca familias responsables para gatos abandonados en La Serena, Coquimbo y Santiago. Adopta, dona o hazte Socio Guardián FPA 365." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fundación Proyecto Arca — Rescatamos vidas, transformamos historias" />
+  <meta property="og:description" content="Rescatamos, rehabilitamos y acompañamos a gatos en situación de abandono en La Serena, Coquimbo y Santiago hasta encontrarles una familia responsable." />
+  <meta property="og:image" content="https://proyectoarcafundacion.cl/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:url" content="https://proyectoarcafundacion.cl/" />
+  <link rel="canonical" href="https://proyectoarcafundacion.cl/" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Fundación Proyecto Arca",
+      "url": "https://proyectoarcafundacion.cl",
+      "logo": "https://proyectoarcafundacion.cl/media/logo.png",
+      "description": "Fundación chilena dedicada al rescate, rehabilitación y adopción responsable de gatos en situación de abandono en La Serena, Coquimbo y Santiago.",
+      "areaServed": ["La Serena", "Coquimbo", "Santiago"],
+      "sameAs": [
+        "https://www.instagram.com/fundacionproyectoarca/",
+        "https://www.instagram.com/proyectoarcaeduca/"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "proyectoarcacoquimbo@gmail.com",
+        "contactType": "customer service",
+        "availableLanguage": "Spanish"
+      }
+    }
+  </script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="https://petfi.io/widgets/foundation-rescues-widget.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, IconHeart, IconPaw, trackEvent } = window.SharedComponents;
+    const {
+      useReveal, useCollection, fmtDate, stripHtml, resumen,
+      Cargando, EstadoVacio, MapaCuidado, FranjaCiudades, AvisoTraslado,
+      PetfiRescues, HojaTransferencia, SociosGuardianes
+    } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, PETFI_PROFILE_URL } = window.SiteConfig;
+
+    /* ---------- Hero ---------- */
+    const Hero = () => (
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-folio" aria-hidden="true"><span>Arca / 01</span><span>Chile</span></div>
+
+        <div className="hero-copy reveal">
+          <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Rescate felino y educación · Chile</p>
+          <h1 id="hero-title">Rescatamos vidas, <em>transformamos historias.</em></h1>
+          <p className="hero-lead">
+            Trabajamos por la protección y el bienestar de los gatos en situación de abandono en
+            La Serena, Coquimbo y Santiago. Los rescatamos, los rehabilitamos y acompañamos su
+            recuperación hasta encontrarles una familia responsable.
+          </p>
+
+          <div className="hero-actions">
+            <div className="hero-actions-row">
+              <a className="button button--yellow" href="/adoptar"
+                onClick={() => trackEvent('adoption_start', { placement: 'hero' })}>
+                Adoptar un gato <IconArrow size={17} />
+              </a>
+              <a className="button" href="/donar"
+                onClick={() => trackEvent('donation_start', { placement: 'hero' })}>
+                Donar <IconHeart size={17} />
+              </a>
+            </div>
+            <p className="hero-actions-note">
+              <strong>Dos formas de ayudar hoy.</strong> Abrir un hogar o sostener el cuidado de
+              quienes todavía esperan.
+            </p>
+          </div>
+
+          <div className="hero-note">
+            <span className="note-line" aria-hidden="true"></span>
+            <p>Somos un equipo de mujeres. Cada gato que llega tiene tiempo, cuidado y una oportunidad real de volver a confiar.</p>
+          </div>
+        </div>
+
+        <figure className="hero-figure reveal">
+          {/* PLACEHOLDER: reemplazar por una fotografía real de un rescate de Arca. */}
+          <div className="hero-image-wrap">
+            <img src="/media/placeholders/hero-gato.webp" width="1400" height="933" fetchpriority="high"
+              alt="Gato atigrado descansando, fotografía de referencia" />
+          </div>
+          <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+        </figure>
+      </section>
+    );
+
+    /* ---------- Nuestra labor ---------- */
+    const PILARES = [
+      {
+        num: '01',
+        title: 'Rescate y rehabilitación',
+        copy: 'Rescatamos gatos en situación de abandono y les brindamos la atención veterinaria, los cuidados y el entorno seguro que necesitan para recuperarse y comenzar una nueva vida.'
+      },
+      {
+        num: '02',
+        title: 'Familias responsables',
+        copy: 'Trabajamos para encontrar familias comprometidas con la adopción responsable, capaces de ofrecerles un hogar seguro, amoroso y para toda la vida.'
+      },
+      {
+        num: '03',
+        title: 'Educación que previene',
+        copy: 'Promovemos la tenencia responsable y el bienestar animal a través de contenido educativo en redes sociales y actividades en colegios y jardines, porque creemos que educar también es una forma de prevenir el abandono.'
+      }
+    ];
+
+    const Labor = () => (
+      <section className="section" id="labor" aria-labelledby="labor-title">
+        <div className="wrap">
+          <div className="section-head reveal">
+            <div>
+              <p className="section-label">02 / Nuestra labor</p>
+              <h2 id="labor-title">Cuidar también es construir futuro.</h2>
+            </div>
+            <p>
+              Trabajamos desde el rescate concreto y la educación cotidiana. Queremos que más
+              personas sepan cómo acompañar, prevenir el abandono y respetar a cada animal como un
+              ser sintiente.
+            </p>
+          </div>
+
+          <div className="mission-grid">
+            {PILARES.map((p) => (
+              <article className="mission-item reveal" key={p.num}>
+                <div className="mission-num">{p.num}</div>
+                <div>
+                  <h3>{p.title}</h3>
+                  <p>{p.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <blockquote className="pull-quote reveal">
+            “Creemos que cada vida rescatada merece una segunda oportunidad: un hogar seguro, una
+            familia responsable y una vida digna, llena de amor.”
+            <cite>— Fundación Proyecto Arca</cite>
+          </blockquote>
+        </div>
+      </section>
+    );
+
+    /* ---------- Adopción ---------- */
+    const Adopcion = () => {
+      const [limite, setLimite] = React.useState(
+        () => (window.matchMedia('(max-width: 767px)').matches ? 4 : 5)
+      );
+
+      return (
+        <section className="section section--soft" id="adopcion" aria-labelledby="adopcion-title">
+          <div className="wrap">
+            <div className="adoption-head reveal">
+              <div>
+                <p className="section-label">03 / Adopción responsable</p>
+                <h2 id="adopcion-title">Conoce a quienes esperan una familia.</h2>
+              </div>
+              <p>
+                Adoptar es asumir una historia completa: sus cuidados, sus tiempos y la compañía que
+                construiremos juntas.
+              </p>
+            </div>
+
+            <AvisoTraslado />
+
+            <PetfiRescues id="petfi-foundation-rescues-home" limit={limite} />
+
+            <div className="petfi-foot">
+              <a className="button" href="/adoptar"
+                onClick={() => trackEvent('adoption_start', { placement: 'home_grid' })}>
+                Ver todos los gatitos <IconArrow size={17} />
+              </a>
+              <a className="text-link" href="/adoptar#proceso"
+                onClick={() => trackEvent('adoption_start', { placement: 'home_proceso_link' })}>
+                Cómo es el proceso
+              </a>
+              <p className="petfi-credit">Fichas actualizadas por nosotras en Petfi.</p>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    /* ---------- Cuidado sin fronteras ---------- */
+    const Territorio = () => (
+      <section className="territory-band on-dark" aria-labelledby="territorio-title">
+        <div className="wrap territory-grid">
+          <div className="territory-copy reveal">
+            <p className="eyebrow">Cuidado sin fronteras</p>
+            <h2 id="territorio-title">La distancia no debería decidir quién recibe ayuda.</h2>
+            <p>
+              Conectamos adopciones entre La Serena, Coquimbo y Santiago. Si el gato está en una
+              ciudad y su familia en otra, coordinamos el traslado con hogares temporales,
+              voluntarias y familias adoptantes para que ninguna historia quede aislada en el mapa.
+            </p>
+            <div className="territory-panel" style={{ marginTop: '1.8rem' }}>
+              <p>Cuando una historia cambia de rumbo, toda la red avanza.</p>
+              <small>Fundación Proyecto Arca · Rescate, cuidado y adopción responsable</small>
+            </div>
+          </div>
+          <MapaCuidado />
+        </div>
+      </section>
+    );
+
+    /* ---------- Historias de la red ---------- */
+    const Historias = () => {
+      const { data, loading } = useCollection('stories', {
+        sort: (a, b) => Number(b.order || 0) - Number(a.order || 0),
+        max: 2
+      });
+
+      return (
+        <section className="section" id="historias" aria-labelledby="historias-title">
+          <div className="wrap">
+            <div className="stories-head reveal">
+              <div>
+                <p className="section-label">05 / Historias de la red</p>
+                <h2 id="historias-title">Cada rescate deja una huella.</h2>
+              </div>
+              <p>
+                Un espacio para contar procesos con honestidad: lo que vimos, lo que aprendimos y lo
+                que aún queda por hacer.
+              </p>
+            </div>
+
+            {loading ? <Cargando label="Cargando historias…" /> : null}
+
+            {!loading && data.length > 0 ? (
+              <React.Fragment>
+                <div className="story-grid">
+                  {data.map((story, i) => (
+                    <a className="story-card reveal" key={story.id} href={'/historias?h=' + story.id}>
+                      <div className="story-index" aria-hidden="true">
+                        {story.image ? <img src={story.image} alt="" /> : null}
+                        <span>{'0' + (i + 1)}</span>
+                      </div>
+                      <div className="story-body">
+                        <span className="story-kicker">Rescate{story.date ? ' · ' + fmtDate(story.date) : ''}</span>
+                        <h3>{story.title}</h3>
+                        <p>{resumen(story.testimonial || stripHtml(story.content), 150)}</p>
+                        <span className="text-link">Leer más <IconArrow size={16} /></span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+                <p style={{ marginTop: '1.8rem', marginBottom: 0 }}>
+                  <a className="text-link" href="/historias">Ver todas las historias <IconArrow size={16} /></a>
+                </p>
+              </React.Fragment>
+            ) : null}
+
+            {!loading && data.length === 0 ? (
+              <EstadoVacio titulo="Estamos escribiendo las primeras.">
+                <p>
+                  Tenemos historias que merecen contarse bien: Tony, que esperó un año y medio;
+                  Toñito, que superó todos los pronósticos; Emilia, que nació en el antejardín de una
+                  casa. Las publicaremos aquí. Mientras tanto, las vas a encontrar en nuestro Instagram.
+                </p>
+                <a className="button button--outline" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                  Seguirnos en Instagram
+                </a>
+              </EstadoVacio>
+            ) : null}
+          </div>
+        </section>
+      );
+    };
+
+    /* ---------- Cómo ayudar ---------- */
+    const AYUDAS = [
+      {
+        num: '01 / Donar',
+        title: 'Sostener el cuidado',
+        copy: 'Una transferencia ayuda a cubrir alimentación, atención veterinaria y traslados.',
+        cta: 'Quiero participar',
+        href: '/donar',
+        event: 'donation_start'
+      },
+      {
+        num: '02 / Adoptar',
+        title: 'Abrir un hogar',
+        copy: 'Conoce el proceso y encuentra una adopción que se construya con tiempo y compromiso.',
+        cta: 'Quiero participar',
+        href: '/adoptar',
+        event: 'adoption_start'
+      },
+      {
+        num: '03 / Acompañar',
+        title: 'Ser hogar temporal',
+        copy: 'Conversa con nosotras si puedes ofrecer un espacio seguro durante una recuperación.',
+        cta: 'Quiero participar',
+        href: '/contacto?motivo=hogar_temporal',
+        event: 'volunteer_start'
+      },
+      {
+        num: '04 / Difundir',
+        title: 'Hacer circular una historia',
+        copy: 'Comparte nuestras publicaciones y contenidos de educación para llegar a más guardianes responsables.',
+        cta: 'Quiero participar',
+        href: INSTAGRAM_URL,
+        event: 'contact_start',
+        external: true
+      }
+    ];
+
+    const ComoAyudar = () => (
+      <section className="section help-section on-dark" id="ayudar" aria-labelledby="ayudar-title">
+        <div className="wrap">
+          <div className="section-head reveal">
+            <div>
+              <p className="eyebrow">06 / Cómo ayudar</p>
+              <h2 id="ayudar-title">Hay muchas formas de hacer espacio.</h2>
+            </div>
+            <p>
+              Elige una acción posible para ti. Cuando se sostiene en comunidad, cada gesto se
+              convierte en cuidado concreto.
+            </p>
+          </div>
+
+          <div className="help-grid">
+            {AYUDAS.map((item) => (
+              <article className="help-card reveal" key={item.num}>
+                <span className="help-card-number">{item.num}</span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                </div>
+                <a className="arrow-link" href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer' : undefined}
+                  onClick={() => trackEvent(item.event, { placement: 'help_grid', help_type: item.num.split(' / ')[1].toLowerCase() })}>
+                  {item.cta} <IconArrow size={16} />
+                </a>
+              </article>
+            ))}
+          </div>
+
+          <p style={{ marginTop: '2rem', marginBottom: 0 }}>
+            <a className="text-link" href="/como-ayudar">Ver cada forma en detalle <IconArrow size={16} /></a>
+          </p>
+        </div>
+      </section>
+    );
+
+    /* ---------- Aporte directo ---------- */
+    const Donar = () => (
+      <section className="donation-section on-dark" id="donar" aria-labelledby="donar-title">
+        <div className="wrap donation-layout">
+          <div className="donation-copy reveal">
+            <p className="eyebrow">07 / Aporte directo</p>
+            <h2 id="donar-title">Tu ayuda llega a una vida.</h2>
+            <p>
+              Alimentación, arena, esterilizaciones, exámenes y traslados. Cada aporte se convierte
+              en algo concreto para un gato que hoy está esperando. Puedes hacerlo una vez o
+              acompañarnos todos los meses como Socio Guardián FPA 365.
+            </p>
+            <a className="button button--yellow" href="/donar"
+              onClick={() => trackEvent('donation_start', { placement: 'home_donation_band' })}>
+              Ver todas las formas de donar <IconArrow size={17} />
+            </a>
+          </div>
+          <HojaTransferencia />
+        </div>
+      </section>
+    );
+
+    /* ---------- Contacto ---------- */
+    const Contacto = () => (
+      <section className="section" id="contacto" aria-labelledby="contacto-title">
+        <div className="wrap">
+          <div className="section-head reveal">
+            <div>
+              <p className="section-label">08 / Conversemos</p>
+              <h2 id="contacto-title">Hablemos de cómo ayudar.</h2>
+            </div>
+            <p>
+              Estamos en La Serena, Coquimbo y Santiago. No publicamos una dirección de refugio: así
+              cuidamos a los gatos y coordinamos cada visita con calma y responsabilidad.
+            </p>
+          </div>
+
+          <div className="split reveal">
+            <div className="split-body">
+              <div className="contact-list">
+                <a href={'mailto:' + CONTACT_EMAIL}
+                  onClick={() => trackEvent('contact_start', { placement: 'home', method: 'email' })}>
+                  {CONTACT_EMAIL}
+                </a>
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@fundacionproyectoarca</a>
+                <a href="https://www.instagram.com/proyectoarcaeduca/" target="_blank" rel="noreferrer">
+                  @proyectoarcaeduca · educación
+                </a>
+                <p>Respondemos lo antes posible. Somos un equipo pequeño y voluntario.</p>
+              </div>
+              <p style={{ marginTop: '1.6rem', marginBottom: 0 }}>
+                <a className="button button--outline" href="/contacto"
+                  onClick={() => trackEvent('contact_start', { placement: 'home', method: 'form' })}>
+                  Escribirnos por el formulario
+                </a>
+              </p>
+            </div>
+
+            <div className="contact-block">
+              <h3>¿Tienes una pregunta sobre adopción, educación o colaboración?</h3>
+              <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.9rem' }}>
+                Escríbenos y lo vemos juntas. También coordinamos charlas de tenencia responsable en
+                colegios y jardines infantiles.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+
+    /* ---------- App ---------- */
+    const App = () => {
+      useReveal();
+      return (
+        <React.Fragment>
+          <Navbar active="inicio" />
+          <main id="contenido">
+            <Hero />
+            <FranjaCiudades />
+            <Labor />
+            <Adopcion />
+            <Territorio />
+            <Historias />
+            <ComoAyudar />
+            <Donar />
+            <SociosGuardianes />
+            <Contacto />
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

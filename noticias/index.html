@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noticias — Fundación Proyecto Arca</title>
+  <meta name="description" content="Noticias, contenido educativo y novedades de Fundación Proyecto Arca sobre rescate felino y tenencia responsable." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Noticias — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Novedades, campañas y contenido educativo sobre rescate felino y tenencia responsable." />
+  <meta property="og:image" content="https://proyectoarcafundacion.cl/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:url" content="https://proyectoarcafundacion.cl/noticias" />
+  <link rel="canonical" href="https://proyectoarcafundacion.cl/noticias" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, trackEvent } = window.SharedComponents;
+    const {
+      useReveal, useCollection, useDocParam, fmtDate, parseCategories, stripHtml, resumen, sanitize,
+      Cargando, EstadoVacio, CierreCTA
+    } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, BASE_URL } = window.SiteConfig;
+
+    const Detalle = ({ post }) => {
+      const cats = parseCategories(post.categories);
+      const url = (BASE_URL || window.location.origin) + '/noticias?post=' + (post.slug || post.id);
+
+      return (
+        <section className="section" aria-labelledby="detalle-title">
+          <div className="wrap">
+            <p style={{ marginBottom: '1.4rem' }}>
+              <a className="text-link" href="/noticias">← Volver a noticias</a>
+            </p>
+
+            <div className="detail-head reveal">
+              <p className="section-label">
+                {cats.length ? cats.join(' · ') + ' · ' : ''}
+                {fmtDate(post.publishedDate || post.date)}
+              </p>
+              <h1 id="detalle-title">{post.title}</h1>
+              {post.summary ? <p className="lede" style={{ color: 'var(--muted)' }}>{post.summary}</p> : null}
+            </div>
+
+            {post.banner || post.thumbnail ? (
+              <figure className="detail-banner reveal">
+                <img src={post.banner || post.thumbnail} alt={post.title} />
+              </figure>
+            ) : null}
+
+            <div className="prose reveal" dangerouslySetInnerHTML={{ __html: sanitize(post.content) }} />
+
+            <div className="detail-foot">
+              {post.author ? <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.88rem' }}>Por {post.author}</p> : null}
+              <a className="text-link"
+                href={'https://wa.me/?text=' + encodeURIComponent(post.title + ' — ' + url)}
+                target="_blank" rel="noreferrer">
+                Compartir por WhatsApp <IconArrow size={16} />
+              </a>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const Listado = ({ posts }) => {
+      const [cat, setCat] = React.useState('todas');
+
+      const todas = React.useMemo(() => {
+        const set = new Set();
+        posts.forEach((p) => parseCategories(p.categories).forEach((c) => set.add(c)));
+        return Array.from(set).sort((a, b) => a.localeCompare(b, 'es'));
+      }, [posts]);
+
+      const visibles = cat === 'todas'
+        ? posts
+        : posts.filter((p) => parseCategories(p.categories).indexOf(cat) > -1);
+
+      return (
+        <section className="section" aria-labelledby="listado-title">
+          <div className="wrap">
+            <h2 id="listado-title" className="sr-only">Listado de noticias</h2>
+
+            {todas.length ? (
+              <div className="chip-row reveal">
+                <button type="button" className={'chip' + (cat === 'todas' ? ' is-active' : '')}
+                  aria-pressed={cat === 'todas'} onClick={() => setCat('todas')}>
+                  Todas
+                </button>
+                {todas.map((c) => (
+                  <button key={c} type="button" className={'chip' + (cat === c ? ' is-active' : '')}
+                    aria-pressed={cat === c} onClick={() => setCat(c)}>
+                    {c}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
+            <div className="article-grid">
+              {visibles.map((p) => (
+                <a className="article-card reveal" key={p.id} href={'/noticias?post=' + (p.slug || p.id)}>
+                  {p.banner || p.thumbnail ? (
+                    <figure><img src={p.banner || p.thumbnail} alt="" loading="lazy" /></figure>
+                  ) : null}
+                  <div className="article-body">
+                    <span className="article-meta">{fmtDate(p.publishedDate || p.date)}</span>
+                    <h3>{p.title}</h3>
+                    <p>{resumen(p.summary || stripHtml(p.content), 150)}</p>
+                    <span className="text-link">Leer <IconArrow size={16} /></span>
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            {visibles.length === 0 ? (
+              <p style={{ color: 'var(--muted)' }}>No hay publicaciones en esta categoría.</p>
+            ) : null}
+          </div>
+        </section>
+      );
+    };
+
+    const App = () => {
+      useReveal();
+
+      const { data, loading } = useCollection('blog', {
+        filter: (d) => (d.status || 'published') === 'published',
+        sort: (a, b) => new Date(b.publishedDate || b.date || 0) - new Date(a.publishedDate || a.date || 0)
+      });
+
+      const slug = useDocParam('post');
+      // Los enlaces que comparte el CMS usan slug; el id es el respaldo.
+      const post = slug ? data.find((d) => d.slug === slug) || data.find((d) => d.id === slug) : null;
+
+      return (
+        <React.Fragment>
+          <Navbar active="noticias" />
+          <main id="contenido">
+
+            {!post ? (
+              <React.Fragment>
+                <section className="wrap page-hero" aria-labelledby="page-title">
+                  <div className="reveal">
+                    <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Noticias</p>
+                    <h1 id="page-title">Lo que estamos haciendo.</h1>
+                    <p className="lede">
+                      Campañas, avances, contenido educativo y noticias de la fundación. Escrito por
+                      nosotras, sin adornos.
+                    </p>
+                  </div>
+                </section>
+                <div className="rule" aria-hidden="true"></div>
+              </React.Fragment>
+            ) : null}
+
+            {loading ? (
+              <section className="section"><div className="wrap"><Cargando label="Cargando noticias…" /></div></section>
+            ) : null}
+
+            {!loading && post ? <Detalle post={post} /> : null}
+
+            {!loading && !post && slug ? (
+              <section className="section">
+                <div className="wrap">
+                  <EstadoVacio titulo="No encontramos esa publicación.">
+                    <p>Puede que haya cambiado de dirección o que ya no esté publicada.</p>
+                    <a className="button button--outline" href="/noticias">Ver todas las noticias</a>
+                  </EstadoVacio>
+                </div>
+              </section>
+            ) : null}
+
+            {!loading && !slug && data.length > 0 ? <Listado posts={data} /> : null}
+
+            {!loading && !slug && data.length === 0 ? (
+              <section className="section">
+                <div className="wrap">
+                  <EstadoVacio titulo="Estamos preparando nuestras primeras historias.">
+                    <p>
+                      Todavía no publicamos noticias en el sitio. Mientras tanto, todo lo que hacemos
+                      lo contamos en Instagram, casi en tiempo real.
+                    </p>
+                    <a className="button button--outline" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                      Seguirnos en Instagram
+                    </a>
+                  </EstadoVacio>
+                </div>
+              </section>
+            ) : null}
+
+            <CierreCTA
+              titulo="Cada publicación empieza con un rescate."
+              texto="Y cada rescate se sostiene con alguien que aportó, adoptó o prestó su casa."
+              acciones={
+                <React.Fragment>
+                  <a className="button button--light" href="/donar"
+                    onClick={() => trackEvent('donation_start', { placement: 'noticias_cierre' })}>Donar</a>
+                  <a className="button button--ghost-light" href="/adoptar"
+                    onClick={() => trackEvent('adoption_start', { placement: 'noticias_cierre' })}>Adoptar</a>
+                </React.Fragment>
+              }
+            />
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

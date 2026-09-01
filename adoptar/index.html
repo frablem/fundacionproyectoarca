@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adoptar — Fundación Proyecto Arca</title>
+  <meta name="description" content="Gatitos en adopción de Fundación Proyecto Arca. Conoce el proceso, los requisitos y postula. Si vives en La Serena o Santiago, coordinamos el traslado de tu gato." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Adoptar — Fundación Proyecto Arca" />
+  <meta property="og:description" content="Conoce a los gatos que esperan familia en La Serena, Coquimbo y Santiago. Proceso, requisitos y adopción responsable." />
+  <meta property="og:image" content="https://proyectoarcafundacion.cl/media/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:url" content="https://proyectoarcafundacion.cl/adoptar" />
+  <link rel="canonical" href="https://proyectoarcafundacion.cl/adoptar" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script src="https://petfi.io/widgets/foundation-rescues-widget.js"></script>
+  <script src="/shared/dompurify.min.js"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
+  <script type="text/babel" src="/shared/app.js"></script>
+  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "sbvzDic2J1XpbstGsWYU4I4KkMy1";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event('fbase-ready'));
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { Navbar, Footer, IconArrow, IconCheck, trackEvent } = window.SharedComponents;
+    const { useReveal, AvisoTraslado, PetfiRescues, CierreCTA } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, PETFI_PROFILE_URL } = window.SiteConfig;
+
+    const PASOS = [
+      { num: 'Paso 01', title: 'Míralos y elige', copy: 'Revisa las fichas de esta página. Cada una dice su edad, su ciudad y lo que necesita para estar bien.' },
+      { num: 'Paso 02', title: 'Postula en su ficha', copy: 'Abre la ficha del gato que te interesa y postula ahí mismo. La solicitud nos llega directo a nosotras.' },
+      { num: 'Paso 03', title: 'Conversamos', copy: 'Te contactamos para hablar con calma, resolver dudas y ver si ese gato y tu casa se corresponden.' },
+      { num: 'Paso 04', title: 'Entrega y seguimiento', copy: 'Coordinamos la entrega, firmamos el compromiso de adopción y seguimos en contacto después.' }
+    ];
+
+    const App = () => {
+      useReveal();
+
+      return (
+        <React.Fragment>
+          <Navbar active="adoptar" />
+          <main id="contenido">
+
+            <section className="wrap page-hero" aria-labelledby="page-title">
+              <div className="reveal">
+                <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Adopción responsable</p>
+                <h1 id="page-title">Conoce a quienes esperan una familia.</h1>
+                <p className="lede">
+                  Adoptar es asumir una historia completa: sus cuidados, sus tiempos y la compañía
+                  que construiremos juntas. Estos son los gatos que hoy están buscando hogar.
+                </p>
+                <div className="page-hero-actions">
+                  <a className="button" href="#gatitos"
+                    onClick={() => trackEvent('adoption_start', { placement: 'adoptar_hero' })}>
+                    Ver quiénes esperan <IconArrow size={17} />
+                  </a>
+                  <a className="button button--outline" href="#proceso">Cómo es el proceso</a>
+                </div>
+              </div>
+            </section>
+
+            <div className="rule" aria-hidden="true"></div>
+
+            {/* Listado completo de Petfi */}
+            <section className="section section--soft" id="gatitos" aria-labelledby="gatitos-title">
+              <div className="wrap">
+                <div className="adoption-head reveal">
+                  <div>
+                    <p className="section-label">Gatitos en adopción</p>
+                    <h2 id="gatitos-title">Todos los que esperan hoy.</h2>
+                  </div>
+                  <p>
+                    Mantenemos las fichas al día en Petfi. Toca cualquiera para ver su historia
+                    completa, su edad y sus cuidados.
+                  </p>
+                </div>
+
+                <AvisoTraslado />
+
+                <PetfiRescues id="petfi-foundation-rescues" limit={200} />
+
+                <div className="petfi-foot">
+                  <a className="button" href={PETFI_PROFILE_URL} target="_blank" rel="noreferrer"
+                    onClick={() => trackEvent('petfi_referral_click', { placement: 'adoptar_profile' })}>
+                    Ver nuestro perfil en Petfi <IconArrow size={17} />
+                  </a>
+                  <a className="text-link" href="/contacto?motivo=adopcion"
+                    onClick={() => trackEvent('adoption_start', { placement: 'adoptar_consulta' })}>
+                    Tengo una duda antes de postular
+                  </a>
+                  <p className="petfi-credit">
+                    ¿No ves al gato que buscas? Escríbenos a {CONTACT_EMAIL}: a veces hay rescatados
+                    que todavía están en recuperación.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Proceso */}
+            <section className="section" id="proceso" aria-labelledby="proceso-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">El proceso</p>
+                    <h2 id="proceso-title">Cuatro pasos, sin apuro.</h2>
+                  </div>
+                  <p>
+                    Ninguna adopción se cierra el mismo día. Preferimos que la decisión esté tomada
+                    de verdad antes de que el gato se mueva de donde está.
+                  </p>
+                </div>
+
+                <div className="step-grid">
+                  {PASOS.map((p) => (
+                    <article className="step reveal" key={p.num}>
+                      <span className="step-num">{p.num}</span>
+                      <h3>{p.title}</h3>
+                      <p>{p.copy}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Requisitos */}
+            <section className="section section--paper-deep" id="requisitos" aria-labelledby="requisitos-title">
+              <div className="wrap">
+                <div className="split">
+                  <div className="split-body reveal">
+                    <p className="section-label">Requisitos</p>
+                    <h2 id="requisitos-title" style={{ fontSize: 'clamp(2.2rem, 5.5vw, 3.4rem)', letterSpacing: '-0.025em', lineHeight: '0.96', marginBottom: '1.4rem' }}>
+                      Lo que pedimos, y por qué.
+                    </h2>
+                    <ul className="req-list">
+                      <li><IconCheck /> <span><strong>Ser mayor de edad</strong> y presentar tu cédula de identidad. La adopción queda a nombre de una persona responsable.</span></li>
+                      <li><IconCheck /> <span><strong>Acuerdo de todo el hogar.</strong> Si alguien en la casa no está de acuerdo, el gato lo va a pagar.</span></li>
+                      <li><IconCheck /> <span><strong>Autorización del arrendador</strong> si arriendas. Muchas devoluciones parten por esto.</span></li>
+                      <li><IconCheck /> <span><strong>Ventanas y balcones protegidos</strong> con malla. Es el requisito que más insistimos y no es negociable en departamentos.</span></li>
+                      <li><IconCheck /> <span><strong>Compromiso de esterilización</strong> cuando el gato tenga la edad, si aún no está esterilizado.</span></li>
+                      <li><IconCheck /> <span><strong>Disposición a la atención veterinaria</strong> y a mantener el contacto con nosotras durante el seguimiento.</span></li>
+                    </ul>
+                    <p style={{ marginTop: '1.4rem', marginBottom: 0, color: 'var(--muted)', fontSize: '0.92rem' }}>
+                      No cobramos por adoptar. Si en algún momento no puedes seguir cuidándolo,
+                      lo primero es avisarnos: siempre es mejor que nos hagamos cargo nosotras.
+                    </p>
+                  </div>
+
+                  <figure className="split-figure reveal">
+                    {/* PLACEHOLDER: reemplazar por una foto real de un gato adoptado. */}
+                    <img src="/media/placeholders/rescate-cuidado.webp" width="1400" height="1960"
+                      alt="Gato descansando en un hogar, fotografía de referencia" />
+                    <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            {/* Preguntas */}
+            <section className="section" aria-labelledby="faq-title">
+              <div className="wrap">
+                <div className="section-head reveal">
+                  <div>
+                    <p className="section-label">Preguntas frecuentes</p>
+                    <h2 id="faq-title">Lo que más nos preguntan.</h2>
+                  </div>
+                </div>
+
+                <div className="faq reveal">
+                  <details className="faq-item">
+                    <summary>¿Vivo en Santiago y el gato está en Coquimbo. Se puede?</summary>
+                    <p>
+                      Sí. Coordinamos adopciones entre las tres ciudades y organizamos el traslado
+                      con voluntarias. Conversamos contigo la fecha, la forma y quién lo acompaña.
+                    </p>
+                  </details>
+                  <details className="faq-item">
+                    <summary>¿Tiene costo adoptar?</summary>
+                    <p>
+                      No. La adopción es gratuita. Si quieres colaborar con los gastos veterinarios
+                      del gato que adoptas, se agradece, pero nunca es una condición.
+                    </p>
+                  </details>
+                  <details className="faq-item">
+                    <summary>¿Los gatos vienen esterilizados y vacunados?</summary>
+                    <p>
+                      Entregamos a cada gato con su evaluación veterinaria al día y esterilizado
+                      cuando tiene la edad. Si es muy pequeño, la esterilización queda como
+                      compromiso firmado y hacemos el seguimiento.
+                    </p>
+                  </details>
+                  <details className="faq-item">
+                    <summary>¿Puedo adoptar si tengo otros animales?</summary>
+                    <p>
+                      Claro. Nos importa saber cómo son y cómo planeas hacer la presentación. Te
+                      damos las indicaciones para que la llegada sea gradual y sin sustos.
+                    </p>
+                  </details>
+                  <details className="faq-item">
+                    <summary>Rescaté un gato en la calle, ¿lo pueden recibir?</summary>
+                    <p>
+                      Escríbenos y cuéntanos el caso con detalle y fotos. Nuestra capacidad depende
+                      de los hogares temporales disponibles en ese momento, así que no siempre
+                      podemos, pero siempre respondemos y orientamos.
+                    </p>
+                  </details>
+                  <details className="faq-item">
+                    <summary>¿Adoptan gatos con enfermedades crónicas?</summary>
+                    <p>
+                      Rescatamos gatos positivos a inmunodeficiencia o leucemia felina y casos
+                      crónicos. Un diagnóstico no es una sentencia: buscamos familias informadas que
+                      quieran acompañarlos igual.
+                    </p>
+                  </details>
+                </div>
+              </div>
+            </section>
+
+            <CierreCTA
+              titulo="¿Ya sabes con quién quieres empezar?"
+              texto="Abre su ficha y postula ahí mismo. Si todavía tienes dudas, escríbenos y las vemos antes."
+              acciones={
+                <React.Fragment>
+                  <a className="button button--light" href="#gatitos"
+                    onClick={() => trackEvent('adoption_start', { placement: 'adoptar_cierre' })}>
+                    Ver el listado
+                  </a>
+                  <a className="button button--ghost-light" href="/contacto"
+                    onClick={() => trackEvent('contact_start', { placement: 'adoptar_cierre' })}>
+                    Tengo una duda
+                  </a>
+                </React.Fragment>
+              }
+            />
+          </main>
+          <Footer />
+        </React.Fragment>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
