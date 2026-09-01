@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /404.html
 
-Sitemap: https://PLACEHOLDER_DOMAIN/sitemap.xml
+Sitemap: https://proyectoarcafundacion.cl/sitemap.xml

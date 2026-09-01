@@ -20,10 +20,11 @@ const INSTAGRAM_EDUCA_HANDLE = '@proyectoarcaeduca';
 const RUT_ONG = '65.201.899-8';
 const REG_NUM = '319235';
 
-/* Se completa cuando el dominio esté resuelto. Vacío desactiva canonical y URLs
-   absolutas en Open Graph, que es lo correcto mientras no haya dominio propio.
-   Nunca poner aquí una URL *.pages.dev. */
-const BASE_URL = '';
+/* Dominio propio de la fundación, recuperado en agosto de 2026. Habilita
+   canonical y URLs absolutas en Open Graph. El apex es la forma canónica.
+   www también sirve el sitio y es el canonical el que consolida, igual que en
+   refugionoe.cl. Nunca poner aquí una URL de proveedor. */
+const BASE_URL = 'https://proyectoarcafundacion.cl';
 
 /* GA4. La medición se activa recién cuando exista la propiedad. */
 const GA_ID = '';
