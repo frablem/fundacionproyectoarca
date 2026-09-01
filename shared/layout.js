@@ -74,7 +74,6 @@ const GUARDIANES = [
     tier: 'Guardián Oro',
     amount: '$10.000',
     color: '#dbcc00',
-    featured: true,
     copy: 'Contribuyes directamente a que podamos recibir nuevos casos y entregarles atención veterinaria.',
     link: 'PLACEHOLDER_MERCADOPAGO_LINK_ORO'
   },

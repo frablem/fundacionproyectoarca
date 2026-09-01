@@ -838,24 +838,12 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
   background: #fff;
   box-shadow: var(--shadow-soft);
 }
-.guardian-card--featured { border-color: var(--purple); box-shadow: 0 14px 40px rgba(119, 54, 139, 0.2); }
 .guardian-tier { display: flex; align-items: center; gap: 0.55rem; color: var(--purple); font-family: var(--condensed); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
 .guardian-dot { width: 0.85rem; height: 0.85rem; flex: 0 0 auto; border-radius: 50%; border: 2px solid rgba(43, 36, 48, 0.18); }
 .guardian-amount { margin: 0; color: var(--purple-deep); font-family: var(--condensed); font-size: 2.1rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
 .guardian-amount small { display: block; margin-top: 0.2rem; color: var(--muted); font-family: "Cabin", sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 .guardian-card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
 .guardian-card .button { margin-top: 0.3rem; }
-.guardians-pending {
-  display: grid;
-  gap: 0.5rem;
-  margin-top: 1.8rem;
-  padding: 1.1rem 1.2rem;
-  border-left: 5px solid var(--yellow);
-  background: rgba(255, 243, 154, 0.55);
-  font-size: 0.9rem;
-}
-.guardians-pending strong { color: var(--purple-deep); font-family: var(--condensed); letter-spacing: 0.04em; }
-.guardians-pending p { margin: 0; color: var(--ink); }
 
 /* ---------- Formularios ---------- */
 

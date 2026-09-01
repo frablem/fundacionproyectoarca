@@ -461,9 +461,24 @@ const HojaTransferencia = ({ titulo, intro }) => {
    Socios Guardianes FPA 365
    ============================================================ */
 
-const SociosGuardianes = ({ compact }) => {
+const SociosGuardianes = () => {
   const { GUARDIANES, CONTACT_EMAIL } = window.SiteConfig;
   const { trackEvent } = window.SharedComponents;
+
+  /* Cada tramo apunta a su suscripción de Mercado Pago en cuanto el link exista.
+     Mientras el campo siga siendo un marcador, cae a correo sin romper nada:
+     basta con pegar la URL en GUARDIANES para que el cobro mensual quede activo. */
+  const destino = (g) => {
+    const esUrl = typeof g.link === 'string' && g.link.indexOf('http') === 0;
+    return esUrl
+      ? { href: g.link, externo: true, metodo: 'mercadopago' }
+      : {
+          href: 'mailto:' + CONTACT_EMAIL + '?subject=' +
+            encodeURIComponent('Quiero ser ' + g.tier + ' — FPA 365'),
+          externo: false,
+          metodo: 'email'
+        };
+  };
 
   return (
     <section className="section guardians" id="socios-guardianes" aria-labelledby="guardianes-title">
@@ -480,32 +495,26 @@ const SociosGuardianes = ({ compact }) => {
         </div>
 
         <div className="guardian-grid">
-          {GUARDIANES.map((g) => (
-            <article key={g.tier} className={'guardian-card reveal' + (g.featured ? ' guardian-card--featured' : '')}>
-              <p className="guardian-tier">
-                <span className="guardian-dot" style={{ background: g.color }} aria-hidden="true"></span>
-                {g.tier}
-              </p>
-              <p className="guardian-amount">{g.amount}<small>al mes</small></p>
-              <p>{g.copy}</p>
-              <a className={'button ' + (g.featured ? 'button--yellow' : 'button--outline')}
-                href={'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Quiero ser ' + g.tier + ' — FPA 365')}
-                onClick={() => trackEvent('donation_start', { placement: 'guardianes', method: 'fpa365', tier: g.tier })}>
-                Quiero ser {g.tier.replace('Guardián ', '')}
-              </a>
-            </article>
-          ))}
+          {GUARDIANES.map((g) => {
+            const d = destino(g);
+            return (
+              <article key={g.tier} className="guardian-card reveal">
+                <p className="guardian-tier">
+                  <span className="guardian-dot" style={{ background: g.color }} aria-hidden="true"></span>
+                  {g.tier}
+                </p>
+                <p className="guardian-amount">{g.amount}<small>al mes</small></p>
+                <p>{g.copy}</p>
+                <a className="button button--outline" href={d.href}
+                  target={d.externo ? '_blank' : undefined}
+                  rel={d.externo ? 'noreferrer' : undefined}
+                  onClick={() => trackEvent('donation_start', { placement: 'guardianes', method: d.metodo, tier: g.tier })}>
+                  Quiero ser {g.tier.replace('Guardián ', '')}
+                </a>
+              </article>
+            );
+          })}
         </div>
-
-        {!compact ? (
-          <div className="guardians-pending reveal">
-            <strong>Suscripción en línea, muy pronto</strong>
-            <p>
-              Estamos terminando de habilitar el pago mensual automático. Mientras tanto, escríbenos
-              y coordinamos tu aporte contigo. Cada Guardián cuenta desde el primer mes.
-            </p>
-          </div>
-        ) : null}
       </div>
     </section>
   );
