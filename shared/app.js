@@ -110,6 +110,7 @@ const useCollection = (name, options) => {
 
   useEffect(() => {
     let cancelled = false;
+    let unsubscribe = null;
 
     const shape = (rows) => {
       let out = rows.slice();
@@ -119,13 +120,19 @@ const useCollection = (name, options) => {
       return out;
     };
 
+    // La red de seguridad de los 12 s tiene que apagarse en cuanto llegan datos.
+    // Si sigue viva, borra la colección ya cargada y la sección se vacía sola
+    // delante del visitante.
+    let timeout = null;
+
     const publish = (rows) => {
       if (cancelled) return;
+      window.clearTimeout(timeout);
       setData(shape(rows));
       setLoading(false);
     };
 
-    const timeout = window.setTimeout(() => {
+    timeout = window.setTimeout(() => {
       if (!cancelled) { setData([]); setLoading(false); }
     }, 12000);
 
@@ -139,7 +146,7 @@ const useCollection = (name, options) => {
           const ref = fb.collection(
             fb.db, 'artifacts', fb.APP_ID, 'users', fb.FOUNDATION_UID, name
           );
-          fb.onSnapshot(
+          unsubscribe = fb.onSnapshot(
             fb.query(ref),
             (snap) => {
               const rows = [];
@@ -185,7 +192,11 @@ const useCollection = (name, options) => {
       }
     }, { once: true });
 
-    return () => { cancelled = true; window.clearTimeout(timeout); };
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+      if (unsubscribe) unsubscribe();
+    };
   }, [name, max]);
 
   return { data, loading };
