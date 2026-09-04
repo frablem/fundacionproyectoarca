@@ -23,9 +23,9 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="https://petfi.io/widgets/foundation-rescues-widget.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
-  <script type="text/babel" src="/shared/app.js"></script>
-  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="text/babel" src="/shared/layout.js?v=20260904"></script>
+  <script type="text/babel" src="/shared/app.js?v=20260904"></script>
+  <link rel="stylesheet" href="/shared/global.css?v=20260904" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -166,10 +166,9 @@
                   </div>
 
                   <figure className="split-figure reveal">
-                    {/* PLACEHOLDER: reemplazar por una foto real de un gato adoptado. */}
-                    <img src="/media/placeholders/rescate-cuidado.webp" width="1400" height="1960"
-                      alt="Gato descansando en un hogar, fotografía de referencia" />
-                    <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+                    <img src="/media/fotos/frida-cachorra.webp" width="1200" height="900" loading="lazy"
+                      alt="Frida de gatita, acurrucada sobre una cama en uno de sus hogares temporales." />
+                    <figcaption><span>Frida, recién rescatada</span><span>Hoy vive con su familia</span></figcaption>
                   </figure>
                 </div>
               </div>

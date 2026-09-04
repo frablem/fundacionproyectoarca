@@ -44,9 +44,9 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="https://petfi.io/widgets/foundation-rescues-widget.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
-  <script type="text/babel" src="/shared/app.js"></script>
-  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="text/babel" src="/shared/layout.js?v=20260904"></script>
+  <script type="text/babel" src="/shared/app.js?v=20260904"></script>
+  <link rel="stylesheet" href="/shared/global.css?v=20260904" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -109,12 +109,11 @@
         </div>
 
         <figure className="hero-figure reveal">
-          {/* PLACEHOLDER: reemplazar por una fotografía real de un rescate de Arca. */}
           <div className="hero-image-wrap">
-            <img src="/media/placeholders/hero-gato.webp" width="1400" height="933" fetchpriority="high"
-              alt="Gato atigrado descansando, fotografía de referencia" />
+            <img src="/media/fotos/frida-rescatada-la-serena.webp" width="1200" height="1200" fetchpriority="high"
+              alt="Frida, gata gris y blanca rescatada en La Serena, echada sobre una cama con un pañuelo rojo al cuello." />
           </div>
-          <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+          <figcaption><span>Frida</span><span>Rescatada en La Serena · adoptada</span></figcaption>
         </figure>
       </section>
     );
@@ -163,6 +162,26 @@
                 </div>
               </article>
             ))}
+          </div>
+
+          {/* Cifras entregadas por la fundación. El total de adopciones aún no lo tenemos. */}
+          <div className="stat-grid reveal">
+            <div className="stat">
+              <span className="stat-value">+500</span>
+              <span className="stat-label">Gatos rescatados en siete años</span>
+            </div>
+            <div className="stat">
+              <span className="stat-value">+100</span>
+              <span className="stat-label">Perros rescatados antes de dedicarnos solo a gatos</span>
+            </div>
+            <div className="stat">
+              <span className="stat-value">+40</span>
+              <span className="stat-label">Charlas en jardines y colegios</span>
+            </div>
+            <div className="stat">
+              <span className="stat-value">3</span>
+              <span className="stat-label">Ciudades: La Serena, Coquimbo y Santiago</span>
+            </div>
           </div>
 
           <blockquote className="pull-quote reveal">
@@ -287,8 +306,8 @@
               <EstadoVacio titulo="Estamos escribiendo las primeras.">
                 <p>
                   Tenemos historias que merecen contarse bien: Tony, que esperó un año y medio;
-                  Toñito, que superó todos los pronósticos; Emilia, que nació en el antejardín de una
-                  casa. Las publicaremos aquí. Mientras tanto, las vas a encontrar en nuestro Instagram.
+                  Frida, que esperó otro; Toñito, que superó todos los pronósticos. Las publicaremos
+                  aquí. Mientras tanto, las vas a encontrar en nuestro Instagram.
                 </p>
                 <a className="button button--outline" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
                   Seguirnos en Instagram

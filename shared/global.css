@@ -936,6 +936,13 @@ legend {
 .team-swatch { width: 0.8rem; height: 0.8rem; flex: 0 0 auto; border-radius: 50%; }
 .team-card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
 
+/* Tarjeta de integrante con retrato. El retrato va a sangre y el texto
+   conserva el aire de la tarjeta sin foto. */
+.team-card--photo { gap: 0; padding: 0; align-content: start; }
+.team-photo { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--soft); }
+.team-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.team-card-body { display: grid; gap: 0.5rem; padding: 1.15rem 1.2rem 1.35rem; }
+
 .timeline { display: grid; gap: 0; border-top: 1px solid var(--paper-line); }
 .timeline-item { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; padding: 1.3rem 0; border-bottom: 1px solid var(--paper-line); }
 .timeline-when { color: var(--purple); font-family: var(--condensed); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.06em; }

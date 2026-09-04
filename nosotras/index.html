@@ -22,9 +22,9 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260830"></script>
-  <script type="text/babel" src="/shared/app.js"></script>
-  <link rel="stylesheet" href="/shared/global.css" />
+  <script type="text/babel" src="/shared/layout.js?v=20260904"></script>
+  <script type="text/babel" src="/shared/app.js?v=20260904"></script>
+  <link rel="stylesheet" href="/shared/global.css?v=20260904" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -45,21 +45,63 @@
     const { useReveal, MapaCuidado, CierreCTA } = window.SharedApp;
     const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_EDUCA_URL, RUT_ONG, REG_NUM } = window.SiteConfig;
 
-    /* Áreas de trabajo con los colores que la fundación definió en su manual de marca.
-       Pendiente: nombres y fotos de cada integrante, cuando Arca las envíe. */
-    const AREAS = [
-      { name: 'Directiva', color: '#91BF20', copy: 'Define el rumbo de la fundación, responde por su gestión y sostiene el vínculo con la comunidad.' },
-      { name: 'Rescate', color: '#E0AB26', copy: 'Recibe los avisos, evalúa cada caso en terreno y coordina la salida y la atención de urgencia.' },
-      { name: 'Adopciones', color: '#4CA252', copy: 'Acompaña las postulaciones, conversa con cada familia y hace el seguimiento después de la entrega.' },
-      { name: 'Voluntarias de transporte', color: '#E8434D', copy: 'Mueven gatos entre La Serena, Coquimbo y Santiago: a la veterinaria, al hogar temporal o a su nueva casa.' },
-      { name: 'Tesorería', color: '#B2B24A', copy: 'Lleva las cuentas, ordena los gastos veterinarios y responde por cada aporte recibido.' },
-      { name: 'Marketing y RRPP', color: '#53A3A3', copy: 'Cuenta lo que hacemos, difunde a los gatos en adopción y sostiene el contenido educativo.' }
+    /* El equipo, con los cargos tal como los envió la fundación.
+       Los colores son los de las áreas definidas en su manual de marca. */
+    const EQUIPO = [
+      {
+        name: 'Chris',
+        role: 'Fundadora y responsable de rescates y hogares temporales',
+        color: '#E0AB26',
+        photo: '/media/equipo/chris-fundadora.webp',
+        alt: 'Chris, fundadora de Fundación Proyecto Arca, sosteniendo en brazos a un gato blanco y gris.',
+        copy: 'Partió rescatando por su cuenta. Hoy recibe los avisos, evalúa cada caso y busca el hogar temporal donde el gato pueda recuperarse.'
+      },
+      {
+        name: 'Pascal',
+        role: 'Presidenta y responsable legal',
+        color: '#91BF20',
+        photo: '/media/equipo/pascal-presidenta.webp',
+        alt: 'Pascal, presidenta de Fundación Proyecto Arca, sentada junto a dos perros.',
+        copy: 'Responde por la gestión de la fundación y por que todo lo que hacemos esté en regla: registro, estatutos y compromisos de adopción.'
+      },
+      {
+        name: 'Ángela',
+        role: 'Tesorera',
+        color: '#B2B24A',
+        photo: '/media/equipo/angela-tesorera.webp',
+        alt: 'Ángela, tesorera de Fundación Proyecto Arca, con un gato negro en brazos.',
+        copy: 'Lleva las cuentas, ordena los gastos veterinarios y responde por cada aporte que recibimos.'
+      },
+      {
+        name: 'Nicole',
+        role: 'Responsable de rescates y adopciones',
+        color: '#4CA252',
+        photo: '/media/equipo/nicole-rescates-adopciones.webp',
+        alt: 'Nicole, responsable de rescates y adopciones, abrazando a un gato blanco y naranjo.',
+        copy: 'Acompaña las postulaciones, conversa con cada familia y hace el seguimiento después de la entrega.'
+      },
+      {
+        name: 'Alejandra',
+        role: 'Responsable de marketing y RRPP',
+        color: '#53A3A3',
+        photo: '/media/equipo/alejandra-marketing.webp',
+        alt: 'Alejandra, responsable de marketing y relaciones públicas, con un gato en brazos.',
+        copy: 'Cuenta lo que hacemos, coordina las alianzas y sostiene la difusión de los gatos que esperan familia.'
+      },
+      {
+        name: 'Catalina',
+        role: 'Responsable de redes sociales',
+        color: '#53A3A3',
+        photo: '/media/equipo/catalina-redes-sociales.webp',
+        alt: 'Catalina, responsable de redes sociales, abrazando a un gato naranjo y blanco.',
+        copy: 'Publica cada rescate, cada gato en adopción y el contenido educativo de @proyectoarcaeduca.'
+      }
     ];
 
     const HITOS = [
-      { when: '2021', title: 'Nace Proyecto Arca', copy: 'Un grupo de mujeres empieza a rescatar gatos en Coquimbo y La Serena, coordinándose por mensajes y financiando con sus propios medios.' },
+      { when: 'Los inicios', title: 'Los primeros rescates', copy: 'Un grupo de mujeres empieza a rescatar gatos en Coquimbo y La Serena, coordinándose por mensajes y financiando con sus propios medios.' },
       { when: '2022', title: 'Identidad propia', copy: 'La fundación define su manual de marca, su logo y la forma en que quiere presentarse: seria, cálida y clara.' },
-      { when: 'Hoy', title: 'Tres ciudades', copy: 'Rescatamos y coordinamos adopciones entre La Serena, Coquimbo y Santiago, y llevamos educación a colegios y jardines.' }
+      { when: 'Hoy', title: 'Siete años después', copy: 'Más de 500 gatos rescatados, más de 40 charlas en jardines y colegios, y adopciones coordinadas entre La Serena, Coquimbo y Santiago.' }
     ];
 
     const App = () => {
@@ -120,23 +162,22 @@
                   </div>
 
                   <figure className="split-figure reveal">
-                    {/* PLACEHOLDER: reemplazar por una foto real del equipo o de un rescate. */}
-                    <img src="/media/placeholders/equipo-cuidado.webp" width="1400" height="2100"
-                      alt="Persona sosteniendo a un gato rescatado, fotografía de referencia" />
-                    <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+                    <img src="/media/fotos/frida-recuperacion.webp" width="1200" height="900" loading="lazy"
+                      alt="Frida, gata rescatada en La Serena, sentada sobre una cama y ya recuperada." />
+                    <figcaption><span>Frida</span><span>Rescatada en La Serena</span></figcaption>
                   </figure>
                 </div>
 
-                {/* Cifras de rescates y adopciones pendientes de que Arca las confirme.
-                    Hasta entonces sólo van datos verificables. */}
+                {/* Cifras entregadas por la fundación. El total de adopciones todavía
+                    no lo tenemos, así que no aparece. */}
                 <div className="stat-grid reveal">
                   <div className="stat">
-                    <span className="stat-value">3</span>
-                    <span className="stat-label">Ciudades: La Serena, Coquimbo y Santiago</span>
+                    <span className="stat-value">+500</span>
+                    <span className="stat-label">Gatos rescatados en siete años de trabajo</span>
                   </div>
                   <div className="stat">
-                    <span className="stat-value">Gatos</span>
-                    <span className="stat-label">Una sola especie, para conocerla de verdad</span>
+                    <span className="stat-value">+40</span>
+                    <span className="stat-label">Charlas educativas en jardines y colegios</span>
                   </div>
                   <div className="stat">
                     <span className="stat-value">100%</span>
@@ -159,8 +200,9 @@
                     <h2 id="trabajo-title">Solo gatos, y hasta el final.</h2>
                   </div>
                   <p>
-                    Decidimos especializarnos. Trabajar con una sola especie nos permite conocer sus
-                    tiempos, sus enfermedades y sus formas de recuperar la confianza.
+                    Decidimos especializarnos. En estos siete años también rescatamos alrededor de
+                    cien perros, pero hoy trabajamos solo con gatos: una sola especie nos permite
+                    conocer sus tiempos, sus enfermedades y sus formas de recuperar la confianza.
                   </p>
                 </div>
 
@@ -200,7 +242,7 @@
                 <div className="section-head reveal">
                   <div>
                     <p className="section-label">El equipo</p>
-                    <h2 id="equipo-title">Cada área tiene una responsable.</h2>
+                    <h2 id="equipo-title">Somos seis, y cada una responde por lo suyo.</h2>
                   </div>
                   <p>
                     Somos un equipo de mujeres voluntarias. Nadie vive de esto: cada una tiene su
@@ -209,16 +251,20 @@
                 </div>
 
                 <div className="team-grid">
-                  {AREAS.map((area) => (
-                    <article className="team-card reveal" key={area.name}>
-                      {/* Pendiente: nombre y foto de la responsable de cada área,
-                          cuando Arca las envíe. Hasta entonces se describe el área. */}
-                      <span className="team-role">
-                        <span className="team-swatch" style={{ background: area.color }} aria-hidden="true"></span>
-                        Área
-                      </span>
-                      <h3>{area.name}</h3>
-                      <p>{area.copy}</p>
+                  {EQUIPO.map((persona) => (
+                    <article className="team-card team-card--photo reveal" key={persona.name}>
+                      <figure className="team-photo">
+                        <img src={persona.photo} width="700" height="875" loading="lazy"
+                          alt={persona.alt} />
+                      </figure>
+                      <div className="team-card-body">
+                        <span className="team-role">
+                          <span className="team-swatch" style={{ background: persona.color }} aria-hidden="true"></span>
+                          {persona.role}
+                        </span>
+                        <h3>{persona.name}</h3>
+                        <p>{persona.copy}</p>
+                      </div>
                     </article>
                   ))}
                 </div>
@@ -266,10 +312,10 @@
               <div className="wrap">
                 <div className="split">
                   <figure className="split-figure reveal">
-                    {/* PLACEHOLDER: reemplazar por una foto real de una charla educativa. */}
-                    <img src="/media/placeholders/educacion.webp" width="1400" height="1866"
-                      alt="Gato en un espacio doméstico, fotografía de referencia" />
-                    <figcaption><span>Imagen de referencia</span><span>Foto real próximamente</span></figcaption>
+                    {/* Los rostros de los niños van difuminados a petición de la fundación. */}
+                    <img src="/media/fotos/charla-educativa-jardin-infantil.webp" width="1200" height="900" loading="lazy"
+                      alt="Charla de tenencia responsable en un jardín infantil: los niños escuchan sentados y un perro acompaña la actividad. Los rostros de los niños están difuminados." />
+                    <figcaption><span>Charla en un jardín infantil</span><span>Rostros difuminados</span></figcaption>
                   </figure>
 
                   <div className="split-body reveal">
@@ -278,9 +324,9 @@
                       Educar también es una forma de rescatar.
                     </h2>
                     <p>
-                      Hacemos charlas en colegios y jardines infantiles sobre tenencia responsable,
-                      esterilización y respeto hacia los animales. Nos interesa llegar temprano:
-                      un niño que entiende que un gato siente es un adulto que no abandona.
+                      Llevamos más de 40 charlas en colegios y jardines infantiles sobre tenencia
+                      responsable, esterilización y respeto hacia los animales. Nos interesa llegar
+                      temprano: un niño que entiende que un gato siente es un adulto que no abandona.
                     </p>
                     <p>
                       Si trabajas en un establecimiento educacional y quieres una charla, escríbenos.

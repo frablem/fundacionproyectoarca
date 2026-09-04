@@ -1,6 +1,7 @@
 # private intake material — never publish
 NOTES.md
 brand/
+client-assets/
 
 # tooling
 .wrangler/
