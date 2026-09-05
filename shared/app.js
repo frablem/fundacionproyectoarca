@@ -243,12 +243,22 @@ const parseCategories = (value) => {
 
 const stripHtml = (html) => String(html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
-/* Recorta al último espacio y agrega puntos suspensivos sólo si de verdad cortó.
-   Sin esto, un texto que ya termina en punto quedaba como "un gato….". */
+/* Prefiere cerrar en una oración completa dentro del límite y, si no alcanza,
+   recorta en el último espacio razonable. Agrega puntos suspensivos sólo si de
+   verdad cortó. */
 const resumen = (text, max) => {
   const t = String(text || '').trim();
   if (t.length <= max) return t;
   const cut = t.slice(0, max);
+
+  const sentenceEnds = /[.!?](?:[»”"')\]]+)?(?=\s|$)/g;
+  let sentenceEnd = null;
+  let match;
+  while ((match = sentenceEnds.exec(cut))) {
+    sentenceEnd = match.index + match[0].length;
+  }
+  if (sentenceEnd) return cut.slice(0, sentenceEnd).trim();
+
   const space = cut.lastIndexOf(' ');
   return (space > max * 0.6 ? cut.slice(0, space) : cut).replace(/[\s.,;:…]+$/, '') + '…';
 };
@@ -559,6 +569,12 @@ const FormspreeForm = ({ formId, tipo, children, submitLabel, successTitle, succ
   const submit = async (event) => {
     event.preventDefault();
     setError('');
+    const form = event.currentTarget;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
     if (Number(answer) !== nums.a + nums.b) {
       setError('La suma de verificación no coincide. Inténtalo otra vez.');
@@ -573,7 +589,6 @@ const FormspreeForm = ({ formId, tipo, children, submitLabel, successTitle, succ
       return;
     }
 
-    const form = event.target;
     setStatus('submitting');
 
     try {
@@ -605,7 +620,7 @@ const FormspreeForm = ({ formId, tipo, children, submitLabel, successTitle, succ
   }
 
   return (
-    <form className="form-card" onSubmit={submit} onFocus={noteStart} noValidate>
+    <form className="form-card" onSubmit={submit} onFocus={noteStart}>
       <input type="hidden" name="_subject" value={'Web Arca — ' + tipo} />
       <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off"
         style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" />
