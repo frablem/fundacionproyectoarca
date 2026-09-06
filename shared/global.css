@@ -401,7 +401,7 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
 /* ---------- Franja de ciudades ---------- */
 
 .route-strip { border-block: 1px solid rgba(119, 54, 139, 0.15); background: var(--cream); }
-.route-strip-inner { display: grid; gap: 1rem; padding-block: 1.05rem; }
+.route-strip-inner { display: grid; justify-content: center; justify-items: center; text-align: center; gap: 1rem; padding-block: 1.05rem; }
 .route-strip-intro {
   color: var(--purple-deep);
   font-family: var(--condensed);
@@ -1055,7 +1055,7 @@ legend {
   .mission-num { margin-bottom: 2.1rem; }
   .mission-item p { font-size: 0.9rem; }
   .pull-quote { max-width: 28ch; margin-left: auto; }
-  .route-strip-inner { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.6rem; }
+  .route-strip-inner { grid-template-columns: auto auto; align-items: center; gap: 1.6rem; }
   .territory-grid { grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr); }
   .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .help-item { grid-template-columns: 3rem minmax(0, 1fr); }
