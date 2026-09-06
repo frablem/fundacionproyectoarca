@@ -40,7 +40,6 @@ const PETFI_PROFILE_URL =
 /* Formspree — un endpoint por formulario. Pendientes de creación. */
 const FORMSPREE = {
   contacto: 'PLACEHOLDER_FORMSPREE_ID_CONTACTO',
-  adopcion: 'PLACEHOLDER_FORMSPREE_ID_ADOPCION',
   hogar_temporal: 'PLACEHOLDER_FORMSPREE_ID_HOGAR_TEMPORAL'
 };
 

@@ -562,7 +562,7 @@ const FormspreeForm = ({ formId, tipo, children, submitLabel, successTitle, succ
   const noteStart = () => {
     if (startedRef.current) return;
     startedRef.current = true;
-    const events = { adopcion: 'adoption_start', hogar_temporal: 'volunteer_start', contacto: 'contact_start' };
+    const events = { hogar_temporal: 'volunteer_start', contacto: 'contact_start' };
     trackEvent(events[tipo] || 'contact_start', { placement: 'form', form_type: tipo });
   };
 

@@ -23,8 +23,8 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="https://petfi.io/widgets/foundation-rescues-widget.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260905b"></script>
-  <script type="text/babel" src="/shared/app.js?v=20260905a"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260905c"></script>
+  <script type="text/babel" src="/shared/app.js?v=20260905b"></script>
   <link rel="stylesheet" href="/shared/global.css?v=20260905c" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
@@ -104,7 +104,7 @@
                     onClick={() => trackEvent('petfi_referral_click', { placement: 'adoptar_profile' })}>
                     Ver nuestro perfil en Petfi <IconArrow size={17} />
                   </a>
-                  <a className="text-link" href="/contacto?motivo=adopcion"
+                  <a className="text-link" href="/adoptar#proceso"
                     onClick={() => trackEvent('adoption_start', { placement: 'adoptar_consulta' })}>
                     Tengo una duda antes de postular
                   </a>
