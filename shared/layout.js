@@ -385,7 +385,7 @@ const Footer = () => (
             <a href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
               <IconBook size={16} /> {INSTAGRAM_EDUCA_HANDLE}
             </a>
-            <p><IconPin size={16} /> {FOUNDATION_TAGLINE}</p>
+            <p className="location-line"><IconPin size={16} /><span>{FOUNDATION_TAGLINE}</span></p>
           </div>
         </div>
 
