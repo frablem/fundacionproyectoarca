@@ -214,6 +214,7 @@ main section[id] { scroll-margin-top: 5.5rem; }
   text-transform: uppercase;
 }
 .primary-nav .nav-donate:hover { background: var(--purple-2); color: #fff; }
+.primary-nav .nav-donate[aria-current="page"] { color: #fff; }
 
 /* ---------- Tipografía de sección ---------- */
 
