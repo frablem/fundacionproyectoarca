@@ -37,10 +37,10 @@ const PETFI_PROFILE_URL =
   'https://petfi.io/fundacion/' + PETFI_FOUNDATION_ID +
   '?utm_source=fundacion_cloe&utm_medium=referral&utm_campaign=arca&utm_content=foundation_profile';
 
-/* Formspree — un endpoint por formulario. Pendientes de creación. */
+/* Formspree — endpoints de consulta general y hogar temporal confirmados por Fran. */
 const FORMSPREE = {
-  contacto: 'PLACEHOLDER_FORMSPREE_ID_CONTACTO',
-  hogar_temporal: 'PLACEHOLDER_FORMSPREE_ID_HOGAR_TEMPORAL'
+  contacto: 'xbgjavnq',
+  hogar_temporal: 'xjyveqnz'
 };
 
 /* Transferencia bancaria — datos confirmados por la fundación. */
