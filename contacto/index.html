@@ -22,9 +22,9 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260904b"></script>
-  <script type="text/babel" src="/shared/app.js?v=20260904b"></script>
-  <link rel="stylesheet" href="/shared/global.css?v=20260904b" />
+  <script type="text/babel" src="/shared/layout.js?v=20260905c"></script>
+  <script type="text/babel" src="/shared/app.js?v=20260905b"></script>
+  <link rel="stylesheet" href="/shared/global.css?v=20260905e" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -45,20 +45,21 @@
     const { useReveal, FormspreeForm, Field, TextArea, Check } = window.SharedApp;
     const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE, FORMSPREE } = window.SiteConfig;
 
-    /* Un selector cambia los campos y el endpoint. También lee ?motivo= para que
-       otras páginas puedan enlazar directo a un tipo de formulario. */
+    /* Un selector cambia los campos y el endpoint. El enlace ?motivo=hogar_temporal
+       permite llegar directamente al formulario de hogar temporal. */
     const TIPOS = [
       { key: 'contacto', label: 'Consulta general', formId: FORMSPREE.contacto },
-      { key: 'hogar_temporal', label: 'Hogar temporal', formId: FORMSPREE.hogar_temporal },
-      { key: 'adopcion', label: 'Adopción', formId: FORMSPREE.adopcion }
+      { key: 'hogar_temporal', label: 'Hogar temporal', formId: FORMSPREE.hogar_temporal }
     ];
+
+    const requestedMotivo = new URLSearchParams(window.location.search).get('motivo');
+    if (requestedMotivo === 'adopcion') window.location.replace('/adoptar#proceso');
 
     const App = () => {
       useReveal();
 
       const [tipo, setTipo] = React.useState(() => {
-        const motivo = new URLSearchParams(window.location.search).get('motivo');
-        return TIPOS.some((t) => t.key === motivo) ? motivo : 'contacto';
+        return requestedMotivo === 'hogar_temporal' ? 'hogar_temporal' : 'contacto';
       });
 
       const actual = TIPOS.find((t) => t.key === tipo);
@@ -71,10 +72,6 @@
         hogar_temporal: {
           title: 'Gracias por ofrecer tu casa.',
           text: 'Te vamos a contactar para conversar los detalles: cuánto tiempo puedes, qué espacio tienes y qué gato calzaría mejor contigo.'
-        },
-        adopcion: {
-          title: 'Recibimos tu consulta.',
-          text: 'Te escribiremos pronto para conversar sobre la adopción y resolver todas tus dudas.'
         }
       }[tipo];
 
@@ -88,8 +85,8 @@
                 <p className="eyebrow"><span className="eyebrow-dot" aria-hidden="true"></span>Conversemos</p>
                 <h1 id="page-title">Hablemos de cómo ayudar.</h1>
                 <p className="lede">
-                  Escríbenos para adoptar, ofrecer tu casa como hogar temporal, colaborar, contarnos
-                  un caso o pedir una charla educativa. Leemos todo.
+                  Escríbenos para ofrecer tu casa como hogar temporal, colaborar, contarnos un caso o
+                  pedir una charla educativa. Leemos todo.
                 </p>
               </div>
             </section>
@@ -166,21 +163,6 @@
                         </fieldset>
                       ) : null}
 
-                      {tipo === 'adopcion' ? (
-                        <fieldset>
-                          <legend>Sobre la adopción</legend>
-                          <div className="field-grid">
-                            <Field id="gato_interes" label="¿Hay algún gato que te interese?" name="gato_interes"
-                              hint="Su nombre, si ya lo viste en el listado." />
-                          </div>
-                          <p className="hint" style={{ marginTop: '0.8rem', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                            La postulación se hace en la ficha de cada gato, dentro de {' '}
-                            <a className="text-link" href="/adoptar">nuestro listado de adopción</a>. {' '}
-                            Este formulario es para las dudas previas.
-                          </p>
-                        </fieldset>
-                      ) : null}
-
                       <fieldset>
                         <legend>Tu mensaje</legend>
                         <div className="field-grid">
@@ -188,9 +170,7 @@
                             placeholder={
                               tipo === 'hogar_temporal'
                                 ? 'Cuéntanos con quién vives, cómo es tu casa y qué te motivó a ofrecerla.'
-                                : tipo === 'adopcion'
-                                  ? 'Cuéntanos qué dudas tienes sobre el proceso, los requisitos o algún gato en particular.'
-                                  : 'Escríbenos con calma. Si es un caso de rescate, incluye la ciudad, el lugar exacto y en qué estado está el gato.'
+                                : 'Escríbenos con calma. Si es un caso de rescate, incluye la ciudad, el lugar exacto y en qué estado está el gato.'
                             } />
                         </div>
                       </fieldset>
@@ -211,8 +191,8 @@
                         <a href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
                           <IconBook /> {INSTAGRAM_EDUCA_HANDLE}
                         </a>
-                        <p style={{ marginTop: '0.4rem' }}>
-                          <IconPin /> La Serena · Coquimbo · Santiago
+                        <p className="location-line" style={{ marginTop: '0.4rem' }}>
+                          <IconPin /><span>La Serena · Coquimbo · Santiago</span>
                         </p>
                       </div>
                     </div>

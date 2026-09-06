@@ -40,7 +40,6 @@ const PETFI_PROFILE_URL =
 /* Formspree — un endpoint por formulario. Pendientes de creación. */
 const FORMSPREE = {
   contacto: 'PLACEHOLDER_FORMSPREE_ID_CONTACTO',
-  adopcion: 'PLACEHOLDER_FORMSPREE_ID_ADOPCION',
   hogar_temporal: 'PLACEHOLDER_FORMSPREE_ID_HOGAR_TEMPORAL'
 };
 
@@ -287,16 +286,21 @@ const IconBook = (props) => (
 
 const Navbar = ({ active }) => {
   const [open, setOpen] = React.useState(false);
+  const toggleRef = React.useRef(null);
 
   /* Sin bloqueo de scroll a propósito. Poner overflow:hidden en el body lo
      convierte en contenedor de scroll y el header sticky salta a su posición
      estática, así que el menú se abría fuera de pantalla al ir desplazado. */
 
   React.useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    const onKey = (e) => {
+      if (e.key !== 'Escape' || !open) return;
+      setOpen(false);
+      toggleRef.current?.focus();
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [open]);
 
   return (
     <header className="site-header">
@@ -309,7 +313,7 @@ const Navbar = ({ active }) => {
           </span>
         </a>
 
-        <button className="nav-toggle" type="button" aria-controls="primary-nav"
+        <button ref={toggleRef} className="nav-toggle" type="button" aria-controls="primary-nav"
           aria-expanded={open ? 'true' : 'false'} onClick={() => setOpen((v) => !v)}>
           <span>{open ? 'Cerrar' : 'Menú'}</span>
           <span className="nav-toggle-icon" aria-hidden="true"><span></span><span></span></span>
@@ -325,6 +329,7 @@ const Navbar = ({ active }) => {
             <IconInstagram size={17} /> Instagram
           </a>
           <a className="nav-donate" href="/donar"
+            aria-current={active === 'donar' ? 'page' : undefined}
             onClick={() => { trackEvent('donation_start', { placement: 'navbar' }); setOpen(false); }}>
             Donar
           </a>
@@ -379,7 +384,7 @@ const Footer = () => (
             <a href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
               <IconBook size={16} /> {INSTAGRAM_EDUCA_HANDLE}
             </a>
-            <p><IconPin size={16} /> {FOUNDATION_TAGLINE}</p>
+            <p className="location-line"><IconPin size={16} /><span>{FOUNDATION_TAGLINE}</span></p>
           </div>
         </div>
 
