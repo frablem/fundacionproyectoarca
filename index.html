@@ -29,7 +29,9 @@
       "areaServed": ["La Serena", "Coquimbo", "Santiago"],
       "sameAs": [
         "https://www.instagram.com/fundacionproyectoarca/",
-        "https://www.instagram.com/proyectoarcaeduca/"
+        "https://www.instagram.com/proyectoarcaeduca/",
+        "https://www.facebook.com/fundacionproyectoarca/",
+        "https://www.tiktok.com/@fundacionproyectoarca/"
       ],
       "contactPoint": {
         "@type": "ContactPoint",
@@ -44,7 +46,7 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="https://petfi.io/widgets/foundation-rescues-widget.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260906a"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260907b"></script>
   <script type="text/babel" src="/shared/app.js?v=20260905b"></script>
   <link rel="stylesheet" href="/shared/global.css?v=20260905e" />
   <script type="module">
@@ -63,13 +65,13 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { Navbar, Footer, IconArrow, IconHeart, IconPaw, trackEvent } = window.SharedComponents;
+    const { Navbar, Footer, IconArrow, IconHeart, IconPaw, IconMail, IconInstagram, IconFacebook, IconTikTok, trackEvent } = window.SharedComponents;
     const {
       useReveal, useCollection, fmtDate, stripHtml, resumen,
       Cargando, EstadoVacio, MapaCuidado, FranjaCiudades, AvisoTraslado,
       PetfiRescues, HojaTransferencia, SociosGuardianes
     } = window.SharedApp;
-    const { CONTACT_EMAIL, INSTAGRAM_URL, PETFI_PROFILE_URL } = window.SiteConfig;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE, PETFI_PROFILE_URL } = window.SiteConfig;
 
     /* ---------- Hero ---------- */
     const Hero = () => (
@@ -437,11 +439,21 @@
               <div className="contact-list">
                 <a href={'mailto:' + CONTACT_EMAIL}
                   onClick={() => trackEvent('contact_start', { placement: 'home', method: 'email' })}>
-                  {CONTACT_EMAIL}
+                  <IconMail size={17} /> {CONTACT_EMAIL}
                 </a>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@fundacionproyectoarca</a>
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                  <IconInstagram size={17} /> @fundacionproyectoarca
+                </a>
                 <a href="https://www.instagram.com/proyectoarcaeduca/" target="_blank" rel="noreferrer">
-                  @proyectoarcaeduca · educación
+                  <IconInstagram size={17} /> @proyectoarcaeduca · educación
+                </a>
+                <a href={FACEBOOK_URL} target="_blank" rel="noreferrer"
+                  aria-label="Facebook de Fundación Proyecto Arca">
+                  <IconFacebook size={17} /> Facebook · {FACEBOOK_LABEL}
+                </a>
+                <a href={TIKTOK_URL} target="_blank" rel="noreferrer"
+                  aria-label={'TikTok ' + TIKTOK_HANDLE + ' de Fundación Proyecto Arca'}>
+                  <IconTikTok size={17} /> TikTok · {TIKTOK_HANDLE}
                 </a>
                 <p>Respondemos lo antes posible. Somos un equipo pequeño y voluntario.</p>
               </div>

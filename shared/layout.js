@@ -16,6 +16,10 @@ const INSTAGRAM_URL = 'https://www.instagram.com/fundacionproyectoarca/';
 const INSTAGRAM_HANDLE = '@fundacionproyectoarca';
 const INSTAGRAM_EDUCA_URL = 'https://www.instagram.com/proyectoarcaeduca/';
 const INSTAGRAM_EDUCA_HANDLE = '@proyectoarcaeduca';
+const FACEBOOK_URL = 'https://www.facebook.com/fundacionproyectoarca/';
+const FACEBOOK_LABEL = 'Fundación Proyecto Arca';
+const TIKTOK_URL = 'https://www.tiktok.com/@fundacionproyectoarca/';
+const TIKTOK_HANDLE = '@fundacionproyectoarca';
 
 const RUT_ONG = '65.201.899-8';
 const REG_NUM = '319235';
@@ -134,7 +138,7 @@ const seoConfigByPath = {
     keywords: 'historias de rescate gatos, casos rescate felino Chile, antes y después adopción'
   },
   '/contacto': {
-    description: 'Escríbenos para adoptar, ofrecer hogar temporal, colaborar o pedir una charla educativa. Fundación Proyecto Arca, La Serena, Coquimbo y Santiago.',
+    description: 'Escríbenos para ofrecer hogar temporal, colaborar o pedir una charla educativa. Fundación Proyecto Arca, La Serena, Coquimbo y Santiago.',
     keywords: 'contacto fundación proyecto arca, escribir fundación gatos, charlas tenencia responsable'
   }
 };
@@ -225,6 +229,19 @@ const IconInstagram = (props) => (
     <rect x="3" y="3" width="18" height="18" rx="5" />
     <circle cx="12" cy="12" r="3.6" />
     <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+  </Icon>
+);
+
+const IconFacebook = (props) => (
+  <Icon {...props}>
+    <path d="M14.1 4.2h3.2v3.4h-2.3c-.8 0-1.2.4-1.2 1.3v1.7h3.4l-.5 3.5h-2.9V21h-3.6v-6.9H7.4v-3.5h2.8V8.9c0-3 1.5-4.7 3.9-4.7Z" fill="currentColor" stroke="none" />
+  </Icon>
+);
+
+const IconTikTok = (props) => (
+  <Icon {...props}>
+    <path d="M14.3 4v10.2a3.9 3.9 0 1 1-3.1-3.8v3.5a1.6 1.6 0 1 0 1 1.5V4h2.1Z" />
+    <path d="M14.3 4c.4 2.1 1.7 3.4 3.7 3.8" />
   </Icon>
 );
 
@@ -384,6 +401,14 @@ const Footer = () => (
             <a href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
               <IconBook size={16} /> {INSTAGRAM_EDUCA_HANDLE}
             </a>
+            <a href={FACEBOOK_URL} target="_blank" rel="noreferrer"
+              aria-label="Facebook de Fundación Proyecto Arca">
+              <IconFacebook size={16} /> Facebook · {FACEBOOK_LABEL}
+            </a>
+            <a href={TIKTOK_URL} target="_blank" rel="noreferrer"
+              aria-label={'TikTok ' + TIKTOK_HANDLE + ' de Fundación Proyecto Arca'}>
+              <IconTikTok size={16} /> TikTok · {TIKTOK_HANDLE}
+            </a>
             <p className="location-line"><IconPin size={16} /><span>{FOUNDATION_TAGLINE}</span></p>
           </div>
         </div>
@@ -428,6 +453,7 @@ initSeo();
 window.SiteConfig = {
   FOUNDATION_NAME, FOUNDATION_SHORT, FOUNDATION_TAGLINE, SLOGAN,
   CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE,
+  FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE,
   RUT_ONG, REG_NUM, BASE_URL, GA_ID,
   PETFI_FOUNDATION_ID, PETFI_SPECIES, PETFI_PROFILE_URL,
   FORMSPREE, TRANSFERENCIA, GUARDIANES, navLinks
@@ -435,6 +461,6 @@ window.SiteConfig = {
 
 window.SharedComponents = {
   Navbar, Footer, Icon,
-  IconInstagram, IconMail, IconPin, IconArrow, IconCheck, IconHeart, IconPaw, IconRoute, IconBook,
+  IconInstagram, IconFacebook, IconTikTok, IconMail, IconPin, IconArrow, IconCheck, IconHeart, IconPaw, IconRoute, IconBook,
   trackEvent
 };
