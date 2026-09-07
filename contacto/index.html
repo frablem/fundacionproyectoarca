@@ -22,7 +22,7 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260906a"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20260907a"></script>
   <script type="text/babel" src="/shared/app.js?v=20260905b"></script>
   <link rel="stylesheet" href="/shared/global.css?v=20260905e" />
   <script type="module">
@@ -41,9 +41,9 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { Navbar, Footer, IconArrow, IconMail, IconInstagram, IconPin, IconBook, trackEvent } = window.SharedComponents;
+    const { Navbar, Footer, IconArrow, IconMail, IconInstagram, IconFacebook, IconTikTok, IconPin, IconBook, trackEvent } = window.SharedComponents;
     const { useReveal, FormspreeForm, Field, TextArea, Check } = window.SharedApp;
-    const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE, FORMSPREE } = window.SiteConfig;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE, FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE, FORMSPREE } = window.SiteConfig;
 
     /* Un selector cambia los campos y el endpoint. El enlace ?motivo=hogar_temporal
        permite llegar directamente al formulario de hogar temporal. */
@@ -190,6 +190,14 @@
                         </a>
                         <a href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
                           <IconBook /> {INSTAGRAM_EDUCA_HANDLE}
+                        </a>
+                        <a href={FACEBOOK_URL} target="_blank" rel="noreferrer"
+                          aria-label="Facebook de Fundación Proyecto Arca">
+                          <IconFacebook /> Facebook · {FACEBOOK_LABEL}
+                        </a>
+                        <a href={TIKTOK_URL} target="_blank" rel="noreferrer"
+                          aria-label={'TikTok ' + TIKTOK_HANDLE + ' de Fundación Proyecto Arca'}>
+                          <IconTikTok /> TikTok · {TIKTOK_HANDLE}
                         </a>
                         <p className="location-line" style={{ marginTop: '0.4rem' }}>
                           <IconPin /><span>La Serena · Coquimbo · Santiago</span>
