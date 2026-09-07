@@ -138,7 +138,7 @@ const seoConfigByPath = {
     keywords: 'historias de rescate gatos, casos rescate felino Chile, antes y después adopción'
   },
   '/contacto': {
-    description: 'Escríbenos para adoptar, ofrecer hogar temporal, colaborar o pedir una charla educativa. Fundación Proyecto Arca, La Serena, Coquimbo y Santiago.',
+    description: 'Escríbenos para ofrecer hogar temporal, colaborar o pedir una charla educativa. Fundación Proyecto Arca, La Serena, Coquimbo y Santiago.',
     keywords: 'contacto fundación proyecto arca, escribir fundación gatos, charlas tenencia responsable'
   }
 };
