@@ -65,7 +65,7 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { Navbar, Footer, IconArrow, IconHeart, IconPaw, IconFacebook, IconTikTok, trackEvent } = window.SharedComponents;
+    const { Navbar, Footer, IconArrow, IconHeart, IconPaw, IconMail, IconInstagram, IconFacebook, IconTikTok, trackEvent } = window.SharedComponents;
     const {
       useReveal, useCollection, fmtDate, stripHtml, resumen,
       Cargando, EstadoVacio, MapaCuidado, FranjaCiudades, AvisoTraslado,
@@ -439,11 +439,13 @@
               <div className="contact-list">
                 <a href={'mailto:' + CONTACT_EMAIL}
                   onClick={() => trackEvent('contact_start', { placement: 'home', method: 'email' })}>
-                  {CONTACT_EMAIL}
+                  <IconMail size={17} /> {CONTACT_EMAIL}
                 </a>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@fundacionproyectoarca</a>
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                  <IconInstagram size={17} /> @fundacionproyectoarca
+                </a>
                 <a href="https://www.instagram.com/proyectoarcaeduca/" target="_blank" rel="noreferrer">
-                  @proyectoarcaeduca · educación
+                  <IconInstagram size={17} /> @proyectoarcaeduca · educación
                 </a>
                 <a href={FACEBOOK_URL} target="_blank" rel="noreferrer"
                   aria-label="Facebook de Fundación Proyecto Arca">

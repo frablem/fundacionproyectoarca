@@ -41,7 +41,7 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { Navbar, Footer, IconArrow, IconMail, IconInstagram, IconFacebook, IconTikTok, IconPin, IconBook, trackEvent } = window.SharedComponents;
+    const { Navbar, Footer, IconArrow, IconMail, IconInstagram, IconFacebook, IconTikTok, IconPin, trackEvent } = window.SharedComponents;
     const { useReveal, FormspreeForm, Field, TextArea, Check } = window.SharedApp;
     const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE, FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE, FORMSPREE } = window.SiteConfig;
 
@@ -183,21 +183,21 @@
                       <div className="contact-list">
                         <a href={'mailto:' + CONTACT_EMAIL}
                           onClick={() => trackEvent('contact_start', { placement: 'contacto_aside', method: 'email' })}>
-                          <IconMail /> {CONTACT_EMAIL}
+                          <IconMail size={17} /> {CONTACT_EMAIL}
                         </a>
                         <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-                          <IconInstagram /> {INSTAGRAM_HANDLE}
+                          <IconInstagram size={17} /> {INSTAGRAM_HANDLE}
                         </a>
                         <a href={INSTAGRAM_EDUCA_URL} target="_blank" rel="noreferrer">
-                          <IconBook /> {INSTAGRAM_EDUCA_HANDLE}
+                          <IconInstagram size={17} /> {INSTAGRAM_EDUCA_HANDLE}
                         </a>
                         <a href={FACEBOOK_URL} target="_blank" rel="noreferrer"
                           aria-label="Facebook de Fundación Proyecto Arca">
-                          <IconFacebook /> Facebook · {FACEBOOK_LABEL}
+                          <IconFacebook size={17} /> Facebook · {FACEBOOK_LABEL}
                         </a>
                         <a href={TIKTOK_URL} target="_blank" rel="noreferrer"
                           aria-label={'TikTok ' + TIKTOK_HANDLE + ' de Fundación Proyecto Arca'}>
-                          <IconTikTok /> TikTok · {TIKTOK_HANDLE}
+                          <IconTikTok size={17} /> TikTok · {TIKTOK_HANDLE}
                         </a>
                         <p className="location-line" style={{ marginTop: '0.4rem' }}>
                           <IconPin /><span>La Serena · Coquimbo · Santiago</span>
