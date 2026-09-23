@@ -48,7 +48,7 @@
   <script src="/shared/dompurify.min.js"></script>
   <script type="text/babel" src="/shared/layout.js?v=20260923c"></script>
   <script type="text/babel" src="/shared/app.js?v=20260923d"></script>
-  <link rel="stylesheet" href="/shared/global.css?v=20260923b" />
+  <link rel="stylesheet" href="/shared/global.css?v=20260923c" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -284,7 +284,7 @@
               <React.Fragment>
                 <div className="story-grid">
                   {data.map((story, i) => (
-                    <a className="story-card reveal" key={story.id} href={'/historias?h=' + story.id}>
+                    <a className={'story-card reveal' + (story.image ? ' story-card--photo' : '')} key={story.id} href={'/historias?h=' + story.id}>
                       <div className="story-index" aria-hidden="true">
                         {story.image ? <img src={story.image} alt="" /> : null}
                         <span>{'0' + (i + 1)}</span>

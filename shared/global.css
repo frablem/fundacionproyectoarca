@@ -664,6 +664,12 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
 }
 .story-index img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.45; }
 .story-index span { position: relative; z-index: 1; font-family: var(--condensed); font-size: 3.5rem; font-weight: 700; line-height: 0.8; }
+/* Con foto, la tarjeta toma la proporción de la imagen: foto entera arriba, texto abajo. */
+.story-card--photo { grid-template-columns: 1fr; align-content: start; }
+.story-card--photo .story-index { display: block; min-height: 0; padding: 0; background: var(--purple-deep); }
+.story-card--photo .story-index::after { display: none; }
+.story-card--photo .story-index img { position: static; display: block; width: 100%; height: auto; opacity: 1; }
+.story-card--photo .story-index span { position: absolute; top: 0; left: 0; padding: 0.45rem 0.6rem 0.4rem; background: var(--purple-deep); font-size: 1.6rem; }
 .story-body { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 1.35rem; }
 .story-kicker {
   margin-bottom: 0.5rem;
@@ -714,8 +720,9 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
 /* Detalle de artículo */
 .detail-head { display: grid; gap: 1rem; margin-bottom: 1.8rem; }
 .detail-head h1 { max-width: 24ch; margin: 0; font-size: clamp(2.3rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 0.96; }
-.detail-banner { margin: 0 0 2rem; aspect-ratio: 16 / 9; overflow: hidden; background: var(--soft); }
-.detail-banner img { width: 100%; height: 100%; object-fit: cover; }
+/* La foto se muestra entera, con su proporción original: nunca se recorta. */
+.detail-banner { margin: 0 0 2rem; }
+.detail-banner img { display: block; width: auto; max-width: 100%; height: auto; max-height: 80vh; }
 .detail-foot { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1px solid var(--paper-line); }
 
 .prose { max-width: 44rem; color: var(--ink); font-size: 1.02rem; line-height: 1.7; }
@@ -1152,8 +1159,11 @@ legend {
   .network-map { min-height: 13.5rem; }
   .travel-note { padding: 0.85rem 0.9rem; font-size: 0.86rem; }
   .story-card { grid-template-columns: 5.5rem 1fr; }
+  .story-card--photo { grid-template-columns: 1fr; }
   .story-index { min-height: 0; padding: 0.8rem; }
   .story-index span { font-size: 2.2rem; }
+  .story-card--photo .story-index { padding: 0; }
+  .story-card--photo .story-index span { font-size: 1.35rem; }
   .story-body { padding: 1rem; }
   .story-body h3 { font-size: 1.35rem; }
   .help-card { min-height: 12rem; padding: 1.15rem; }
