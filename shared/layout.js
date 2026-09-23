@@ -58,42 +58,45 @@ const TRANSFERENCIA = [
 ];
 
 /* Socios Guardianes FPA 365 — montos y textos escritos por la fundación.
-   La cuenta de Mercado Pago está en creación, así que los links quedan pendientes. */
+   Los aportes se suscriben en eSponsor; sus 5 planes no tienen link individual
+   propio (el checkout se genera por sesión al presionar "Join" en su página),
+   así que los cinco botones apuntan a la página de planes de eSponsor. */
+const ESPONSOR_PLANES_URL = 'https://esponsor.com/fundacion-proyecto-arca/subscribe';
 const GUARDIANES = [
   {
     tier: 'Guardián Bronce',
     amount: '$3.000',
     color: '#b08d57',
     copy: 'Tu aporte ayuda a mantener nuestra labor de rescate activa durante todo el año.',
-    link: 'PLACEHOLDER_MERCADOPAGO_LINK_BRONCE'
+    link: ESPONSOR_PLANES_URL
   },
   {
     tier: 'Guardián Plata',
     amount: '$5.000',
     color: '#9aa2ab',
     copy: 'Ayudas a cubrir alimentación, arena y cuidados básicos de nuestros rescatados.',
-    link: 'PLACEHOLDER_MERCADOPAGO_LINK_PLATA'
+    link: ESPONSOR_PLANES_URL
   },
   {
     tier: 'Guardián Oro',
     amount: '$10.000',
     color: '#dbcc00',
     copy: 'Contribuyes directamente a que podamos recibir nuevos casos y entregarles atención veterinaria.',
-    link: 'PLACEHOLDER_MERCADOPAGO_LINK_ORO'
+    link: ESPONSOR_PLANES_URL
   },
   {
     tier: 'Guardián Platino',
     amount: '$20.000',
     color: '#c9d1d6',
     copy: 'Tu aporte nos permite responder ante emergencias y acompañar procesos de recuperación.',
-    link: 'PLACEHOLDER_MERCADOPAGO_LINK_PLATINO'
+    link: ESPONSOR_PLANES_URL
   },
   {
     tier: 'Guardián Diamante',
     amount: '$30.000 o más',
     color: '#bf99d1',
     copy: 'Eres parte de la red que permite que Proyecto Arca siga creciendo y transformando historias.',
-    link: 'PLACEHOLDER_MERCADOPAGO_LINK_DIAMANTE'
+    link: ESPONSOR_PLANES_URL
   }
 ];
 

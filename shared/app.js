@@ -486,13 +486,13 @@ const SociosGuardianes = () => {
   const { GUARDIANES, CONTACT_EMAIL } = window.SiteConfig;
   const { trackEvent } = window.SharedComponents;
 
-  /* Cada tramo apunta a su suscripción de Mercado Pago en cuanto el link exista.
+  /* Cada tramo apunta a la página de planes de eSponsor en cuanto el link exista.
      Mientras el campo siga siendo un marcador, cae a correo sin romper nada:
      basta con pegar la URL en GUARDIANES para que el cobro mensual quede activo. */
   const destino = (g) => {
     const esUrl = typeof g.link === 'string' && g.link.indexOf('http') === 0;
     return esUrl
-      ? { href: g.link, externo: true, metodo: 'mercadopago' }
+      ? { href: g.link, externo: true, metodo: 'esponsor' }
       : {
           href: 'mailto:' + CONTACT_EMAIL + '?subject=' +
             encodeURIComponent('Quiero ser ' + g.tier + ' — FPA 365'),
