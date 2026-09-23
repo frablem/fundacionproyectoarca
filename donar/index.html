@@ -22,9 +22,9 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260923b"></script>
-  <script type="text/babel" src="/shared/app.js?v=20260923"></script>
-  <link rel="stylesheet" href="/shared/global.css?v=20260905e" />
+  <script type="text/babel" src="/shared/layout.js?v=20260923c"></script>
+  <script type="text/babel" src="/shared/app.js?v=20260923c"></script>
+  <link rel="stylesheet" href="/shared/global.css?v=20260923" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -42,7 +42,7 @@
 
   <script type="text/babel">
     const { Navbar, Footer, IconArrow, IconHeart, trackEvent } = window.SharedComponents;
-    const { useReveal, HojaTransferencia, SociosGuardianes, CierreCTA } = window.SharedApp;
+    const { useReveal, HojaTransferencia, EsponsorCard, SociosGuardianes, CierreCTA } = window.SharedApp;
     const { CONTACT_EMAIL, INSTAGRAM_URL } = window.SiteConfig;
 
     /* Montos ilustrativos: sirven para dimensionar el aporte, no son un precio. */
@@ -88,15 +88,19 @@
             <section className="donation-section on-dark" id="transferencia" aria-labelledby="transferencia-title">
               <div className="wrap donation-layout">
                 <div className="donation-copy reveal">
-                  <p className="eyebrow">01 / Aporte único</p>
-                  <h2 id="transferencia-title">Transferencia bancaria.</h2>
+                  <p className="eyebrow">01 / Cómo aportar</p>
+                  <h2 id="transferencia-title">Elige cómo ayudar.</h2>
                   <p>
-                    Es la forma más directa: el aporte llega completo, sin comisiones de por medio.
-                    Si nos envías el comprobante, te confirmamos la recepción y te contamos en qué
-                    se usó.
+                    Puedes hacer un aporte único por transferencia, sin comisiones de por medio, o
+                    sumarte como Socio Guardián con un cobro mensual automático en eSponsor. Si nos
+                    envías el comprobante de tu transferencia, te confirmamos la recepción y te
+                    contamos en qué se usó.
                   </p>
                 </div>
-                <HojaTransferencia />
+                <div className="donation-cards">
+                  <HojaTransferencia />
+                  <EsponsorCard />
+                </div>
               </div>
             </section>
 

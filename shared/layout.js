@@ -59,7 +59,9 @@ const TRANSFERENCIA = [
 
 /* Socios Guardianes FPA 365 — montos y textos escritos por la fundación.
    Los aportes se suscriben en eSponsor; cada plan tiene su propia página
-   de suscripción en /subscribe/<id>. */
+   de suscripción en /subscribe/<id>. ESPONSOR_URL es la página general,
+   usada como acceso rápido fuera de la grilla de niveles. */
+const ESPONSOR_URL = 'https://esponsor.com/fundacion-proyecto-arca/subscribe';
 const GUARDIANES = [
   {
     tier: 'Guardián Bronce',
@@ -457,7 +459,7 @@ window.SiteConfig = {
   FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE,
   RUT_ONG, REG_NUM, BASE_URL, GA_ID,
   PETFI_FOUNDATION_ID, PETFI_SPECIES, PETFI_PROFILE_URL,
-  FORMSPREE, TRANSFERENCIA, GUARDIANES, navLinks
+  FORMSPREE, TRANSFERENCIA, GUARDIANES, ESPONSOR_URL, navLinks
 };
 
 window.SharedComponents = {

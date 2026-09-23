@@ -553,7 +553,7 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-.network-map .map-caption { fill: var(--cream); font-size: 9px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; }
+.network-map .map-caption { fill: var(--cream); font-size: 9px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; text-anchor: middle; }
 .network-card-foot { padding: 0 0.55rem 0.35rem; color: var(--cream); font-size: 0.78rem; }
 .network-card-foot strong { color: var(--cream); font-family: var(--condensed); font-size: 1rem; }
 
@@ -780,6 +780,7 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
 .donation-copy > p { max-width: 32rem; color: rgba(255, 255, 255, 0.8); }
 .donation-copy .button { margin-top: 0.8rem; }
 
+.donation-cards { display: flex; flex-direction: column; gap: 1.5rem; }
 .bank-sheet { padding: 1.2rem; background: var(--paper); color: var(--ink); }
 .bank-sheet h3 { margin-bottom: 0.9rem; color: var(--purple); font-size: 1.7rem; line-height: 1.02; }
 .bank-intro { margin-bottom: 1rem; color: var(--muted); font-size: 0.82rem; }

@@ -310,9 +310,9 @@ const MapaCuidado = () => (
         <text x="91" y="31">Santiago</text>
         <text x="287" y="103">La Serena</text>
         <text x="220" y="238">Coquimbo</text>
-        <text className="map-caption" x="38" y="73">rescate</text>
-        <text className="map-caption" x="298" y="152">cuidado</text>
-        <text className="map-caption" x="122" y="213">familias</text>
+        <text className="map-caption" x="161" y="50">rescate</text>
+        <text className="map-caption" x="313" y="178">cuidado</text>
+        <text className="map-caption" x="232" y="196">familias</text>
       </svg>
     </div>
     <div className="network-card-foot">
@@ -474,6 +474,23 @@ const HojaTransferencia = ({ titulo, intro }) => {
         Los datos son públicos y cualquiera puede verificarlos: somos una fundación con personalidad
         jurídica vigente, Reg. N° {window.SiteConfig.REG_NUM}.
       </p>
+    </div>
+  );
+};
+
+const EsponsorCard = () => {
+  const { ESPONSOR_URL } = window.SiteConfig;
+  return (
+    <div className="bank-sheet reveal">
+      <h3>Aporte mensual con eSponsor</h3>
+      <p className="bank-intro">
+        Súmate como Socio Guardián FPA 365 con un cobro mensual automático. Elige tu nivel y
+        completa la suscripción directamente en eSponsor.
+      </p>
+      <a className="button" href={ESPONSOR_URL} target="_blank" rel="noreferrer"
+        onClick={() => window.SharedComponents.trackEvent('donation_start', { placement: 'bank_sheet_esponsor', method: 'esponsor' })}>
+        Ver planes en eSponsor <IconArrow size={16} />
+      </a>
     </div>
   );
 };
@@ -697,6 +714,6 @@ window.SharedApp = {
   fmtAge, fmtDate, parseCategories, stripHtml, resumen, sanitize,
   Cargando, EstadoVacio, SectionHead,
   MapaCuidado, FranjaCiudades, AvisoTraslado,
-  PetfiRescues, ValorCopiable, HojaTransferencia, SociosGuardianes,
+  PetfiRescues, ValorCopiable, HojaTransferencia, EsponsorCard, SociosGuardianes,
   FormspreeForm, Field, TextArea, Check, CierreCTA
 };
