@@ -96,6 +96,19 @@ const unwrapDoc = (doc) => {
   return Object.assign({ id: parts[parts.length - 1] }, unwrapFields(doc.fields || {}));
 };
 
+// Firestore corta cada página por peso, no solo por pageSize. Con fotos en base64,
+// Historias llegaba en dos páginas y el sitio mostraba solo la primera.
+const fetchAllDocs = (url, pageToken, acc) => {
+  const rows = acc || [];
+  const pageUrl = pageToken ? url + '&pageToken=' + encodeURIComponent(pageToken) : url;
+  return fetch(pageUrl)
+    .then((res) => (res.ok ? res.json() : Promise.reject(new Error('rest ' + res.status))))
+    .then((json) => {
+      (json.documents || []).forEach((d) => rows.push(unwrapDoc(d)));
+      return json.nextPageToken ? fetchAllDocs(url, json.nextPageToken, rows) : rows;
+    });
+};
+
 const useCollection = (name, options) => {
   const opts = options || {};
   const { filter, sort, max } = opts;
@@ -169,9 +182,8 @@ const useCollection = (name, options) => {
         'https://firestore.googleapis.com/v1/projects/fundacion-cloe/databases/(default)/documents/' +
         'artifacts/fundacion-cloe/users/' + uid + '/' + name + '?pageSize=100';
 
-      fetch(url)
-        .then((res) => (res.ok ? res.json() : Promise.reject(new Error('rest ' + res.status))))
-        .then((json) => publish((json.documents || []).map(unwrapDoc)))
+      fetchAllDocs(url)
+        .then(publish)
         .catch(viaSdk);
     };
 
@@ -184,9 +196,8 @@ const useCollection = (name, options) => {
           const url =
             'https://firestore.googleapis.com/v1/projects/fundacion-cloe/databases/(default)/documents/' +
             'artifacts/fundacion-cloe/users/' + ready + '/' + name + '?pageSize=100';
-          fetch(url)
-            .then((res) => (res.ok ? res.json() : Promise.reject(new Error('rest'))))
-            .then((json) => publish((json.documents || []).map(unwrapDoc)))
+          fetchAllDocs(url)
+            .then(publish)
             .catch(viaSdk);
         } else publish([]);
       }
