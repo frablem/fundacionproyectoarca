@@ -553,7 +553,14 @@ figcaption span { color: var(--purple); font-family: var(--condensed); font-weig
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-.network-map .map-caption { fill: var(--cream); font-size: 9px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; text-anchor: middle; }
+.network-map .map-land { fill: url(#map-land-fade); }
+.network-map .map-coast { fill: none; stroke: url(#map-coast-fade); stroke-width: 1; stroke-linejoin: round; }
+.network-map .map-grid { stroke: rgba(255, 255, 255, 0.1); stroke-width: 1; stroke-dasharray: 2 4; }
+.network-map .map-grid-label { fill: rgba(255, 255, 255, 0.45); font-size: 8px; font-weight: 500; letter-spacing: 0.04em; text-anchor: end; }
+.network-map .map-sea { fill: rgba(255, 243, 154, 0.5); font-family: "Cabin", sans-serif; font-size: 9px; font-style: italic; font-weight: 500; letter-spacing: 0.1em; text-anchor: middle; text-transform: none; }
+.network-map .map-distance { fill: var(--bright-yellow); font-size: 12px; text-anchor: end; text-transform: none; }
+.network-map .map-distance-note { fill: var(--cream); font-size: 9px; font-weight: 500; letter-spacing: 0.02em; text-anchor: end; text-transform: none; }
+.network-map .map-label-west { text-anchor: end; }
 .network-card-foot { padding: 0 0.55rem 0.35rem; color: var(--cream); font-size: 0.78rem; }
 .network-card-foot strong { color: var(--cream); font-family: var(--condensed); font-size: 1rem; }
 

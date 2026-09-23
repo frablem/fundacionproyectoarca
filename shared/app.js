@@ -297,22 +297,40 @@ const MapaCuidado = () => (
       <span>Mapa de cuidado</span>
       <span>Territorio en común</span>
     </div>
-    <div className="network-map" role="img" aria-label="Conexión entre Santiago, La Serena y Coquimbo">
-      <svg viewBox="0 0 360 260" preserveAspectRatio="none">
-        <path className="route-line-ghost" d="M74 35 C128 65, 215 63, 274 107 S308 198, 208 218" />
-        <path className="route-line" d="M74 35 C128 65, 215 63, 274 107 S308 198, 208 218" />
-        <circle className="route-node" cx="74" cy="35" r="8" />
-        <circle className="node-core" cx="74" cy="35" r="3" />
-        <circle className="route-node" cx="274" cy="107" r="8" />
-        <circle className="node-core" cx="274" cy="107" r="3" />
-        <circle className="route-node" cx="208" cy="218" r="8" />
-        <circle className="node-core" cx="208" cy="218" r="3" />
-        <text x="91" y="31">Santiago</text>
-        <text x="287" y="103">La Serena</text>
-        <text x="220" y="238">Coquimbo</text>
-        <text className="map-caption" x="161" y="50">rescate</text>
-        <text className="map-caption" x="313" y="178">cuidado</text>
-        <text className="map-caption" x="232" y="196">familias</text>
+    <div className="network-map" role="img" aria-label="Mapa de Chile entre Coquimbo y Santiago: La Serena y Coquimbo están juntas en la costa y Santiago a unos 470 km al sur por la Ruta 5">
+      {/* Proyección real (lat/lon a escala) desde 29,5° S hasta 33,9° S. */}
+      <svg viewBox="0 0 360 260" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          {[['map-land-fade', 0.08], ['map-coast-fade', 0.4]].map(([id, alpha]) => (
+            <linearGradient key={id} id={id} x1="0" y1="0" x2="0" y2="260" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stopColor="#fff39a" stopOpacity="0" />
+              <stop offset="0.08" stopColor="#fff39a" stopOpacity={alpha} />
+              <stop offset="0.9" stopColor="#fff39a" stopOpacity={alpha} />
+              <stop offset="1" stopColor="#fff39a" stopOpacity="0" />
+            </linearGradient>
+          ))}
+        </defs>
+        {[['30', 32.1], ['31', 90.1], ['32', 148.1], ['33', 206.1]].map(([lat, y]) => (
+          <g key={lat}>
+            <line className="map-grid" x1="0" x2="360" y1={y} y2={y} />
+            <text className="map-grid-label" x="356" y={y - 3}>{lat}° S</text>
+          </g>
+        ))}
+        <path className="map-land" d="M143.5 -14.3 L152.4 8.9 L153.8 25.1 L151.9 28.0 L148.9 28.6 L149.4 32.1 L149.4 37.9 L146.9 43.1 L143.0 47.2 L136.6 45.4 L133.6 58.2 L133.1 74.4 L135.6 90.1 L138.0 113.3 L142.0 142.3 L142.0 159.7 L145.4 177.1 L141.5 193.3 L140.5 207.3 L136.1 207.8 L134.6 227.0 L137.1 240.9 L128.2 258.3 L119.8 281.5 L222.0 281.5 L226.9 229.3 L214.6 185.8 L204.7 165.5 L189.9 124.9 L207.1 84.3 L225.9 43.7 L224.4 -14.3 Z" />
+        <path className="map-coast" d="M143.5 -14.3 L152.4 8.9 L153.8 25.1 L151.9 28.0 L148.9 28.6 L149.4 32.1 L149.4 37.9 L146.9 43.1 L143.0 47.2 L136.6 45.4 L133.6 58.2 L133.1 74.4 L135.6 90.1 L138.0 113.3 L142.0 142.3 L142.0 159.7 L145.4 177.1 L141.5 193.3 L140.5 207.3 L136.1 207.8 L134.6 227.0 L137.1 240.9 L128.2 258.3 L119.8 281.5" />
+        <text className="map-sea" x="72" y="186">Océano</text>
+        <text className="map-sea" x="72" y="198">Pacífico</text>
+        <path className="route-line-ghost" d="M155.4 26.6 L152.9 29.5 L148.9 42.5 L142.0 58.2 L139.0 75.6 L140.5 101.7 L142.0 124.9 L143.5 142.9 L145.4 159.7 L155.3 174.2 L169.6 196.8 L178.5 214.8 L184.0 232.1" />
+        <path className="route-line" d="M155.4 26.6 L152.9 29.5 L148.9 42.5 L142.0 58.2 L139.0 75.6 L140.5 101.7 L142.0 124.9 L143.5 142.9 L145.4 159.7 L155.3 174.2 L169.6 196.8 L178.5 214.8 L184.0 232.1" />
+        <text className="map-distance" x="128" y="121">≈ 470 km</text>
+        <text className="map-distance-note" x="128" y="132">por Ruta 5</text>
+        <circle className="route-node" cx="155.4" cy="26.6" r="3.2" />
+        <circle className="route-node" cx="150.7" cy="29.4" r="3.2" />
+        <circle className="route-node" cx="184" cy="232.1" r="4.5" />
+        <circle className="node-core" cx="184" cy="232.1" r="1.6" />
+        <text x="164" y="24">La Serena</text>
+        <text className="map-label-west" x="142" y="40">Coquimbo</text>
+        <text x="194" y="236">Santiago</text>
       </svg>
     </div>
     <div className="network-card-foot">
