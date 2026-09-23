@@ -58,45 +58,43 @@ const TRANSFERENCIA = [
 ];
 
 /* Socios Guardianes FPA 365 — montos y textos escritos por la fundación.
-   Los aportes se suscriben en eSponsor; sus 5 planes no tienen link individual
-   propio (el checkout se genera por sesión al presionar "Join" en su página),
-   así que los cinco botones apuntan a la página de planes de eSponsor. */
-const ESPONSOR_PLANES_URL = 'https://esponsor.com/fundacion-proyecto-arca/subscribe';
+   Los aportes se suscriben en eSponsor; cada plan tiene su propia página
+   de suscripción en /subscribe/<id>. */
 const GUARDIANES = [
   {
     tier: 'Guardián Bronce',
     amount: '$3.000',
     color: '#b08d57',
     copy: 'Tu aporte ayuda a mantener nuestra labor de rescate activa durante todo el año.',
-    link: ESPONSOR_PLANES_URL
+    link: 'https://esponsor.com/fundacion-proyecto-arca/subscribe/1CfJxqbYX9J1LWQdFS2Nf5'
   },
   {
     tier: 'Guardián Plata',
     amount: '$5.000',
     color: '#9aa2ab',
     copy: 'Ayudas a cubrir alimentación, arena y cuidados básicos de nuestros rescatados.',
-    link: ESPONSOR_PLANES_URL
+    link: 'https://esponsor.com/fundacion-proyecto-arca/subscribe/1CfJyQHtEH6YR9pjXifZyB'
   },
   {
     tier: 'Guardián Oro',
     amount: '$10.000',
     color: '#dbcc00',
     copy: 'Contribuyes directamente a que podamos recibir nuevos casos y entregarles atención veterinaria.',
-    link: ESPONSOR_PLANES_URL
+    link: 'https://esponsor.com/fundacion-proyecto-arca/subscribe/1CfJyxgzs2abpYQ7xahvrx'
   },
   {
     tier: 'Guardián Platino',
     amount: '$20.000',
     color: '#c9d1d6',
     copy: 'Tu aporte nos permite responder ante emergencias y acompañar procesos de recuperación.',
-    link: ESPONSOR_PLANES_URL
+    link: 'https://esponsor.com/fundacion-proyecto-arca/subscribe/1CfJzekRwmAs9ihKgLBFQx'
   },
   {
     tier: 'Guardián Diamante',
     amount: '$30.000 o más',
     color: '#bf99d1',
     copy: 'Eres parte de la red que permite que Proyecto Arca siga creciendo y transformando historias.',
-    link: ESPONSOR_PLANES_URL
+    link: 'https://esponsor.com/fundacion-proyecto-arca/subscribe/1CfJzuc2uHittqxqkcrvEr'
   }
 ];
 
