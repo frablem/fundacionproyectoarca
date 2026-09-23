@@ -70,19 +70,22 @@
                   esperando. Puedes aportar una vez o acompañarnos todos los meses.
                 </p>
                 <div className="page-hero-actions">
-                  <a className="button" href="#transferencia"
-                    onClick={() => trackEvent('donation_start', { placement: 'donar_hero', method: 'transferencia' })}>
-                    Datos de transferencia <IconArrow size={17} />
-                  </a>
-                  <a className="button button--outline" href="#socios-guardianes"
+                  <a className="button" href="#socios-guardianes"
                     onClick={() => trackEvent('donation_start', { placement: 'donar_hero', method: 'fpa365' })}>
-                    Ser Socio Guardián FPA 365
+                    Ser Socio Guardián FPA 365 <IconArrow size={17} />
+                  </a>
+                  <a className="button button--outline" href="#transferencia"
+                    onClick={() => trackEvent('donation_start', { placement: 'donar_hero', method: 'transferencia' })}>
+                    Datos de transferencia
                   </a>
                 </div>
               </div>
             </section>
 
             <div className="rule" aria-hidden="true"></div>
+
+            {/* Socios Guardianes */}
+            <SociosGuardianes />
 
             {/* Transferencia bancaria */}
             <section className="donation-section on-dark" id="transferencia" aria-labelledby="transferencia-title">
@@ -103,9 +106,6 @@
                 </div>
               </div>
             </section>
-
-            {/* Socios Guardianes */}
-            <SociosGuardianes />
 
             {/* Qué hace tu aporte */}
             <section className="section" aria-labelledby="impacto-title">
