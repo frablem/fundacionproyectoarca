@@ -24,7 +24,7 @@
   <script src="/shared/dompurify.min.js"></script>
   <script type="text/babel" src="/shared/layout.js?v=20260923c"></script>
   <script type="text/babel" src="/shared/app.js?v=20260923d"></script>
-  <link rel="stylesheet" href="/shared/global.css?v=20260923b" />
+  <link rel="stylesheet" href="/shared/global.css?v=20260923c" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -148,7 +148,7 @@
                 <div className="wrap">
                   <div className="story-grid">
                     {data.map((h, i) => (
-                      <a className="story-card reveal" key={h.id} href={'/historias?h=' + h.id}>
+                      <a className={'story-card reveal' + (h.image ? ' story-card--photo' : '')} key={h.id} href={'/historias?h=' + h.id}>
                         <div className="story-index" aria-hidden="true">
                           {h.image ? <img src={h.image} alt="" loading="lazy" /> : null}
                           <span>{(i + 1) < 10 ? '0' + (i + 1) : (i + 1)}</span>
