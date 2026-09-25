@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    /* Instagram a veces codifica el "#" de un link como "%23"
+       (/donar/%23socios-guardianes). Se devuelve a la sección correcta. */
+    (function () {
+      var p = location.pathname, i = p.toLowerCase().indexOf('%23');
+      if (i < 0) return;
+      var ancla = p.slice(i + 3);
+      try { ancla = decodeURIComponent(ancla); } catch (e) {}
+      location.replace(p.slice(0, i) + location.search + '#' + ancla);
+    })();
+  </script>
   <title>Página no encontrada — Fundación Proyecto Arca</title>
   <meta name="robots" content="noindex" />
   <meta name="description" content="No encontramos la página que buscabas en el sitio de Fundación Proyecto Arca." />
@@ -22,7 +33,7 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="/shared/dompurify.min.js"></script>
   <script type="text/babel" src="/shared/layout.js?v=20260923c"></script>
-  <script type="text/babel" src="/shared/app.js?v=20260923e"></script>
+  <script type="text/babel" src="/shared/app.js?v=20260925a"></script>
   <link rel="stylesheet" href="/shared/global.css?v=20260923c" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
