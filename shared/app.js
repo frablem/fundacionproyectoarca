@@ -49,6 +49,15 @@ const useReveal = () => {
       window.clearTimeout(finalSweep);
     };
   }, []);
+
+  // El navegador busca el #ancla antes de que React pinte la sección, así que
+  // un link como /donar/#socios-guardianes quedaba arriba. Se salta al montar.
+  useEffect(() => {
+    let id = window.location.hash.slice(1);
+    try { id = decodeURIComponent(id); } catch (e) {}
+    const el = id && document.getElementById(id);
+    if (el) window.requestAnimationFrame(() => el.scrollIntoView());
+  }, []);
 };
 
 /* ============================================================
