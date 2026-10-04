@@ -22,8 +22,8 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
   <script src="/shared/dompurify.min.js"></script>
-  <script type="text/babel" src="/shared/layout.js?v=20260923c"></script>
-  <script type="text/babel" src="/shared/app.js?v=20260923e"></script>
+  <script type="text/babel" src="/shared/layout.js?v=20261004-forms"></script>
+  <script type="text/babel" src="/shared/app.js?v=20261004-forms"></script>
   <link rel="stylesheet" href="/shared/global.css?v=20260923c" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
@@ -35,6 +35,7 @@
     window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
     window.dispatchEvent(new Event('fbase-ready'));
   </script>
+  <script src="/shared/forms.js?v=20261004"></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -42,14 +43,14 @@
 
   <script type="text/babel">
     const { Navbar, Footer, IconArrow, IconMail, IconInstagram, IconFacebook, IconTikTok, IconPin, trackEvent } = window.SharedComponents;
-    const { useReveal, FormspreeForm, Field, TextArea, Check } = window.SharedApp;
-    const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE, FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE, FORMSPREE } = window.SiteConfig;
+    const { useReveal, EmailForm, Field, TextArea, Check } = window.SharedApp;
+    const { CONTACT_EMAIL, INSTAGRAM_URL, INSTAGRAM_HANDLE, INSTAGRAM_EDUCA_URL, INSTAGRAM_EDUCA_HANDLE, FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE } = window.SiteConfig;
 
     /* Un selector cambia los campos y el endpoint. El enlace ?motivo=hogar_temporal
        permite llegar directamente al formulario de hogar temporal. */
     const TIPOS = [
-      { key: 'contacto', label: 'Consulta general', formId: FORMSPREE.contacto },
-      { key: 'hogar_temporal', label: 'Hogar temporal', formId: FORMSPREE.hogar_temporal }
+      { key: 'contacto', label: 'Consulta general' },
+      { key: 'hogar_temporal', label: 'Hogar temporal' }
     ];
 
     const requestedMotivo = new URLSearchParams(window.location.search).get('motivo');
@@ -110,9 +111,8 @@
                       ))}
                     </div>
 
-                    <FormspreeForm
+                    <EmailForm
                       key={tipo}
-                      formId={actual.formId}
                       tipo={tipo}
                       submitLabel="Enviar mensaje"
                       successTitle={exito.title}
@@ -174,7 +174,7 @@
                             } />
                         </div>
                       </fieldset>
-                    </FormspreeForm>
+                    </EmailForm>
                   </div>
 
                   <aside className="contact-aside reveal">

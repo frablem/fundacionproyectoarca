@@ -41,11 +41,6 @@ const PETFI_PROFILE_URL =
   'https://petfi.io/fundacion/' + PETFI_FOUNDATION_ID +
   '?utm_source=fundacion_cloe&utm_medium=referral&utm_campaign=arca&utm_content=foundation_profile';
 
-/* Formspree — endpoints de consulta general y hogar temporal confirmados por Fran. */
-const FORMSPREE = {
-  contacto: 'xbgjavnq',
-  hogar_temporal: 'xjyveqnz'
-};
 
 /* Transferencia bancaria — datos confirmados por la fundación. */
 const TRANSFERENCIA = [
@@ -459,7 +454,7 @@ window.SiteConfig = {
   FACEBOOK_URL, FACEBOOK_LABEL, TIKTOK_URL, TIKTOK_HANDLE,
   RUT_ONG, REG_NUM, BASE_URL, GA_ID,
   PETFI_FOUNDATION_ID, PETFI_SPECIES, PETFI_PROFILE_URL,
-  FORMSPREE, TRANSFERENCIA, GUARDIANES, ESPONSOR_URL, navLinks
+  TRANSFERENCIA, GUARDIANES, ESPONSOR_URL, navLinks
 };
 
 window.SharedComponents = {

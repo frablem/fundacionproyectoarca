@@ -587,110 +587,51 @@ const SociosGuardianes = () => {
   );
 };
 
-/* ============================================================
-   Formspree — formularios con captcha aritmético
-   ============================================================ */
-
-const useCaptcha = () => {
-  const make = () => ({ a: 1 + Math.floor(Math.random() * 8), b: 1 + Math.floor(Math.random() * 8) });
-  const [nums, setNums] = useState(make);
-  return { nums, reset: () => setNums(make()) };
-};
-
-const FormspreeForm = ({ formId, tipo, children, submitLabel, successTitle, successText, onSuccess }) => {
+/* Formularios con verificación y entrega de correo en el servidor. */
+const EmailForm = ({ tipo, children, submitLabel, successTitle, successText, onSuccess }) => {
   const [status, setStatus] = useState('idle');
-  const [error, setError] = useState('');
-  const [answer, setAnswer] = useState('');
-  const { nums, reset } = useCaptcha();
+  const delivery = window.CloeForms.useForm('arca-' + tipo);
   const { trackEvent } = window.SharedComponents;
   const startedRef = useRef(false);
-
   const noteStart = () => {
     if (startedRef.current) return;
     startedRef.current = true;
     const events = { hogar_temporal: 'volunteer_start', contacto: 'contact_start' };
     trackEvent(events[tipo] || 'contact_start', { placement: 'form', form_type: tipo });
   };
-
   const submit = async (event) => {
     event.preventDefault();
-    setError('');
+    if (status === 'submitting') return;
     const form = event.currentTarget;
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    if (Number(answer) !== nums.a + nums.b) {
-      setError('La suma de verificación no coincide. Inténtalo otra vez.');
-      reset();
-      setAnswer('');
-      return;
-    }
-
-    if (!formId || formId.indexOf('PLACEHOLDER') === 0) {
-      setError('El envío del formulario aún no está habilitado. Escríbenos a ' +
-        window.SiteConfig.CONTACT_EMAIL + ' y te respondemos igual.');
-      return;
-    }
-
+    if (!form.checkValidity()) { form.reportValidity(); return; }
     setStatus('submitting');
-
-    try {
-      const res = await fetch('https://formspree.io/f/' + formId, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form)
-      });
-      if (!res.ok) throw new Error('formspree ' + res.status);
+    const result = await delivery.submit(form);
+    if (result) {
       form.reset();
       setStatus('success');
-      trackEvent('generate_lead', { form_type: tipo });
+      if (!result.preview) trackEvent('generate_lead', { form_type: tipo });
       if (onSuccess) onSuccess();
-    } catch (err) {
-      setStatus('idle');
-      setError('No pudimos enviar el formulario. Revisa tu conexión o escríbenos a ' +
-        window.SiteConfig.CONTACT_EMAIL + '.');
-    }
+    } else setStatus('idle');
   };
-
-  if (status === 'success') {
-    return (
-      <div className="form-success" role="status">
-        <h3>{successTitle}</h3>
-        <p>{successText}</p>
-        <a className="button" href="/">Volver al inicio</a>
-      </div>
-    );
-  }
-
+  if (status === 'success' && delivery.result?.preview) return <window.CloeForms.Preview form={delivery} />;
+  if (status === 'success') return (
+    <div className="form-success" role="status">
+      <h3>{successTitle}</h3><p>{successText}</p>
+      <a className="button" href="/">Volver al inicio</a>
+    </div>
+  );
   return (
     <form className="form-card" onSubmit={submit} onFocus={noteStart}>
-      <input type="hidden" name="_subject" value={'Web Arca — ' + tipo} />
       <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off"
         style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" />
       {children}
-
-      <fieldset>
-        <legend>Verificación</legend>
-        <div className="captcha">
-          <label htmlFor={'captcha-' + tipo}>¿Cuánto es {nums.a} + {nums.b}? <span className="required-mark">*</span></label>
-          <input id={'captcha-' + tipo} type="text" inputMode="numeric" required
-            value={answer} onChange={(e) => setAnswer(e.target.value)} autoComplete="off" />
-        </div>
-      </fieldset>
-
+      <window.CloeForms.Security form={delivery} />
       <div className="form-actions">
-        <button className="button" type="submit" disabled={status === 'submitting'}>
+        <button className="button" type="submit" disabled={!delivery.token || status === 'submitting'}>
           {status === 'submitting' ? 'Enviando…' : (submitLabel || 'Enviar')}
         </button>
-        <span className="hint" style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>
-          Te respondemos al correo que nos dejes.
-        </span>
+        <span className="hint" style={{color:'var(--muted)',fontSize:'0.8rem'}}>Te respondemos al correo que nos dejes.</span>
       </div>
-
-      {error ? <p className="form-error" role="alert">{error}</p> : null}
     </form>
   );
 };
@@ -744,5 +685,5 @@ window.SharedApp = {
   Cargando, EstadoVacio, SectionHead,
   MapaCuidado, FranjaCiudades, AvisoTraslado,
   PetfiRescues, ValorCopiable, HojaTransferencia, EsponsorCard, SociosGuardianes,
-  FormspreeForm, Field, TextArea, Check, CierreCTA
+  EmailForm, Field, TextArea, Check, CierreCTA
 };
