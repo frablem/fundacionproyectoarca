@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio — Fundación Proyecto Arca</title>
+  <meta name="description" content="Fundación Proyecto Arca rescata, rehabilita y busca hogares responsables para gatos abandonados en La Serena, Coquimbo y Santiago." />
+  <meta name="keywords" content="rescate de gatos, adopción responsable, La Serena, Coquimbo, Santiago, Fundación Proyecto Arca" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fundación Proyecto Arca — Rescatamos vidas, transformamos historias" />
+  <meta property="og:description" content="Rescatamos gatos, acompañamos su recuperación y buscamos familias para una vida digna, segura y amorosa." />
+  <meta property="og:image" content="/media/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#77368B" />
+  <link rel="icon" type="image/png" href="/media/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cabin+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { initializeFirestore, collection, query, where, orderBy, limit, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    const firebaseConfig = { apiKey: "AIzaSyBVEpigRETBVYVcEhL1fvG0oM-Eph6teiI", authDomain: "fundacion-cloe.firebaseapp.com", projectId: "fundacion-cloe", storageBucket: "fundacion-cloe.firebasestorage.app", messagingSenderId: "911205802218", appId: "1:911205802218:web:86acc81671f9e643da7793" };
+    const FOUNDATION_UID = "PLACEHOLDER_FOUNDATION_UID";
+    const APP_ID = "fundacion-cloe";
+    const app = initializeApp(firebaseConfig); const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    window.FBase = { db, collection, query, where, orderBy, limit, onSnapshot, getDocs, FOUNDATION_UID, APP_ID };
+    window.dispatchEvent(new Event("fbase-ready"));
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Fundación Proyecto Arca",
+    "url": "",
+    "logo": "/media/logo.png",
+    "sameAs": [
+      "https://www.instagram.com/fundacionproyectoarca/",
+      "https://www.instagram.com/proyectoarcaeduca/"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "proyectoarcacoquimbo@gmail.com",
+      "contactType": "general"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --arca-deep: #77368B;
+      --arca-purple: #804996;
+      --arca-olive: #AEB515;
+      --arca-yellow: #DBCC00;
+      --arca-lilac: #BF99D1;
+      --arca-light-purple: #A46EBE;
+      --arca-bright-yellow: #E4E43D;
+      --arca-cream: #FFF39A;
+      --arca-paper: #fffdf2;
+      --arca-ink: #211a23;
+      --arca-muted: #5c4d62;
+      --max-content: 1260px;
+      --condensed: "Cabin Condensed", "Gill Sans", "Trebuchet MS", sans-serif;
+      --body: "Cabin", "Gill Sans", "Trebuchet MS", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body {
+      margin: 0;
+      overflow-x: clip;
+      background: var(--arca-paper);
+      color: var(--arca-ink);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    body, button, a, input { font-family: var(--body); }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    :focus-visible {
+      outline: 3px solid var(--arca-yellow);
+      outline-offset: 4px;
+    }
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      left: 1rem;
+      top: -5rem;
+      padding: .75rem 1rem;
+      border-radius: 0 0 .6rem .6rem;
+      background: var(--arca-yellow);
+      color: var(--arca-ink);
+      font-weight: 700;
+      transition: top .2s ease;
+    }
+    .skip-link:focus { top: 0; }
+    .container {
+      width: min(calc(100% - 2.5rem), var(--max-content));
+      margin-inline: auto;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      margin: 0;
+      color: var(--arca-purple);
+      font-family: var(--condensed);
+      font-size: .84rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      width: 2.6rem;
+      height: .2rem;
+      background: currentColor;
+      content: "";
+    }
+    .section-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2.2rem;
+      height: 2.2rem;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-family: var(--condensed);
+      font-size: .85rem;
+      letter-spacing: .08em;
+    }
+    .section-header {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    main section[id] { scroll-margin-top: 5rem; }
+    .section-header h2 {
+      max-width: 15ch;
+      margin: 0;
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: clamp(2.7rem, 7vw, 6.5rem);
+      font-weight: 600;
+      letter-spacing: -.045em;
+      line-height: .88;
+      text-wrap: balance;
+    }
+    .section-header p {
+      max-width: 49ch;
+      margin: 0;
+      color: var(--arca-muted);
+      font-size: 1.06rem;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(1.25rem);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: .08s; }
+    .delay-2 { transition-delay: .16s; }
+    .delay-3 { transition-delay: .24s; }
+
+    /* Header and navigation */
+    .site-header {
+      position: sticky;
+      z-index: 40;
+      top: 0;
+      border-bottom: 1px solid rgba(119, 54, 139, .14);
+      background: rgba(255, 253, 242, .94);
+      backdrop-filter: blur(16px);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 4.65rem;
+      gap: 1rem;
+    }
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      color: var(--arca-deep);
+      text-decoration: none;
+    }
+    .brand-link img {
+      width: 3rem;
+      height: 3rem;
+      object-fit: contain;
+    }
+    .brand-text {
+      display: grid;
+      gap: .08rem;
+      line-height: 1;
+    }
+    .brand-text strong {
+      font-family: var(--condensed);
+      font-size: 1.2rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .brand-text span {
+      color: var(--arca-muted);
+      font-size: .72rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.8rem;
+      height: 2.8rem;
+      border: 1px solid var(--arca-deep);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--arca-deep);
+    }
+    .menu-lines {
+      display: grid;
+      gap: .25rem;
+      width: 1.05rem;
+    }
+    .menu-lines span {
+      display: block;
+      height: 2px;
+      background: currentColor;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    .menu-toggle[aria-expanded="true"] .menu-lines span:first-child { transform: translateY(.23rem) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-lines span:last-child { transform: translateY(-.23rem) rotate(-45deg); }
+    .site-menu {
+      position: absolute;
+      top: calc(100% + 1px);
+      right: 1.25rem;
+      left: 1.25rem;
+      display: none;
+      padding: .65rem;
+      border: 1px solid rgba(119, 54, 139, .2);
+      border-top: 0;
+      background: var(--arca-paper);
+      box-shadow: 0 1.5rem 3rem rgba(53, 24, 64, .12);
+    }
+    .site-menu.is-open { display: grid; }
+    .site-menu a {
+      padding: .78rem .85rem;
+      border-bottom: 1px solid rgba(119, 54, 139, .11);
+      color: var(--arca-deep);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .site-menu a:last-child { border-bottom: 0; }
+    .site-menu a:hover { background: rgba(191, 153, 209, .18); }
+    .site-menu a.is-active { color: var(--arca-purple); }
+    .header-actions {
+      display: none;
+      align-items: center;
+      gap: .8rem;
+    }
+    .instagram-link {
+      color: var(--arca-deep);
+      font-size: .88rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .instagram-link:hover { color: var(--arca-purple); }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3rem;
+      padding: .78rem 1.25rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-family: var(--condensed);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      line-height: 1;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 .7rem 1.5rem rgba(43, 22, 53, .16); }
+    .button-primary { background: var(--arca-yellow); color: var(--arca-ink); }
+    .button-secondary { border-color: var(--arca-deep); color: var(--arca-deep); }
+    .button-secondary:hover { background: var(--arca-deep); color: var(--arca-paper); }
+    .button-light { border-color: rgba(255, 255, 255, .7); color: #fff; }
+    .button-light:hover { background: #fff; color: var(--arca-deep); }
+    .arrow-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .arrow-link::after {
+      display: inline-block;
+      content: "↗";
+      font-family: var(--body);
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: transform .2s ease;
+    }
+    .arrow-link:hover::after { transform: translate(.2rem, -.2rem); }
+
+    /* Sculptural hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 3.8rem 0 4.5rem;
+      background: var(--arca-deep);
+      color: #fff;
+      isolation: isolate;
+    }
+    .hero::before {
+      position: absolute;
+      z-index: -1;
+      top: -13rem;
+      right: -15rem;
+      width: 42rem;
+      height: 42rem;
+      border: 1px solid rgba(255, 243, 154, .36);
+      border-radius: 50%;
+      content: "";
+    }
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      right: 31%;
+      bottom: -17rem;
+      width: 32rem;
+      height: 32rem;
+      border: 1px solid rgba(191, 153, 209, .35);
+      border-radius: 50%;
+      content: "";
+    }
+    .hero-grid {
+      display: grid;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-copy { position: relative; z-index: 2; }
+    .hero .eyebrow { color: var(--arca-cream); }
+    .hero h1 {
+      max-width: 10ch;
+      margin: 1.25rem 0 1.45rem;
+      font-family: var(--condensed);
+      font-size: clamp(4rem, 15vw, 9rem);
+      font-weight: 600;
+      letter-spacing: -.06em;
+      line-height: .78;
+      text-wrap: balance;
+    }
+    .hero h1 span, .hero h1 em { display: block; }
+    .hero h1 span:nth-child(2) { margin-left: .68em; color: var(--arca-yellow); }
+    .hero h1 em {
+      margin-left: .12em;
+      color: var(--arca-cream);
+      font-style: normal;
+      font-size: .67em;
+      letter-spacing: -.04em;
+    }
+    .hero h1 span:last-child { margin-left: .85em; color: var(--arca-bright-yellow); }
+    .hero-lead {
+      max-width: 47ch;
+      margin: 0;
+      color: rgba(255, 255, 255, .86);
+      font-size: 1.08rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      margin-top: 2rem;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.2rem;
+      margin: 2.2rem 0 0;
+      color: rgba(255, 255, 255, .72);
+      font-family: var(--condensed);
+      font-size: .91rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .hero-meta strong { color: var(--arca-cream); }
+    .hero-art {
+      position: relative;
+      min-height: 24rem;
+    }
+    .hero-window {
+      position: absolute;
+      top: 0;
+      right: 4%;
+      width: min(86vw, 25rem);
+      height: min(108vw, 32rem);
+      overflow: hidden;
+      border: .7rem solid var(--arca-cream);
+      border-bottom: 0;
+      border-radius: 50% 50% 0 0 / 31% 31% 0 0;
+      box-shadow: 1.3rem 1.3rem 0 var(--arca-olive);
+      transform: rotate(3deg);
+    }
+    .hero-window::after {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255, 255, 255, .42);
+      border-radius: inherit;
+      content: "";
+      pointer-events: none;
+    }
+    .hero-window img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.86) contrast(1.04);
+    }
+    .hero-art-ring {
+      position: absolute;
+      z-index: -1;
+      right: -2%;
+      bottom: -1rem;
+      width: 12rem;
+      height: 12rem;
+      border: 1.2rem solid var(--arca-yellow);
+      border-radius: 50%;
+      opacity: .96;
+    }
+    .hero-art-caption {
+      position: absolute;
+      z-index: 3;
+      right: 0;
+      bottom: .4rem;
+      display: grid;
+      gap: .1rem;
+      padding: .75rem 1rem;
+      background: var(--arca-yellow);
+      color: var(--arca-ink);
+      font-family: var(--condensed);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .hero-art-caption span:first-child { color: var(--arca-deep); font-size: 1.35rem; }
+
+    /* Mission */
+    .mission {
+      padding: 5.7rem 0 6.3rem;
+      background: var(--arca-paper);
+    }
+    .mission-intro {
+      display: grid;
+      gap: 1.4rem;
+      max-width: 920px;
+      margin-bottom: 3.8rem;
+    }
+    .mission-intro h2 {
+      max-width: 15ch;
+      margin: 0;
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      font-weight: 600;
+      letter-spacing: -.06em;
+      line-height: .84;
+      text-wrap: balance;
+    }
+    .mission-intro p {
+      max-width: 58ch;
+      margin: 0;
+      color: var(--arca-muted);
+      font-size: 1.12rem;
+    }
+    .pillar-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .pillar {
+      position: relative;
+      min-height: 14rem;
+      padding: 1.5rem;
+      border-top: 1px solid var(--arca-deep);
+      background: #fff;
+    }
+    .pillar::after {
+      position: absolute;
+      right: 1.25rem;
+      bottom: -1.7rem;
+      width: 4.4rem;
+      height: 4.4rem;
+      border: .65rem solid var(--arca-lilac);
+      border-radius: 50%;
+      content: "";
+    }
+    .pillar:nth-child(2)::after { border-color: var(--arca-olive); border-radius: 50% 50% 0 0; }
+    .pillar:nth-child(3)::after { border-color: var(--arca-yellow); }
+    .pillar-number {
+      color: var(--arca-purple);
+      font-family: var(--condensed);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+    .pillar h3 {
+      max-width: 15ch;
+      margin: 2rem 0 .7rem;
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: 2.1rem;
+      letter-spacing: -.03em;
+      line-height: .95;
+    }
+    .pillar p { max-width: 34ch; margin: 0; color: var(--arca-muted); }
+
+    /* Adoptable gallery */
+    .adoption-section {
+      padding: 5.7rem 0 6rem;
+      background: var(--arca-cream);
+    }
+    .adoption-section .section-header {
+      grid-template-columns: 1fr;
+    }
+    .adoption-section .eyebrow { color: var(--arca-deep); }
+    .adoption-section .section-header h2 { color: var(--arca-deep); }
+    .stand-in-note {
+      max-width: 54rem;
+      margin: -1rem 0 2rem;
+      padding: .8rem 1rem;
+      border-left: .3rem solid var(--arca-purple);
+      background: rgba(255, 255, 255, .55);
+      color: var(--arca-ink);
+      font-size: .91rem;
+    }
+    .adoption-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .9rem;
+    }
+    .cat-card {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--arca-deep);
+      color: #fff;
+      text-decoration: none;
+    }
+    .cat-card:nth-child(n + 5) { display: none; }
+    .cat-card figure { margin: 0; }
+    .cat-card-image {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+    }
+    .cat-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.8);
+      transition: transform .55s ease, filter .55s ease;
+    }
+    .cat-card:hover .cat-card-image img { transform: scale(1.05); filter: saturate(1); }
+    .cat-card-body {
+      display: grid;
+      gap: .35rem;
+      min-height: 6.8rem;
+      padding: .95rem;
+    }
+    .cat-card-body h3 {
+      margin: 0;
+      font-family: var(--condensed);
+      font-size: 1.55rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .cat-card-body p {
+      margin: 0;
+      color: rgba(255, 255, 255, .72);
+      font-size: .86rem;
+    }
+    .cat-card-tag {
+      position: absolute;
+      top: .65rem;
+      left: .65rem;
+      padding: .3rem .48rem;
+      background: var(--arca-yellow);
+      color: var(--arca-ink);
+      font-family: var(--condensed);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .adoption-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      margin-top: 2.4rem;
+    }
+    .adoption-footer p { max-width: 43ch; margin: 0; color: var(--arca-ink); }
+    .adoption-footer .arrow-link { color: var(--arca-deep); }
+
+    /* Stories and content teaser */
+    .stories {
+      padding: 5.7rem 0 6.2rem;
+      background: var(--arca-paper);
+    }
+    .stories-grid {
+      display: grid;
+      gap: 1.2rem;
+    }
+    .story-card {
+      display: grid;
+      grid-template-columns: 5.5rem 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 1.1rem 0;
+      border-top: 1px solid rgba(119, 54, 139, .4);
+    }
+    .story-card:first-child { border-top: 2px solid var(--arca-deep); }
+    .story-index {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--arca-lilac);
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .story-card:nth-child(2) .story-index { border-radius: 50% 50% 0 0; background: var(--arca-olive); color: var(--arca-ink); }
+    .story-card h3 {
+      margin: 0 0 .35rem;
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: 1.8rem;
+      line-height: .96;
+    }
+    .story-card p { margin: 0; color: var(--arca-muted); }
+    .story-card small {
+      display: inline-block;
+      margin-bottom: .6rem;
+      color: var(--arca-purple);
+      font-size: .73rem;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    .stories-note {
+      margin: 2.3rem 0 0;
+      color: var(--arca-muted);
+      font-size: .88rem;
+    }
+
+    /* Ways to help */
+    .help-section {
+      padding: 5.7rem 0 6rem;
+      background: var(--arca-purple);
+      color: #fff;
+    }
+    .help-section .eyebrow { color: var(--arca-cream); }
+    .help-section .section-header h2 { color: #fff; }
+    .help-section .section-header p { color: rgba(255, 255, 255, .82); }
+    .help-grid {
+      display: grid;
+      gap: 1px;
+      background: rgba(255, 255, 255, .42);
+    }
+    .help-card {
+      display: grid;
+      gap: 1.2rem;
+      min-height: 15.5rem;
+      padding: 1.5rem;
+      background: var(--arca-purple);
+    }
+    .help-card:nth-child(2) { background: var(--arca-deep); }
+    .help-card:nth-child(3) { background: var(--arca-olive); color: var(--arca-ink); }
+    .help-card:nth-child(4) { background: var(--arca-yellow); color: var(--arca-ink); }
+    .help-card-number {
+      font-family: var(--condensed);
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      opacity: .8;
+    }
+    .help-card h3 {
+      align-self: end;
+      max-width: 12ch;
+      margin: 0;
+      font-family: var(--condensed);
+      font-size: 2.4rem;
+      letter-spacing: -.04em;
+      line-height: .9;
+    }
+    .help-card p { max-width: 31ch; margin: 0; color: rgba(255, 255, 255, .8); }
+    .help-card:nth-child(n + 3) p { color: rgba(33, 26, 35, .79); }
+    .help-card .arrow-link { justify-self: start; color: inherit; }
+
+    /* Donation */
+    .donation-section {
+      padding: 5.7rem 0 6.2rem;
+      background: var(--arca-deep);
+      color: #fff;
+    }
+    .donation-layout {
+      display: grid;
+      gap: 2.4rem;
+      align-items: start;
+    }
+    .donation-copy .eyebrow { color: var(--arca-cream); }
+    .donation-copy h2 {
+      max-width: 10ch;
+      margin: 1rem 0 1.1rem;
+      color: #fff;
+      font-family: var(--condensed);
+      font-size: clamp(3.3rem, 8vw, 7rem);
+      letter-spacing: -.06em;
+      line-height: .82;
+      text-wrap: balance;
+    }
+    .donation-copy p { max-width: 42ch; margin: 0; color: rgba(255, 255, 255, .81); }
+    .bank-card {
+      position: relative;
+      padding: 1.5rem;
+      background: var(--arca-yellow);
+      color: var(--arca-ink);
+    }
+    .bank-card::before {
+      position: absolute;
+      top: -1.1rem;
+      right: 1rem;
+      width: 4rem;
+      height: 4rem;
+      border: .75rem solid var(--arca-cream);
+      border-radius: 50%;
+      content: "";
+    }
+    .bank-card h3 {
+      margin: 0;
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: 2rem;
+      letter-spacing: -.025em;
+      line-height: 1;
+    }
+    .bank-card > p { margin: .45rem 0 1.1rem; font-size: .9rem; }
+    .bank-list {
+      display: grid;
+      gap: .5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .bank-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .8rem;
+      padding: .65rem 0;
+      border-top: 1px solid rgba(33, 26, 35, .3);
+    }
+    .bank-list li span {
+      color: rgba(33, 26, 35, .75);
+      font-size: .73rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .copy-button {
+      max-width: 65%;
+      padding: .18rem 0;
+      border: 0;
+      background: transparent;
+      color: var(--arca-ink);
+      font-size: .94rem;
+      font-weight: 700;
+      text-align: right;
+    }
+    .copy-button:hover { color: var(--arca-deep); text-decoration: underline; }
+    .copy-state {
+      min-height: 1.4rem;
+      margin: .8rem 0 0;
+      color: var(--arca-deep);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .donation-foot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem 1.5rem;
+      align-items: center;
+      margin-top: 1.5rem;
+      color: rgba(255, 255, 255, .82);
+      font-size: .9rem;
+    }
+    .donation-foot a { color: var(--arca-cream); font-weight: 700; }
+
+    /* Contact strip */
+    .contact-section {
+      padding: 4rem 0;
+      background: var(--arca-olive);
+      color: var(--arca-ink);
+    }
+    .contact-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1.8rem;
+    }
+    .contact-inner h2 {
+      max-width: 13ch;
+      margin: .7rem 0 0;
+      color: var(--arca-deep);
+      font-family: var(--condensed);
+      font-size: clamp(2.8rem, 7vw, 5.3rem);
+      letter-spacing: -.05em;
+      line-height: .85;
+    }
+    .contact-inner p { max-width: 42ch; margin: .85rem 0 0; }
+    .contact-links {
+      display: grid;
+      gap: .65rem;
+      min-width: min(100%, 19rem);
+    }
+    .contact-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .7rem;
+      padding: .8rem 0;
+      border-bottom: 1px solid rgba(33, 26, 35, .4);
+      color: var(--arca-ink);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .contact-links a::after { content: "↗"; font-size: 1.2rem; }
+    .contact-links a:hover { color: var(--arca-deep); }
+
+    /* Footer */
+    .site-footer {
+      padding: 4.5rem 0 2rem;
+      background: #29142f;
+      color: rgba(255, 255, 255, .8);
+    }
+    .footer-grid {
+      display: grid;
+      gap: 2.2rem;
+      padding-bottom: 3.1rem;
+    }
+    .footer-title {
+      margin: 0 0 .75rem;
+      color: var(--arca-cream);
+      font-family: var(--condensed);
+      font-size: 1.08rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      font-family: var(--condensed);
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+    .footer-brand img { width: 3.4rem; height: 3.4rem; object-fit: contain; }
+    .footer-grid p { max-width: 32ch; margin: 0; font-size: .93rem; }
+    .footer-links {
+      display: grid;
+      gap: .35rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .footer-links a, .footer-contact a {
+      color: rgba(255, 255, 255, .82);
+      text-decoration: none;
+    }
+    .footer-links a:hover, .footer-contact a:hover { color: var(--arca-cream); }
+    .footer-contact { display: grid; gap: .35rem; margin: 0; font-size: .93rem; }
+    .footer-donation {
+      padding: 1rem;
+      border: 1px solid rgba(255, 243, 154, .4);
+      background: rgba(119, 54, 139, .35);
+    }
+    .footer-donation strong { display: block; color: #fff; }
+    .footer-donation p { margin-top: .45rem; color: rgba(255, 255, 255, .72); font-size: .88rem; }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, .2);
+      font-size: .8rem;
+    }
+    .cloe-credit {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      color: var(--arca-cream);
+      text-decoration: none;
+    }
+    .cloe-credit:hover { color: var(--arca-yellow); }
+    .cloe-credit svg { flex: 0 0 auto; }
+
+    @media (max-width: 767px) {
+      .header-inner { min-height: 4.25rem; }
+      .brand-link img { width: 2.6rem; height: 2.6rem; }
+      .brand-text strong { font-size: 1.05rem; }
+      .brand-text span { font-size: .65rem; }
+      .menu-toggle { width: 2.75rem; height: 2.75rem; }
+      .hero { padding: 3rem 0 3.5rem; }
+      .hero-grid { gap: 2rem; }
+      .hero h1 {
+        margin: 1rem 0 1.25rem;
+        font-size: clamp(3.35rem, 14.5vw, 4rem);
+      }
+      .hero-lead { font-size: 1rem; }
+      .hero-actions { margin-top: 1.5rem; }
+      .hero-meta { margin-top: 1.5rem; font-size: .82rem; }
+      .hero-art { min-height: 23rem; }
+      .hero-window {
+        right: 5%;
+        width: min(82vw, 20rem);
+        height: min(94vw, 23rem);
+        border-width: .55rem;
+        box-shadow: .8rem .8rem 0 var(--arca-olive);
+      }
+      .hero-art-caption { right: .25rem; bottom: .25rem; padding: .6rem .75rem; }
+      .mission,
+      .adoption-section,
+      .stories,
+      .help-section,
+      .donation-section,
+      .contact-section { padding: 3.5rem 0; }
+      .mission-intro { gap: 1rem; margin-bottom: 2.25rem; }
+      .mission-intro h2 { font-size: clamp(2.75rem, 12vw, 3.4rem); }
+      .mission-intro p { font-size: 1rem; }
+      .pillar-grid { gap: .75rem; }
+      .pillar { min-height: 11rem; padding: 1.15rem; }
+      .pillar h3 { margin: 1.25rem 0 .55rem; font-size: 1.8rem; }
+      .section-header { gap: .8rem; margin-bottom: 1.75rem; }
+      .section-header h2 { font-size: clamp(2.55rem, 12vw, 3.2rem); }
+      .section-header p { font-size: 1rem; }
+      .stand-in-note { margin: 0 0 1.4rem; padding: .75rem .85rem; font-size: .84rem; }
+      .adoption-grid { gap: .65rem; }
+      .cat-card-image { aspect-ratio: 1 / 1; }
+      .cat-card-body { min-height: 5.4rem; padding: .72rem; }
+      .cat-card-body h3 { font-size: 1.35rem; }
+      .cat-card-body p { font-size: .76rem; }
+      .cat-card-tag { font-size: .6rem; }
+      .adoption-footer { gap: .8rem; margin-top: 1.5rem; }
+      .story-card { grid-template-columns: 4rem 1fr; gap: .8rem; padding: 1rem 0; }
+      .story-card h3 { font-size: 1.5rem; }
+      .stories-note { margin-top: 1.5rem; }
+      .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .help-card { min-height: 13rem; gap: .8rem; padding: 1.05rem; }
+      .help-card h3 { font-size: 1.75rem; }
+      .help-card p { font-size: .8rem; }
+      .help-card .arrow-link { font-size: .85rem; }
+      .donation-layout { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+      .donation-layout > * { min-width: 0; }
+      .donation-copy h2 { font-size: 3rem; }
+      .donation-foot { overflow-wrap: anywhere; }
+      .bank-card { width: 100%; min-width: 0; padding: 1.1rem; }
+      .bank-list li { align-items: flex-start; padding: .55rem 0; }
+      .copy-button {
+        display: inline-flex;
+        min-width: 0;
+        min-height: 44px;
+        align-items: center;
+        justify-content: flex-end;
+        overflow-wrap: anywhere;
+      }
+      .bank-list li:last-child { display: grid; grid-template-columns: 1fr; gap: .25rem; }
+      .bank-list li:last-child .copy-button { width: 100%; max-width: none; justify-content: flex-start; text-align: left; }
+      .contact-inner { gap: 1.4rem; }
+      .contact-inner h2 { font-size: 2.75rem; }
+      .site-footer { padding: 3rem 0 1.5rem; }
+      .footer-grid { gap: 1.7rem; padding-bottom: 2.2rem; }
+    }
+    @media (max-width: 374px) {
+      .brand-text span { display: none; }
+      .hero-actions .button { width: 100%; }
+      .help-grid { grid-template-columns: 1fr; }
+      .help-card { min-height: 11rem; }
+    }
+    @media (min-width: 768px) {
+      .container { width: min(calc(100% - 5rem), var(--max-content)); }
+      .menu-toggle { display: none; }
+      .site-menu {
+        position: static;
+        display: flex;
+        align-items: center;
+        gap: 1.1rem;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+      .site-menu a {
+        padding: .35rem 0;
+        border-bottom: 2px solid transparent;
+        font-size: .88rem;
+      }
+      .site-menu a:hover { background: transparent; border-color: var(--arca-yellow); }
+      .site-menu a.is-active { border-color: var(--arca-yellow); }
+      .header-actions { display: flex; }
+      .hero { padding: 5.5rem 0 6rem; }
+      .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(20rem, .72fr); gap: 2rem; }
+      .hero-art { min-height: 36rem; }
+      .hero-window { right: 9%; width: min(34vw, 26rem); height: min(48vw, 38rem); }
+      .hero-art-ring { right: -3%; bottom: .5rem; }
+      .mission { padding-block: 8rem; }
+      .mission-intro { grid-template-columns: 1.15fr .85fr; align-items: end; max-width: none; }
+      .mission-intro p { padding-bottom: .45rem; }
+      .pillar-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .pillar { min-height: 17rem; padding: 1.8rem; }
+      .adoption-section { padding-block: 8rem; }
+      .adoption-section .section-header { grid-template-columns: 1.1fr .9fr; align-items: end; }
+      .adoption-section .section-header p { padding-bottom: .2rem; }
+      .adoption-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: 1.1rem; }
+      .cat-card { grid-column: auto; align-self: start; }
+      .cat-card:nth-child(1),
+      .cat-card:nth-child(2),
+      .cat-card:nth-child(3),
+      .cat-card:nth-child(4),
+      .cat-card:nth-child(5) { grid-column: auto; margin-top: 0; }
+      .cat-card:nth-child(5) { display: block; }
+      .cat-card-body { min-height: 7.4rem; padding: 1rem; }
+      .stories { padding-block: 8rem; }
+      .stories-grid { max-width: 62rem; margin-left: auto; }
+      .story-card { grid-template-columns: 7rem 1fr; gap: 1.5rem; padding-block: 1.4rem; }
+      .help-section { padding-block: 8rem; }
+      .help-grid { grid-template-columns: repeat(4, 1fr); }
+      .help-card { min-height: 23rem; padding: 1.6rem; }
+      .donation-section { padding-block: 8rem; }
+      .donation-layout { grid-template-columns: 1fr 1fr; gap: 5rem; }
+      .donation-copy { padding-top: 1rem; }
+      .contact-section { padding-block: 5.3rem; }
+      .footer-grid { grid-template-columns: 1.35fr .8fr .9fr 1fr; gap: 2.5rem; }
+    }
+    @media (min-width: 900px) {
+      .adoption-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    }
+    @media (min-width: 1080px) {
+      .site-menu { gap: 1.5rem; }
+      .hero-grid { grid-template-columns: 1.02fr .98fr; }
+      .hero-art { min-height: 42rem; }
+      .hero-window { width: 27rem; height: 40rem; }
+      .hero h1 { font-size: clamp(5.4rem, 9vw, 9.2rem); }
+      .hero-art-ring { width: 15rem; height: 15rem; right: -1rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body class="arca-site">
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useEffect, useState } = React;
+
+    const BASE_URL = "";
+    const GA_ID = "";
+    const FOUNDATION_NAME = "Fundación Proyecto Arca";
+    const CONTACT_EMAIL = "proyectoarcacoquimbo@gmail.com";
+    const INSTAGRAM_URL = "https://www.instagram.com/fundacionproyectoarca/";
+    const EDUCATION_INSTAGRAM_URL = "https://www.instagram.com/proyectoarcaeduca/";
+
+    const navItems = [
+      { key: "inicio", name: "Inicio", href: "/" },
+      { key: "nosotras", name: "Nosotras", href: "/nosotros" },
+      { key: "adoptar", name: "Adoptar", href: "/adoptar" },
+      { key: "ayudar", name: "Cómo ayudar", href: "/como-ayudar" },
+      { key: "noticias", name: "Noticias", href: "/noticias" },
+      { key: "historias", name: "Historias", href: "/historias" },
+      { key: "contacto", name: "Contacto", href: "/contacto" }
+    ];
+
+    const standInCats = [
+      {
+        name: "Lila",
+        detail: "Joven · Santiago",
+        image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=900&q=86"
+      },
+      {
+        name: "Bruno",
+        detail: "Adulto · Coquimbo",
+        image: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=86"
+      },
+      {
+        name: "Menta",
+        detail: "Joven · La Serena",
+        image: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=900&q=86"
+      },
+      {
+        name: "Nilo",
+        detail: "Adulto · Santiago",
+        image: "https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&w=900&q=86"
+      },
+      {
+        name: "Circe",
+        detail: "Joven · La Serena",
+        image: "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=900&q=86"
+      }
+    ];
+
+    /* Proposal-only stand-in: this replaces the native Petfi widget until its foundation ID is supplied.
+       In the final site, Petfi owns the card markup and styling inside Shadow DOM. */
+    const SHOW_REFERENCE_CONTENT = true;
+
+    function trackEvent(name, params) {
+      if (typeof window.gtag === "function") {
+        window.gtag("event", name, params || {});
+      }
+    }
+
+    if (GA_ID) {
+      const gaScript = document.createElement("script");
+      gaScript.async = true;
+      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(gaScript);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag("js", new Date());
+      window.gtag("config", GA_ID);
+    }
+
+    const seoConfigByPath = {
+      "/": {
+        description: "Fundación Proyecto Arca rescata, rehabilita y busca hogares responsables para gatos abandonados en La Serena, Coquimbo y Santiago.",
+        keywords: "rescate felino, adopción responsable, gatos, La Serena, Coquimbo, Santiago"
+      }
+    };
+
+    function initSeo() {
+      const path = window.location.pathname.replace(/\/+$/, "") || "/";
+      const config = seoConfigByPath[path] || seoConfigByPath["/"];
+      const description = document.querySelector('meta[name="description"]');
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (description) description.setAttribute("content", config.description);
+      if (keywords) keywords.setAttribute("content", config.keywords);
+      if (BASE_URL) {
+        let canonical = document.querySelector('link[rel="canonical"]');
+        if (!canonical) {
+          canonical = document.createElement("link");
+          canonical.rel = "canonical";
+          document.head.appendChild(canonical);
+        }
+        canonical.href = BASE_URL + (path === "/" ? "/" : path);
+      }
+    }
+
+    function useReveal() {
+      useEffect(function () {
+        const reveal = function () {
+          const elements = document.querySelectorAll(".reveal:not(.in)");
+          if (!("IntersectionObserver" in window)) {
+            elements.forEach(function (element) { element.classList.add("in"); });
+            return;
+          }
+          const observer = new IntersectionObserver(function (entries, instance) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in");
+                instance.unobserve(entry.target);
+              }
+            });
+          }, { rootMargin: "0px 0px -8% 0px", threshold: .08 });
+          elements.forEach(function (element) { observer.observe(element); });
+          return observer;
+        };
+        let observer = reveal();
+        const mutationObserver = new MutationObserver(function () {
+          if (observer) observer.disconnect();
+          observer = reveal();
+        });
+        mutationObserver.observe(document.body, { childList: true, subtree: true });
+        const sweep = window.setTimeout(function () {
+          document.querySelectorAll(".reveal:not(.in)").forEach(function (element) { element.classList.add("in"); });
+        }, 1800);
+        return function () {
+          if (observer) observer.disconnect();
+          mutationObserver.disconnect();
+          window.clearTimeout(sweep);
+        };
+      }, []);
+    }
+
+    function Navbar() {
+      const [open, setOpen] = useState(false);
+      useEffect(function () {
+        const closeOnEscape = function (event) {
+          if (event.key === "Escape") setOpen(false);
+        };
+        document.addEventListener("keydown", closeOnEscape);
+        return function () { document.removeEventListener("keydown", closeOnEscape); };
+      }, []);
+      return (
+        <header className="site-header">
+          <div className="container header-inner">
+            <a className="brand-link" href="/" onClick={function () { setOpen(false); }}>
+              <img src="/media/logo.png" alt="Logo de Fundación Proyecto Arca" />
+              <span className="brand-text">
+                <strong>Proyecto Arca</strong>
+                <span>Rescate felino</span>
+              </span>
+            </a>
+            <button
+              className="menu-toggle"
+              type="button"
+              aria-label={open ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={open}
+              aria-controls="site-menu"
+              onClick={function () { setOpen(!open); }}
+            >
+              <span className="menu-lines" aria-hidden="true"><span></span><span></span></span>
+            </button>
+            <nav id="site-menu" className={"site-menu" + (open ? " is-open" : "")} aria-label="Navegación principal">
+              {navItems.map(function (item) {
+                return (
+                  <a
+                    key={item.key}
+                    className={item.key === "inicio" ? "is-active" : ""}
+                    href={item.href}
+                    onClick={function () {
+                      setOpen(false);
+                      if (item.key === "adoptar") trackEvent("adoption_start", { placement: "navbar" });
+                    }}
+                  >
+                    {item.name}
+                  </a>
+                );
+              })}
+            </nav>
+            <div className="header-actions">
+              <a className="instagram-link" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
+              <a className="button button-primary" href="/donar" onClick={function () { trackEvent("donation_start", { placement: "navbar" }); }}>Donar</a>
+            </div>
+          </div>
+        </header>
+      );
+    }
+
+    async function copyText(value) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(value);
+        return;
+      }
+      const textArea = document.createElement("textarea");
+      textArea.value = value;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    }
+
+    function CopyButton(props) {
+      const [copied, setCopied] = useState(false);
+      return (
+        <button
+          className="copy-button"
+          type="button"
+          onClick={function () {
+            copyText(props.value).then(function () {
+              setCopied(true);
+              window.setTimeout(function () { setCopied(false); }, 2200);
+            }).catch(function () { setCopied(false); });
+          }}
+          aria-label={"Copiar " + props.label}
+        >
+          {copied ? "Copiado" : props.value}
+        </button>
+      );
+    }
+
+    function Footer() {
+      return (
+        <footer className="site-footer">
+          <div className="container">
+            <div className="footer-grid">
+              <div>
+                <div className="footer-brand">
+                  <img src="/media/logo.png" alt="" aria-hidden="true" />
+                  <span>Fundación<br />Proyecto Arca</span>
+                </div>
+                <p>Rescatamos vidas, transformamos historias. Protegemos gatos abandonados y acompañamos su camino hacia una familia responsable.</p>
+              </div>
+              <div>
+                <h2 className="footer-title">Explora</h2>
+                <ul className="footer-links">
+                  {navItems.map(function (item) {
+                    return <li key={item.key}><a href={item.href}>{item.name}</a></li>;
+                  })}
+                  <li><a href="/donar" onClick={function () { trackEvent("donation_start", { placement: "footer" }); }}>Donar</a></li>
+                </ul>
+              </div>
+              <div>
+                <h2 className="footer-title">Conversemos</h2>
+                <address className="footer-contact">
+                  <a href={"mailto:" + CONTACT_EMAIL} onClick={function () { trackEvent("contact_start", { placement: "footer" }); }}>{CONTACT_EMAIL}</a>
+                  <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@fundacionproyectoarca</a>
+                  <a href={EDUCATION_INSTAGRAM_URL} target="_blank" rel="noreferrer">@proyectoarcaeduca</a>
+                  <span>Santiago · La Serena · Coquimbo</span>
+                </address>
+              </div>
+              <div className="footer-donation">
+                <h2 className="footer-title">Transferencia</h2>
+                <strong>Banco Santander · Cuenta corriente</strong>
+                <p>Fundación Proyecto Arca<br />RUT 65.201.899-8 · N° 91975505<br />Comprobantes a <a href={"mailto:" + CONTACT_EMAIL}>{CONTACT_EMAIL}</a></p>
+              </div>
+            </div>
+            <div className="footer-bottom">
+              <span>© {new Date().getFullYear()} Fundación Proyecto Arca · Personalidad jurídica vigente · Reg. N° 319235</span>
+              <a href="https://fundacioncloe.com" target="_blank" rel="noreferrer" className="cloe-credit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 207 207" aria-hidden="true">
+                  <path d="M 98.112 22.581 C 85.376 26.006, 73.852 34.909, 65.765 47.573 C 60.760 55.410, 58.004 61.973, 54.933 73.371 C 53.038 80.404, 52.974 81.402, 54.329 82.757 C 56.961 85.390, 58.556 83.456, 60.847 74.854 C 67.547 49.692, 81.463 33.501, 100.693 28.492 C 116.252 24.439, 145.475 30.082, 152.936 38.580 C 155.706 41.735, 159 50.146, 159 54.065 C 159 58.567, 170.457 65.493, 187.982 71.588 C 193.952 73.664, 197.622 75.485, 197.828 76.473 C 198.101 77.783, 197.470 77.939, 194.083 77.397 C 186.236 76.142, 185.013 81.836, 192.729 83.705 C 196.379 84.589, 196.490 84.745, 196.180 88.559 C 195.738 94.012, 192.918 99.978, 188.438 104.937 C 182.265 111.770, 181.366 112, 160.800 112.004 C 140.168 112.008, 137.812 112.663, 134.680 119.262 C 127.589 134.205, 127.975 158.464, 135.580 175.750 C 137.935 181.103, 139.777 182.178, 142 179.499 C 143.010 178.283, 142.846 177.069, 141.130 173.082 C 137.748 165.218, 136.031 156.195, 136.015 146.197 C 135.996 134.625, 138.381 123.528, 141.572 120.337 C 143.858 118.051, 144.325 118, 162.974 118 C 181.282 118, 182.188 117.906, 185.775 115.642 C 194.351 110.228, 201.230 99.466, 202.485 89.500 C 202.831 86.750, 203.586 82.355, 204.161 79.732 C 205.995 71.382, 205.470 70.770, 192.898 66.599 C 180.620 62.526, 169.378 57.236, 166.891 54.360 C 166.006 53.337, 164.747 50.302, 164.093 47.616 C 161.332 36.277, 156.961 31.286, 146.146 27.121 C 130.752 21.193, 110.419 19.271, 98.112 22.581 M 104.030 71.463 C 103.118 72.563, 103.222 74.767, 104.491 81.192 C 107.026 94.034, 107.528 114.233, 105.480 121 C 102.977 129.274, 103.031 132.433, 105.682 132.811 C 112.116 133.727, 115.233 108.567, 111.544 85.500 C 109.557 73.074, 109.294 72.228, 107.037 71.020 C 105.721 70.316, 104.880 70.440, 104.030 71.463 M 43.449 88.027 C 23.174 98.692, 6.001 118.178, 3.019 133.900 C 1.722 140.740, 1.692 163.059, 2.975 166.435 C 3.988 169.098, 7.898 170.098, 8.116 167.750 C 8.180 167.063, 8.293 159.277, 8.366 150.448 L 8.500 134.396 12.402 126.501 C 15.323 120.590, 18.339 116.550, 24.402 110.425 C 31.677 103.076, 45.243 93, 47.864 93 C 49.539 93, 50.260 101.317, 48.997 106.071 C 48.350 108.507, 46.440 113.028, 44.753 116.117 C 41.410 122.237, 41.545 125.357, 45.128 124.820 C 46.564 124.605, 48.467 122.368, 50.927 118 L 54.589 111.500 60.371 111.198 C 71.018 110.641, 76.120 114.731, 81.914 128.465 C 85.645 137.309, 87.608 139.160, 93.895 139.764 C 98.736 140.229, 98.984 140.399, 99.598 143.671 C 99.951 145.553, 100.035 149.566, 99.784 152.588 C 99.028 161.702, 94.189 166.444, 83.989 168.066 C 72.815 169.841, 63.520 175.844, 58.391 184.596 C 55.502 189.525, 55.784 192.027, 59.219 191.946 C 60.814 191.908, 62.402 190.480, 64.500 187.196 C 68.324 181.210, 75.416 176.464, 82.758 174.977 C 100.020 171.481, 106 164.803, 106 149.023 C 106 137.763, 103.746 134, 97 134 C 92.043 134, 90.417 132.511, 87.549 125.345 C 81.790 110.961, 74.393 105, 62.304 105 L 56 105 56 100.659 C 56 93.081, 52.858 85.086, 49.852 85.015 C 49.495 85.007, 46.614 86.362, 43.449 88.027" stroke="none" fill="currentColor" fillRule="evenodd" />
+                </svg>
+                <span className="font-medium">Sitio web donado por Fundación Cloe</span>
+              </a>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    function Hero() {
+      return (
+        <section className="hero" id="inicio" aria-labelledby="hero-title">
+          <div className="container hero-grid">
+            <div className="hero-copy reveal">
+              <p className="eyebrow">Fundación Proyecto Arca · Rescate felino</p>
+              <h1 id="hero-title"><span>Rescatamos</span><span>vidas,</span><em>transformamos</em><span>historias.</span></h1>
+              <p className="hero-lead">Protegemos gatos abandonados en La Serena, Coquimbo y Santiago. Rescatamos, rehabilitamos y acompañamos cada historia hasta encontrar una familia responsable.</p>
+              <div className="hero-actions">
+                <a className="button button-primary" href="/adoptar" onClick={function () { trackEvent("adoption_start", { placement: "hero" }); }}>Conoce a los gatos</a>
+                <a className="button button-light" href="/donar" onClick={function () { trackEvent("donation_start", { placement: "hero" }); }}>Quiero donar</a>
+              </div>
+              <p className="hero-meta"><strong>Gatos solamente</strong><span>Santiago · La Serena · Coquimbo</span></p>
+            </div>
+            <div className="hero-art reveal delay-2" aria-label="Ventana fotográfica con un gato, imagen de referencia reemplazable">
+              {/* PLACEHOLDER: reemplazar por una foto real de un rescate felino de Fundación Proyecto Arca. */}
+              <div className="hero-window">
+                <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1000&q=88" alt="Gato en una ventana; imagen de referencia para esta propuesta" />
+              </div>
+              <div className="hero-art-ring" aria-hidden="true"></div>
+              <div className="hero-art-caption"><span>01</span><span>Una vida<br />a la vez</span></div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Mission() {
+      return (
+        <section className="mission" id="nosotras" aria-labelledby="mission-title">
+          <div className="container">
+            <div className="mission-intro reveal">
+              <h2 id="mission-title">El cuidado también necesita un lugar.</h2>
+              <p>Somos una fundación de mujeres que trabaja para que un gato abandonado no quede definido por el lugar donde fue encontrado. Abrimos espacio para rescatar, cuidar, educar y construir encuentros responsables entre animales y familias.</p>
+            </div>
+            <div className="pillar-grid">
+              <article className="pillar reveal">
+                <span className="pillar-number">01 / RESCATE</span>
+                <h3>Intervenimos a tiempo.</h3>
+                <p>Protegemos gatos abandonados y coordinamos su traslado, evaluación y recuperación con una mirada integral.</p>
+              </article>
+              <article className="pillar reveal delay-1">
+                <span className="pillar-number">02 / CUIDADO</span>
+                <h3>La recuperación es parte del hogar.</h3>
+                <p>Entregamos cuidados y acompañamiento para que cada gato pueda volver a confiar y prepararse para una vida segura.</p>
+              </article>
+              <article className="pillar reveal delay-2">
+                <span className="pillar-number">03 / EDUCACIÓN</span>
+                <h3>Prevenir también es rescatar.</h3>
+                <p>Promovemos la guardianía responsable y el respeto por los animales mediante contenidos y charlas en centros educativos.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function AdoptionGallery() {
+      return (
+        <section className="adoption-section" id="adopciones" aria-labelledby="adoption-title">
+          <div className="container">
+            <div className="section-header reveal">
+              <div>
+                <p className="eyebrow"><span className="section-number">02</span> Adopción responsable</p>
+                <h2 id="adoption-title">Una vida espera una decisión.</h2>
+              </div>
+              <p>Adoptar es abrir un lugar en la casa y en la rutina. Conoce el catálogo completo y encuentra el vínculo que pueda crecer contigo.</p>
+            </div>
+            <p className="stand-in-note" role="note"><strong>Propuesta visual:</strong> estas cinco fichas son datos e imágenes de referencia para mostrar el ritmo de la galería. En la versión publicada, este espacio será el widget nativo de Petfi, filtrado para gatos, con cuatro animales en móvil y cinco en escritorio.</p>
+            <div className="adoption-grid" aria-label="Gatos disponibles, fichas de referencia visual">
+              {standInCats.map(function (cat, index) {
+                return (
+                  <a className="cat-card reveal" key={cat.name} href="/adoptar" onClick={function () { trackEvent("adoption_start", { placement: "home_gallery", animal_identifier: "reference_" + (index + 1) }); }}>
+                    <span className="cat-card-tag">Referencia visual</span>
+                    <figure>
+                      <div className="cat-card-image">
+                        {/* PLACEHOLDER: reemplazar por fotografía real; esta imagen externa solo es referencia de encuadre. */}
+                        <img src={cat.image} alt={"Imagen de referencia de " + cat.name + ", reemplazar por foto real"} loading="lazy" />
+                      </div>
+                      <figcaption className="cat-card-body">
+                        <h3>{cat.name}</h3>
+                        <p>{cat.detail}</p>
+                      </figcaption>
+                    </figure>
+                  </a>
+                );
+              })}
+            </div>
+            <div className="adoption-footer reveal">
+              <p>El proceso de adopción busca una relación duradera y responsable, con información clara para ambas partes.</p>
+              <a className="arrow-link" href="/adoptar" onClick={function () { trackEvent("adoption_start", { placement: "home_gallery_footer" }); }}>Ver todos los gatos</a>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function StoriesTeaser() {
+      if (!SHOW_REFERENCE_CONTENT) {
+        return null;
+      }
+      return (
+        <section className="stories" id="historias" aria-labelledby="stories-title" data-cms-state="reference">
+          <div className="container">
+            <div className="section-header reveal">
+              <p className="eyebrow"><span className="section-number">03</span> Historias y noticias</p>
+              <h2 id="stories-title">Cada rescate deja una huella.</h2>
+              <p>El CMS permitirá publicar noticias, aprendizajes y relatos de rescate sin perder la intimidad de cada proceso.</p>
+            </div>
+            <div className="stories-grid">
+              <article className="story-card reveal">
+                <span className="story-index" aria-hidden="true">A</span>
+                <div>
+                  <small>Ejemplo de contenido para el CMS</small>
+                  <h3>Cómo acompañamos un rescate felino</h3>
+                  <p>Un espacio para explicar, con calma y transparencia, qué ocurre desde el primer aviso hasta la recuperación.</p>
+                </div>
+              </article>
+              <article className="story-card reveal delay-1">
+                <span className="story-index" aria-hidden="true">B</span>
+                <div>
+                  <small>Borrador editorial de referencia</small>
+                  <h3>Lo que significa abrir la puerta</h3>
+                  <p>Historias para que las familias conozcan la adopción responsable y puedan decidir con información.</p>
+                </div>
+              </article>
+            </div>
+            <p className="stories-note">Estas entradas son referencias para visualizar el módulo. Cuando el CMS esté vacío, la sección podrá ocultarse y la página conservará su recorrido principal.</p>
+            <a className="arrow-link reveal" href="/noticias">Explorar noticias</a>
+          </div>
+        </section>
+      );
+    }
+
+    function WaysToHelp() {
+      const helpItems = [
+        { number: "01 / DONAR", title: "Sostener el cuidado", copy: "Una transferencia ayuda a cubrir alimentación, atención veterinaria y traslados.", href: "/donar", event: "donation_start" },
+        { number: "02 / ADOPTAR", title: "Abrir un hogar", copy: "Conoce el proceso y encuentra una adopción que se construya con tiempo y compromiso.", href: "/adoptar", event: "adoption_start" },
+        { number: "03 / ACOMPAÑAR", title: "Ser hogar temporal", copy: "Conversa con nosotras si puedes ofrecer un espacio seguro durante una recuperación.", href: "mailto:" + CONTACT_EMAIL, event: "contact_start" },
+        { number: "04 / DIFUNDIR", title: "Hacer circular una historia", copy: "Comparte nuestras publicaciones y contenidos de educación para llegar a más guardianes responsables.", href: INSTAGRAM_URL, event: "contact_start" }
+      ];
+      return (
+        <section className="help-section" id="ayudar" aria-labelledby="help-title">
+          <div className="container">
+            <div className="section-header reveal">
+              <p className="eyebrow"><span className="section-number">04</span> Cómo ayudar</p>
+              <h2 id="help-title">Hay muchas formas de hacer espacio.</h2>
+              <p>Elige una acción posible para ti. Cuando se sostiene en comunidad, cada gesto se convierte en cuidado concreto.</p>
+            </div>
+            <div className="help-grid">
+              {helpItems.map(function (item) {
+                return (
+                  <article className="help-card reveal" key={item.number}>
+                    <span className="help-card-number">{item.number}</span>
+                    <div>
+                      <h3>{item.title}</h3>
+                      <p>{item.copy}</p>
+                    </div>
+                    <a className="arrow-link" href={item.href} target={item.href.indexOf("http") === 0 ? "_blank" : undefined} rel={item.href.indexOf("http") === 0 ? "noreferrer" : undefined} onClick={function () { trackEvent(item.event, { placement: "help_grid", help_type: item.number.split(" / ")[1].toLowerCase() }); }}>Quiero participar</a>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Donation() {
+      const bankFields = [
+        { label: "Nombre", value: "Fundación Proyecto Arca" },
+        { label: "RUT", value: "65.201.899-8" },
+        { label: "Banco", value: "Banco Santander" },
+        { label: "Tipo", value: "Cuenta corriente" },
+        { label: "N° cuenta", value: "91975505" },
+        { label: "Comprobantes", value: CONTACT_EMAIL }
+      ];
+      return (
+        <section className="donation-section" id="donar" aria-labelledby="donation-title">
+          <div className="container">
+            <div className="donation-layout">
+              <div className="donation-copy reveal">
+                <p className="eyebrow"><span className="section-number">05</span> Donar</p>
+                <h2 id="donation-title">Tu aporte se vuelve cuidado.</h2>
+                <p>La alimentación, los controles veterinarios y cada traslado necesitan una red que los sostenga. Si quieres contribuir, puedes hacerlo mediante transferencia bancaria en pesos chilenos.</p>
+                <div className="donation-foot">
+                  <span>¿Tienes dudas?</span>
+                  <a href={"mailto:" + CONTACT_EMAIL} onClick={function () { trackEvent("contact_start", { placement: "donation_section" }); }}>Escríbenos</a>
+                </div>
+              </div>
+              <div className="bank-card reveal delay-1">
+                <h3>Transferencia bancaria</h3>
+                <p>Presiona cualquier dato para copiarlo. Envíanos el comprobante al correo indicado.</p>
+                <ul className="bank-list">
+                  {bankFields.map(function (field) {
+                    return (
+                      <li key={field.label}>
+                        <span>{field.label}</span>
+                        <CopyButton label={field.label} value={field.value} />
+                      </li>
+                    );
+                  })}
+                </ul>
+                <p className="copy-state" aria-live="polite">Tus datos se mantienen en tu dispositivo.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function ContactStrip() {
+      return (
+        <section className="contact-section" id="contacto" aria-labelledby="contact-title">
+          <div className="container contact-inner">
+            <div className="reveal">
+              <p className="eyebrow">Hablemos</p>
+              <h2 id="contact-title">Una pregunta también puede abrir un camino.</h2>
+              <p>Si necesitas orientación sobre adopción, quieres colaborar o tienes información sobre un gato que necesita ayuda, escríbenos.</p>
+            </div>
+            <div className="contact-links reveal delay-1">
+              <a href={"mailto:" + CONTACT_EMAIL} onClick={function () { trackEvent("contact_start", { placement: "contact_strip" }); }}>{CONTACT_EMAIL}</a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@fundacionproyectoarca</a>
+              <a href={EDUCATION_INSTAGRAM_URL} target="_blank" rel="noreferrer">@proyectoarcaeduca</a>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function App() {
+      useReveal();
+      useEffect(function () { initSeo(); }, []);
+      return (
+        <>
+          <Navbar />
+          <main id="contenido">
+            <Hero />
+            <Mission />
+            <AdoptionGallery />
+            <StoriesTeaser />
+            <WaysToHelp />
+            <Donation />
+            <ContactStrip />
+          </main>
+          <Footer />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
